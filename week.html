@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #1e1e2f;
+            color: #ffffff;
+            display: flex;
+            min-height: 100vh;
+        }
+        .container {
+            padding: 20px;
+            width: 700px;
+            max-width: 90%;
+            background: #29293d;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 750px;
+            border-radius: 8px;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+        footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .right-space {
+            flex-grow: 1;
+            padding: 20px;
+            color: #cccccc;
+            background: #29293d;
+            border-radius: 8px;
+            margin: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+        }
+        .tradingview-widget-container {
+            width: 100%;
+            height: 750px;
+        }
+        .tradingview-widget-copyright {
+            font-size: 12px;
+            color: #cccccc;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .tradingview-widget-copyright a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+        .tradingview-widget-copyright a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weekly</h1>
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1" 
+                allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+    </div>
+    <div class="right-space">
+   
+ <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright">
+ 
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+  {
+  "colorTheme": "dark",
+  "dateRange": "1D",
+  "showChart": true,
+  "locale": "en",
+  "largeChartUrl": "",
+  "isTransparent": false,
+  "showSymbolLogo": false,
+  "showFloatingTooltip": false,
+  "width": "500",
+  "height": "750",
+  "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+  "plotLineColorFalling": "rgba(255, 0, 0, 1)",
+  "gridLineColor": "rgba(42, 46, 57, 0)",
+  "scaleFontColor": "rgba(209, 212, 220, 1)",
+  "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+  "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+  "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+  "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+  "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+  "tabs": [
+    {
+      "title": "Moje",
+      "symbols": [
+        {
+          "s": "FX:EURUSD"
+        },
+        {
+          "s": "FX:GBPUSD"
+        },
+        {
+          "s": "FX:USDCAD"
+        },
+        {
+          "s": "FX:AUDUSD"
+        },
+        {
+          "s": "FX:NZDUSD"
+        },
+        {
+          "s": "FX:USDCHF"
+        },
+        {
+          "s": "FX:EURAUD"
+        },
+        {
+          "s": "FX:EURGBP"
+        },
+        {
+          "s": "FX:USDJPY"
+        }
+      ]
+    },
+    {
+      "title": "Reszta",
+      "symbols": [
+        {
+          "s": "CAPITALCOM:US100"
+        },
+        {
+          "s": "CAPITALCOM:US500"
+        },
+        {
+          "s": "CAPITALCOM:DE40"
+        },
+        {
+          "s": "GPW:WIG20"
+        },
+        {
+          "s": "CAPITALCOM:GOLD"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+    
+    </div>
+</body>
+</html>
