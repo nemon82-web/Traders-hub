@@ -3,167 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Calendar</title>
+    <title>Weekly Calendar Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* CSS Variables for Theme Management */
+        :root {
+            --primary-bg: #1e1e2f;
+            --secondary-bg: #29293d;
+            --accent-color: #ff6b6b;
+            --text-color: #ffffff;
+            --subtext-color: #cccccc;
+            --card-shadow: rgba(0, 0, 0, 0.5);
+            --border-radius: 8px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Reset and Base Styles */
+        * {
             margin: 0;
             padding: 0;
-            background: #1e1e2f;
-            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--primary-bg);
+            color: var(--text-color);
             display: flex;
-            flex-direction: row;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        .container {
-            padding: 20px;
-            width: 700px;
-            max-width: 90%;
-            background: #29293d;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-            margin: 20px;
-        }
-        h1 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #ff6b6b;
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 750px;
-            border-radius: 8px;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #cccccc;
-        }
-        footer a {
-            color: #ff6b6b;
+
+        a {
+            color: var(--accent-color);
             text-decoration: none;
         }
-        footer a:hover {
+
+        a:hover {
             text-decoration: underline;
         }
-        .right-panel {
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: var(--secondary-bg);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            width: 400px;
-            margin: 20px;
+            gap: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .sidebar nav a {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            transition: background 0.3s;
+        }
+
+        .sidebar nav a:hover {
+            background-color: rgba(255, 107, 107, 0.1);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Calendar Container */
+        .calendar-container {
+            flex: 2;
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calendar-container h1 {
+            font-size: 24px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .calendar-iframe {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+        }
+
+        /* Widgets Panel */
+        .widgets-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
-        .panel {
+
+        .widget {
+            background-color: var(--secondary-bg);
             padding: 20px;
-            background: #29293d;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px var(--card-shadow);
         }
+
+        .widget h2 {
+            font-size: 20px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* TradingView Widget Containers */
         .tradingview-widget-container {
             width: 100%;
         }
+
         .tradingview-widget-copyright {
             font-size: 12px;
-            color: #cccccc;
+            color: var(--subtext-color);
             margin-top: 10px;
             text-align: center;
         }
-        .tradingview-widget-copyright a {
-            color: #ff6b6b;
-            text-decoration: none;
+
+        /* Footer Styling */
+        footer {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: var(--secondary-bg);
+            color: var(--subtext-color);
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 250px;
         }
-        .tradingview-widget-copyright a:hover {
-            text-decoration: underline;
+
+        footer a {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            footer {
+                left: 200px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            footer {
+                left: 0;
+                position: relative;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar h2 {
+                font-size: 20px;
+            }
+
+            .sidebar nav a {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .calendar-container h1, .widget h2 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Weekly</h1>
-        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1" 
-                allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
-    </div>
-    <div class="right-panel">
-        <!-- Top Panel: Single Quote Widget -->
-        <div class="panel">
-            <h2 style="margin: 0 0 10px; color: #ff6b6b;">USDCAD Quote</h2>
-            <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <div class="tradingview-widget-copyright">
-                    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2>Dashboard</h2>
+        <nav>
+            <a href="#">Weekly Calendar</a>
+            <a href="#">Market Overview</a>
+            <a href="#">USDCAD Quote</a>
+            <a href="#">Settings</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Calendar Section -->
+        <section class="calendar-container">
+            <h1>Weekly Calendar</h1>
+            <iframe class="calendar-iframe" 
+                    src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1" 
+                    allowtransparency="true" 
+                    marginwidth="0" 
+                    marginheight="0">
+            </iframe>
+        </section>
+
+        <!-- Widgets Panel -->
+        <aside class="widgets-panel">
+            <!-- USDCAD Quote Widget -->
+            <div class="widget">
+                <h2>USDCAD Quote</h2>
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright">
+                        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                            Track all markets on TradingView
+                        </a>
+                    </div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                    {
+                        "symbol": "FX:USDCAD",
+                        "width": "100%",
+                        "isTransparent": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
                 </div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                    "symbol": "FX:USDCAD",
-                    "width": "100%",
-                    "isTransparent": false,
-                    "colorTheme": "dark",
-                    "locale": "en"
-                }
-                </script>
+                <!-- TradingView Widget END -->
             </div>
-            <!-- TradingView Widget END -->
-        </div>
-        <!-- Bottom Panel: Market Overview Widget -->
-        <div class="panel">
-            <h2 style="margin: 0 0 10px; color: #ff6b6b;">Market Overview</h2>
-            <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                    "colorTheme": "dark",
-                    "dateRange": "1D",
-                    "showChart": true,
-                    "locale": "en",
-                    "largeChartUrl": "",
-                    "isTransparent": false,
-                    "showSymbolLogo": false,
-                    "showFloatingTooltip": false,
-                    "width": "100%",
-                    "height": "400",
-                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-                    "plotLineColorFalling": "rgba(255, 0, 0, 1)",
-                    "gridLineColor": "rgba(42, 46, 57, 0)",
-                    "scaleFontColor": "rgba(209, 212, 220, 1)",
-                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-                    "tabs": [
-                        {
-                            "title": "Moje",
-                            "symbols": [
-                                { "s": "FX:EURUSD" },
-                                { "s": "FX:GBPUSD" },
-                                { "s": "FX:USDCAD" },
-                                { "s": "FX:AUDUSD" },
-                                { "s": "FX:NZDUSD" },
-                                { "s": "FX:USDCHF" },
-                                { "s": "FX:EURAUD" },
-                                { "s": "FX:EURGBP" },
-                                { "s": "FX:USDJPY" }
-                            ]
-                        },
-                        {
-                            "title": "Reszta",
-                            "symbols": [
-                                { "s": "CAPITALCOM:US100" },
-                                { "s": "CAPITALCOM:US500" },
-                                { "s": "CAPITALCOM:DE40" },
-                                { "s": "GPW:WIG20" },
-                                { "s": "CAPITALCOM:GOLD" }
-                            ]
-                        }
-                    ]
-                }
-                </script>
+
+            <!-- Market Overview Widget -->
+            <div class="widget">
+                <h2>Market Overview</h2>
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    {
+                        "colorTheme": "dark",
+                        "dateRange": "1D",
+                        "showChart": true,
+                        "locale": "en",
+                        "largeChartUrl": "",
+                        "isTransparent": false,
+                        "showSymbolLogo": false,
+                        "showFloatingTooltip": false,
+                        "width": "100%",
+                        "height": "400",
+                        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                        "plotLineColorFalling": "rgba(255, 0, 0, 1)",
+                        "gridLineColor": "rgba(42, 46, 57, 0)",
+                        "scaleFontColor": "rgba(209, 212, 220, 1)",
+                        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                        "tabs": [
+                            {
+                                "title": "Moje",
+                                "symbols": [
+                                    { "s": "FX:EURUSD" },
+                                    { "s": "FX:GBPUSD" },
+                                    { "s": "FX:USDCAD" },
+                                    { "s": "FX:AUDUSD" },
+                                    { "s": "FX:NZDUSD" },
+                                    { "s": "FX:USDCHF" },
+                                    { "s": "FX:EURAUD" },
+                                    { "s": "FX:EURGBP" },
+                                    { "s": "FX:USDJPY" }
+                                ]
+                            },
+                            {
+                                "title": "Reszta",
+                                "symbols": [
+                                    { "s": "CAPITALCOM:US100" },
+                                    { "s": "CAPITALCOM:US500" },
+                                    { "s": "CAPITALCOM:DE40" },
+                                    { "s": "GPW:WIG20" },
+                                    { "s": "CAPITALCOM:GOLD" }
+                                ]
+                            }
+                        ]
+                    }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
             </div>
-            <!-- TradingView Widget END -->
-        </div>
-    </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Your Company. All rights reserved. 
+        <a href="#">Privacy Policy</a>
+    </footer>
 </body>
 </html>
