@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TradingView Charts</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-bg: #0a0a14;
@@ -21,30 +20,31 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
-            min-height: 100vh;
             color: var(--text-primary);
             font-family: 'Segoe UI', system-ui, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
+            padding: 0.5rem;
         }
 
         .charts-container {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            max-width: 1850px;
+            gap: 0.5rem;
+            height: calc(100vh - 1rem);
             width: 100%;
-            animation: fadeIn 1s ease-out;
         }
 
         .chart-row {
             display: flex;
-            gap: 2rem;
-            height: 50vh;
+            gap: 0.5rem;
+            height: 50%;
+            flex: 1;
         }
 
         .panel {
@@ -54,13 +54,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             flex: 1;
-        }
-
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
         }
 
         .tradingview-widget-container {
@@ -68,19 +62,13 @@
             height: 100%;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @media (max-width: 1200px) {
             .chart-row {
                 flex-direction: column;
-                height: auto;
             }
             
             .panel {
-                height: 500px;
+                height: 50%;
             }
         }
 
@@ -107,7 +95,6 @@
                     <div id="tradingview_f1e7f" style="height:100%;width:100%"></div>
                 </div>
             </div>
-
             <div class="panel">
                 <div class="tradingview-widget-container">
                     <div id="tradingview_e6c7b" style="height:100%;width:100%"></div>
@@ -121,7 +108,6 @@
                     <div id="tradingview_bbe76" style="height:100%;width:100%"></div>
                 </div>
             </div>
-
             <div class="panel">
                 <div class="tradingview-widget-container">
                     <div id="tradingview_c4f34" style="height:100%;width:100%"></div>
