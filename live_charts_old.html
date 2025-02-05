@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingView Charts</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden; /* Ensure no scrollbars */
+        }
+
+        .chart-row {
+            display: flex;
+            height: 50vh; /* just slightly less than half the viewport height */
+            width: 100vw; /* full viewport width */
+            margin: 0.0vh 0; /* a small margin between rows */
+        }
+
+        .chart-row:first-child {
+            margin-top: 0;
+        }
+
+        .tradingview-widget-container {
+            flex: 1; /* evenly divide space between charts */
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chart-row">
+    <!-- Chart 1 -->
+    <div class="tradingview-widget-container">
+        <div id="tradingview_f1e7f" style="height:100%;width:100%"></div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div class="tradingview-widget-container">
+        <div id="tradingview_e6c7b" style="height:100%;width:100%"></div>
+    </div>
+</div>
+
+<div class="chart-row">
+    <!-- Chart 3 -->
+    <div class="tradingview-widget-container">
+        <div id="tradingview_bbe76" style="height:100%;width:100%"></div>
+    </div>
+
+    <!-- Chart 4 -->
+    <div class="tradingview-widget-container">
+        <div id="tradingview_c4f34" style="height:100%;width:100%"></div>
+    </div>
+</div>
+
+<!-- JavaScript for the charts -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript">
+    new TradingView.widget({
+        "autosize": true,
+        "symbol": "OANDA:NZDUSD",
+        "interval": "60",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+		"backgroundColor": "rgba(0, 0, 0, 1)",
+        "gridColor": "rgba(0, 0, 0, 0)",
+        "allow_symbol_change": true,
+        "save_image": false,
+        "hide_volume": true,
+        "studies": ["STD;Stochastic"], <!-- Adds Stochastic  to this chart -->
+		<!-- "studies":["STD;RSI"],
+
+        "container_id": "tradingview_f1e7f"
+    });
+
+    new TradingView.widget({
+        "autosize": true,
+        "symbol": "OANDA:USDCAD",
+        "interval": "60",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+		<!-- "backgroundColor": "rgba(0, 0, 0, 1)",
+        "gridColor": "rgba(0, 0, 0, 0)",
+        "allow_symbol_change": true,
+        "save_image": false,
+        "hide_volume": true,
+		"studies":["STD;RSI"],
+		
+		
+        "container_id": "tradingview_e6c7b"
+    });
+
+    new TradingView.widget({
+        "autosize": true,
+        "symbol": "OANDA:EURUSD",
+        "interval": "60",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+		<!-- "backgroundColor": "rgba(0, 0, 0, 1)",
+        "gridColor": "rgba(0, 0, 0, 0)",
+        "allow_symbol_change": true,
+        "save_image": false,
+        "hide_volume": true,
+        "container_id": "tradingview_bbe76"
+    });
+
+    new TradingView.widget({
+        "autosize": true,
+        "symbol": "OANDA:GBPUSD",
+        "interval": "60",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+		<!-- "backgroundColor": "rgba(0, 0, 0, 1)",
+        "gridColor": "rgba(0, 0, 0, 0.0)",
+        "allow_symbol_change": true,
+        "save_image": false,
+        "hide_volume": true,
+        "container_id": "tradingview_c4f34"
+    });
+</script>
+
+</body>
+
+</html>
