@@ -55,11 +55,33 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             flex: 1;
+            position: relative;
         }
 
         .tradingview-widget-container {
             width: 100%;
             height: 100%;
+        }
+
+        .chart-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: var(--glass-bg);
+            padding: 8px;
+            border-radius: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .reset-button {
+            background: #26a326;
+            border: none;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         @media (max-width: 1200px) {
@@ -90,12 +112,18 @@
 <body>
     <div class="charts-container">
         <div class="chart-row">
-            <div class="panel">
+            <div class="panel" data-chart-id="chart1">
+                <div class="chart-controls">
+                    <button class="reset-button" onclick="resetChart('chart1')">Reset</button>
+                </div>
                 <div class="tradingview-widget-container">
                     <div id="tradingview_f1e7f" style="height:100%;width:100%"></div>
                 </div>
             </div>
-            <div class="panel">
+            <div class="panel" data-chart-id="chart2">
+                <div class="chart-controls">
+                    <button class="reset-button" onclick="resetChart('chart2')">Reset</button>
+                </div>
                 <div class="tradingview-widget-container">
                     <div id="tradingview_e6c7b" style="height:100%;width:100%"></div>
                 </div>
@@ -103,12 +131,18 @@
         </div>
 
         <div class="chart-row">
-            <div class="panel">
+            <div class="panel" data-chart-id="chart3">
+                <div class="chart-controls">
+                    <button class="reset-button" onclick="resetChart('chart3')">Reset</button>
+                </div>
                 <div class="tradingview-widget-container">
                     <div id="tradingview_bbe76" style="height:100%;width:100%"></div>
                 </div>
             </div>
-            <div class="panel">
+            <div class="panel" data-chart-id="chart4">
+                <div class="chart-controls">
+                    <button class="reset-button" onclick="resetChart('chart4')">Reset</button>
+                </div>
                 <div class="tradingview-widget-container">
                     <div id="tradingview_c4f34" style="height:100%;width:100%"></div>
                 </div>
@@ -118,45 +152,102 @@
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script type="text/javascript">
-        const widgetSettings = {
-            "autosize": true,
-            "interval": "60",
-            "timezone": "Etc/UTC",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "enable_publishing": false,
-            "backgroundColor": "rgba(0, 0, 0, 0)",
-            "gridColor": "rgba(255, 255, 255, 0.1)",
-            "allow_symbol_change": true,
-            "save_image": false,
-            "hide_volume": true
+        // Default settings
+        const defaultSettings = {
+            chart1: { symbol: "OANDA:NZDUSD", interval: "60", studies: ["STD;Stochastic"] },
+            chart2: { symbol: "OANDA:USDCAD", interval: "60", studies: ["STD;RSI"] },
+            chart3: { symbol: "OANDA:EURUSD", interval: "60", studies: [] },
+            chart4: { symbol: "OANDA:GBPUSD", interval: "60", studies: [] }
         };
 
-        new TradingView.widget({
-            ...widgetSettings,
-            "symbol": "OANDA:NZDUSD",
-            "studies": ["STD;Stochastic"],
-            "container_id": "tradingview_f1e7f"
-        });
+        // Load saved settings or use defaults
+        function loadSettings(chartId) {
+            const saved = localStorage.getItem(chartId);
+            return saved ? JSON.parse(saved) : defaultSettings[chartId];
+        }
 
-        new TradingView.widget({
-            ...widgetSettings,
-            "symbol": "OANDA:USDCAD",
-            "studies": ["STD;RSI"],
-            "container_id": "tradingview_e6c7b"
-        });
+        // Save settings to localStorage
+        function saveSettings(chartId, settings) {
+            localStorage.setItem(chartId, JSON.stringify(settings));
+        }
 
-        new TradingView.widget({
-            ...widgetSettings,
-            "symbol": "OANDA:EURUSD",
-            "container_id": "tradingview_bbe76"
-        });
+        // Reset to default settings
+        function resetChart(chartId) {
+            localStorage.removeItem(chartId);
+            window.location.reload();
+        }
 
-        new TradingView.widget({
-            ...widgetSettings,
-            "symbol": "OANDA:GBPUSD",
-            "container_id": "tradingview_c4f34"
+        // Initialize charts
+        function initializeChart(containerId, chartId) {
+            const settings = loadSettings(chartId);
+            
+            new TradingView.widget({
+                "autosize": true,
+                "symbol": settings.symbol,
+                "interval": settings.interval,
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "gridColor": "rgba(255, 255, 255, 0.1)",
+                "allow_symbol_change": true,
+                "save_image": false,
+                "hide_volume": true,
+                "studies": settings.studies,
+                "container_id": containerId,
+                "time_frames": [
+                    { text: "1m", resolution: "1" },
+                    { text: "5m", resolution: "5" },
+                    { text: "15m", resolution: "15" },
+                    { text: "1h", resolution: "60" },
+                    { text: "4h", resolution: "240" },
+                    { text: "1D", resolution: "1D" }
+                ],
+                "disabled_features": ["use_localstorage_for_settings"],
+                "overrides": {
+                    "mainSeriesProperties.style": 1
+                },
+                "events": {
+                    "onReady": function() {
+                        const chart = this.chart();
+                        
+                        // Save settings on change
+                        chart.onIntervalChanged().subscribe(null, (interval) => {
+                            const settings = loadSettings(chartId);
+                            settings.interval = interval;
+                            saveSettings(chartId, settings);
+                        });
+
+                        chart.onSymbolChanged().subscribe(null, (symbol) => {
+                            const settings = loadSettings(chartId);
+                            settings.symbol = symbol;
+                            saveSettings(chartId, settings);
+                        });
+
+                        chart.onStudyAdded().subscribe(null, (study) => {
+                            const settings = loadSettings(chartId);
+                            settings.studies = chart.getAllStudies().map(s => s.name);
+                            saveSettings(chartId, settings);
+                        });
+
+                        chart.onStudyRemoved().subscribe(null, (study) => {
+                            const settings = loadSettings(chartId);
+                            settings.studies = chart.getAllStudies().map(s => s.name);
+                            saveSettings(chartId, settings);
+                        });
+                    }
+                }
+            });
+        }
+
+        // Initialize all charts
+        window.addEventListener('load', () => {
+            initializeChart('tradingview_f1e7f', 'chart1');
+            initializeChart('tradingview_e6c7b', 'chart2');
+            initializeChart('tradingview_bbe76', 'chart3');
+            initializeChart('tradingview_c4f34', 'chart4');
         });
     </script>
 </body>
