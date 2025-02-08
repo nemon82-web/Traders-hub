@@ -3,117 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTS NemoN Simple Indicator</title>
+    <title>HTS NemoN Indicator + Trading Psychology</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-bg: #0a0a14;
             --secondary-bg: #1a1a2f;
-            --accent-1: #26a326;
-            --accent-2: #9c27b0;
-            --accent-3: #2196f3;
+            --accent-green: #26a326;
+            --accent-blue: #2196f3;
             --text-primary: #f0f0ff;
-            --glass-bg: rgba(25, 25, 45, 0.9);
-            --border-radius: 16px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 6px;
+            border: 3px solid var(--primary-bg);
         }
 
         body {
             background: var(--primary-bg);
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
-            line-height: 1.6;
-            padding: 2rem;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container-wrapper {
             display: flex;
-            gap: 2rem;
-            min-height: 100vh;
+            gap: 30px;
+            max-width: 1800px;
+            margin: 0 auto;
         }
 
         .code-container {
-            flex: 1;
+            width: 900px;
+            height: 90vh;
             background: var(--secondary-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            max-height: 95vh;
             overflow-y: auto;
         }
 
         .quotes-container {
-            flex: 1;
-            padding: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            max-height: 95vh;
+            width: 800px;
+            height: 90vh;
+            padding: 25px;
+            background: rgba(40, 40, 60, 0.95);
+            border-radius: 15px;
             overflow-y: auto;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--primary-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-1);
-            border-radius: 4px;
         }
 
         .code-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 25px;
         }
 
         h1 {
-            color: var(--accent-3);
-            font-size: 1.5rem;
+            color: var(--accent-blue);
+            font-size: 1.8rem;
         }
 
         pre {
-            background: var(--primary-bg);
-            padding: 1.5rem;
-            border-radius: calc(var(--border-radius) - 4px);
+            background: #000000;
+            padding: 20px;
+            border-radius: 10px;
             overflow-x: auto;
             white-space: pre-wrap;
-            word-wrap: break-word;
             tab-size: 4;
+            line-height: 1.5;
         }
 
         .quote {
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--accent-3);
+            padding: 25px;
+            margin-bottom: 25px;
+            background: linear-gradient(145deg, #1a1a2f, #252540);
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-green);
             transition: transform 0.3s ease;
         }
 
         .quote:hover {
-            transform: translateX(5px);
+            transform: translateY(-3px);
         }
 
         .quote h2 {
-            color: var(--accent-3);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .quote p {
+            margin: 0;
+            line-height: 1.6;
         }
 
         .quote em {
-            color: var(--accent-1);
+            color: var(--accent-green);
             font-style: italic;
         }
 
@@ -124,44 +117,47 @@
         .code-number { color: #ffeb3b; }
 
         .copy-btn {
-            background: var(--accent-3);
+            background: var(--accent-blue);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 12px 24px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
         .copy-btn:hover {
-            background: #1a73e8;
+            background: #1976d2;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
 
-        @media (max-width: 768px) {
-            body {
+        @media (max-width: 1600px) {
+            .container-wrapper {
                 flex-direction: column;
-                padding: 1rem;
-                min-height: auto;
+                align-items: center;
             }
-            .code-container, .quotes-container {
-                width: 100%;
-                padding: 1rem;
-                max-height: none;
+            
+            .code-container,
+            .quotes-container {
+                width: 95%;
+                height: auto;
+                max-height: 90vh;
             }
-            pre { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
-    <div class="code-container">
-        <div class="code-header">
-            <h1>HTS NemoN Simple Indicator</h1>
-            <button class="copy-btn" onclick="copyCode()">
-                <i class="far fa-copy"></i> Copy Code
-            </button>
-        </div>
-        <pre><code>//@version=6
+    <div class="container-wrapper">
+        <div class="code-container">
+            <div class="code-header">
+                <h1>HTS NemoN Simple Indicator</h1>
+                <button class="copy-btn" onclick="copyCode()">
+                    <i class="far fa-copy"></i> Copy Code
+                </button>
+            </div>
+            <pre><code>//@version=6
 indicator(<span class="code-string">"HTS_NemoN_simple"</span>, overlay=true)
 
 <span class="code-comment">// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗
@@ -220,89 +216,48 @@ bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) <span class="code-comment"
 <span class="code-comment">// PLOT DOTS EXACTLY ON CROSSOVER LINES</span>
 plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, <span class="code-string">title="Bullish Dot 🟢"</span>)
 plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">title="Bearish Dot 🔴"</span>)</code></pre>
-    </div>
-
-    <div class="quotes-container">
-        <div class="quote">
-            <h2>Mentalna Transformacja</h2>
-            <p>"Przestań walczyć z rynkiem - zacznij go słuchać. <em>Trend to nie przeciwnik, to twój sojusznik.</em> Twoja nowa mantra: 'Nie przewiduję, reaguję'."</p>
         </div>
 
-        <div class="quote">
-            <h2>Złote Zasady</h2>
-            <p>① Akceptuj opóźnione wejścia<br>
-            ② Pozwól zyskom biec<br>
-            ③ Ścinaj straty natychmiast<br>
-            ④ <em>1 udana transakcja > 5 przedwczesnych</em></p>
-        </div>
+        <div class="quotes-container">
+            <div class="quote">
+                <h2>Mark Douglas - Trading w Strefie</h2>
+                <p>"<em>Prawdziwie dojrzały trader nie martwi się, czy ma rację - skupia się na tym, co zrobi, gdy się myli.</em> Rynek nigdy nie zawdzięcza ci zwycięstwa, ale zawsze weźmie zapłatę za twoje błędy."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Pokonaj Pokusy</h2>
-            <p>"Gdy widzisz korektę:<br>
-            ✗ Stary ja: 'To szansa na kontrę!'<br>
-            ✓ Nowy ja: 'Czy to dobry moment do dołożenia?'<br>
-            <em>Korekty to test twojej nowej mentalności</em>"</p>
-        </div>
+            <div class="quote">
+                <h2>Tom Hougaard - Best Loser Wins</h2>
+                <p>"<em>Najlepsi traderzy to profesjonalni zarządcy strat.</em> Twoja umiejętność akceptowania małych strat determinuje twoje prawo do uczestnictwa w wielkich trendach."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Psychologia Wyjścia</h2>
-            <p>"Najtrudniejsze momenty:<br>
-            • Pierwszy zysk - nie zabezpieczaj za wcześnie<br>
-            • Nowe maksima - nie szukaj odwrócenia<br>
-            • Długie bezczynności - to nie bierność, to dyscyplina"</p>
-        </div>
+            <div class="quote">
+                <h2>Brett Steenbarger - Psychologia Tradingu</h2>
+                <p>"<em>Skuteczność to 10% strategia i 90% samoregulacja.</em> Najważniejszy wskaźnik na twoim wykresie to twoja zdolność utrzymania dyscypliny emocjonalnej podczas zmiennych warunków rynkowych."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Radzenie Sobie z FOMO</h2>
-            <p>"Gryzą Cię pominięte okazje? Pamiętaj:<br>
-            → Rynek zawsze daje nowe szanse<br>
-            → Lepiej kilka dobrych wejść niż wiele złych<br>
-            → <em>Pusty wykres to czas na analizę, nie akcję</em>"</p>
-        </div>
+            <div class="quote">
+                <h2>Van Tharp - Super Trader</h2>
+                <p>"<em>Trendy nie wymagają twojej wiary - wymagają twojego posłuszeństwa.</em> Wielkie fortuny zbijają się poprzez konsekwentne podążanie za ruchem, nie poprzez inteligentne przewidywanie go."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Mantra Cierpliwości</h2>
-            <p>"Czekam:<br>
-            Na odpowiedni sygnał<br>
-            Na właściwe ustawienie<br>
-            Na pełne potwierdzenie<br>
-            <em>Nie ma spóźnienia - jest tylko przedwczesność</em>"</p>
-        </div>
+            <div class="quote">
+                <h2>Michael Covel - Trend Following</h2>
+                <p>"<em>Rynek nie nagradza geniuszy - nagradza dyscyplinę.</em> Najdłuższe trendy generują 80% zysków, ale 95% traderów nie wytrzymuje wystarczająco długo, by je złapać."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Przełamanie Nawyków</h2>
-            <p>"Zmiana wymaga:<br>
-            ✓ Codziennej medytacji nad wykresami<br>
-            ✓ Dzienniczka emocji przy transakcjach<br>
-            ✓ Mechanicznych zasad wykonania<br>
-            ✓ Akceptacji 'straconych' ruchów"</p>
-        </div>
+            <div class="quote">
+                <h2>Mark Minervini - Think & Trade Like a Champion</h2>
+                <p>"<em>Twoje największe zyski przyjdą z 2-3 transakcji rocznie.</em> Sztuka polega na tym, by nie stracić koncentracji i kapitału, gdy te okazje w końcu nadejdą."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Zaufanie do Systemu</h2>
-            <p>"Gdy pojawią się wątpliwości:<br>
-            1. Sprawdź zasady<br>
-            2. Przypomnij statystyki<br>
-            3. <em>Nigdy nie improwizuj w emocjach</em><br>
-            4. Zaakceptuj wynik - nawet negatywny"</p>
-        </div>
+            <div class="quote">
+                <h2>Dr Alexander Elder - Trading for a Living</h2>
+                <p>"<em>Rynek to ocean, a trend to prąd.</em> Pływanie pod prąd wymaga 10x więcej energii niż podążanie z nurtem. Mądrzy żeglarze ustawiają żagle, nie walczą z falami."</p>
+            </div>
 
-        <div class="quote">
-            <h2>Radzenie Sobie z Porażkami</h2>
-            <p>"Dobre straty to:<br>
-            ▶ Zgodne z planem<br>
-            ▶ Kontrolowane rozmiarem<br>
-            ▶ Bez emocjonalnego 'odrabiania'<br>
-            <em>Każda strata to opłata za naukę</em>"</p>
-        </div>
-
-        <div class="quote">
-            <h2>Ostateczna Prawda</h2>
-            <p>"Sukces w trend followingu to:<br>
-            10% system +<br>
-            20% zarządzanie ryzykiem +<br>
-            70% psychologia<br>
-            <em>Twoja głowa to najważniejszy wskaźnik</em>"</p>
+            <div class="quote">
+                <h2>Nassim Taleb - Czarny łabędź</h2>
+                <p>"<em>Trendy rodzą się z niepewności, a umierają z pewności.</em> Największe rynkowe ruchy zaczynają się gdy większość jest przekonana, że 'nic się nie dzieje'."</p>
+            </div>
         </div>
     </div>
 
@@ -310,9 +265,9 @@ plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(
         function copyCode() {
             const code = document.querySelector('pre').textContent;
             navigator.clipboard.writeText(code).then(() => {
-                alert('Code copied to clipboard!');
+                alert('Kod skopiowany do schowka!');
             }).catch(err => {
-                console.error('Failed to copy code:', err);
+                console.error('Błąd kopiowania:', err);
             });
         }
     </script>
