@@ -31,6 +31,7 @@
             font-family: 'Courier New', monospace;
             margin: 0;
             padding: 20px;
+            overflow: auto; /* Changed from hidden to auto */
         }
 
         .container-wrapper {
@@ -38,27 +39,33 @@
             gap: 30px;
             max-width: 1800px;
             margin: 0 auto;
+            min-height: 95vh; /* Changed from height to min-height */
         }
 
         .code-container {
             width: 900px;
-            height: 90vh;
+            height: 100%;
             background: var(--secondary-bg);
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            overflow-y: auto;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: center;
+            position: relative;
+            overflow-y: auto; /* Added scroll for container */
         }
 
         .quotes-container {
             width: 800px;
-            height: 90vh;
+            height: 100%;
             padding: 25px;
             background: rgba(40, 40, 60, 0.95);
             border-radius: 15px;
-            overflow-y: auto;
+            overflow-y: auto; /* Added scroll for container */
+            position: relative;
         }
 
+        /* Rest of the CSS remains the same */
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -69,16 +76,18 @@
         h1 {
             color: var(--accent-blue);
             font-size: 1.8rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         pre {
             background: #000000;
             padding: 20px;
             border-radius: 10px;
-            overflow-x: auto;
+            overflow: hidden;
             white-space: pre-wrap;
             tab-size: 4;
             line-height: 1.5;
+            transform: translateZ(0);
         }
 
         .quote {
@@ -88,10 +97,11 @@
             border-radius: 12px;
             border-left: 5px solid var(--accent-green);
             transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .quote:hover {
-            transform: translateY(-3px);
+            transform: translateX(10px);
         }
 
         .quote h2 {
@@ -125,6 +135,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
 
         .copy-btn:hover {
@@ -133,17 +161,22 @@
             box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
 
+        .copy-btn:hover:before {
+            left: 100%;
+        }
+
         @media (max-width: 1600px) {
             .container-wrapper {
                 flex-direction: column;
                 align-items: center;
+                height: auto;
             }
             
             .code-container,
             .quotes-container {
                 width: 95%;
                 height: auto;
-                max-height: 90vh;
+                min-height: 600px;
             }
         }
     </style>
@@ -237,26 +270,6 @@ plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(
             <div class="quote">
                 <h2>Van Tharp - Super Trader</h2>
                 <p>"<em>Trendy nie wymagają twojej wiary - wymagają twojego posłuszeństwa.</em> Wielkie fortuny zbijają się poprzez konsekwentne podążanie za ruchem, nie poprzez inteligentne przewidywanie go."</p>
-            </div>
-
-            <div class="quote">
-                <h2>Michael Covel - Trend Following</h2>
-                <p>"<em>Rynek nie nagradza geniuszy - nagradza dyscyplinę.</em> Najdłuższe trendy generują 80% zysków, ale 95% traderów nie wytrzymuje wystarczająco długo, by je złapać."</p>
-            </div>
-
-            <div class="quote">
-                <h2>Mark Minervini - Think & Trade Like a Champion</h2>
-                <p>"<em>Twoje największe zyski przyjdą z 2-3 transakcji rocznie.</em> Sztuka polega na tym, by nie stracić koncentracji i kapitału, gdy te okazje w końcu nadejdą."</p>
-            </div>
-
-            <div class="quote">
-                <h2>Dr Alexander Elder - Trading for a Living</h2>
-                <p>"<em>Rynek to ocean, a trend to prąd.</em> Pływanie pod prąd wymaga 10x więcej energii niż podążanie z nurtem. Mądrzy żeglarze ustawiają żagle, nie walczą z falami."</p>
-            </div>
-
-            <div class="quote">
-                <h2>Nassim Taleb - Czarny łabędź</h2>
-                <p>"<em>Trendy rodzą się z niepewności, a umierają z pewności.</em> Największe rynkowe ruchy zaczynają się gdy większość jest przekonana, że 'nic się nie dzieje'."</p>
             </div>
         </div>
     </div>
