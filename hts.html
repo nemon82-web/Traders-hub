@@ -29,15 +29,47 @@
             font-family: 'Courier New', monospace;
             line-height: 1.6;
             padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .code-container {
+            flex: 1;
             background: var(--secondary-bg);
             border-radius: var(--border-radius);
             padding: 2rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        .quotes-container {
+            flex: 1;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 4px;
         }
 
         .code-header {
@@ -62,6 +94,29 @@
             tab-size: 4;
         }
 
+        .quote {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-3);
+            transition: transform 0.3s ease;
+        }
+
+        .quote:hover {
+            transform: translateX(5px);
+        }
+
+        .quote h2 {
+            color: var(--accent-3);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .quote em {
+            color: var(--accent-1);
+            font-style: italic;
+        }
+
         .code-keyword { color: #00bbd4; }
         .code-function { color: #ff5252; }
         .code-comment { color: #26a326; }
@@ -84,14 +139,22 @@
         }
 
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .container { padding: 1rem; }
+            body {
+                flex-direction: column;
+                padding: 1rem;
+                min-height: auto;
+            }
+            .code-container, .quotes-container {
+                width: 100%;
+                padding: 1rem;
+                max-height: none;
+            }
             pre { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="code-container">
         <div class="code-header">
             <h1>HTS NemoN Simple Indicator</h1>
             <button class="copy-btn" onclick="copyCode()">
@@ -155,8 +218,92 @@ bullishCross = ta.crossover(HTSFastLow, HTSSlowHigh) <span class="code-comment">
 bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) <span class="code-comment">// Fast High crosses below Slow Low</span>
 
 <span class="code-comment">// PLOT DOTS EXACTLY ON CROSSOVER LINES</span>
-plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, <span class="code-string">"Bullish Dot 🟢"</span>)
-plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">"Bearish Dot 🔴"</span>)</code></pre>
+plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, <span class="code-string">title="Bullish Dot 🟢"</span>)
+plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">title="Bearish Dot 🔴"</span>)</code></pre>
+    </div>
+
+    <div class="quotes-container">
+        <div class="quote">
+            <h2>Mentalna Transformacja</h2>
+            <p>"Przestań walczyć z rynkiem - zacznij go słuchać. <em>Trend to nie przeciwnik, to twój sojusznik.</em> Twoja nowa mantra: 'Nie przewiduję, reaguję'."</p>
+        </div>
+
+        <div class="quote">
+            <h2>Złote Zasady</h2>
+            <p>① Akceptuj opóźnione wejścia<br>
+            ② Pozwól zyskom biec<br>
+            ③ Ścinaj straty natychmiast<br>
+            ④ <em>1 udana transakcja > 5 przedwczesnych</em></p>
+        </div>
+
+        <div class="quote">
+            <h2>Pokonaj Pokusy</h2>
+            <p>"Gdy widzisz korektę:<br>
+            ✗ Stary ja: 'To szansa na kontrę!'<br>
+            ✓ Nowy ja: 'Czy to dobry moment do dołożenia?'<br>
+            <em>Korekty to test twojej nowej mentalności</em>"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Psychologia Wyjścia</h2>
+            <p>"Najtrudniejsze momenty:<br>
+            • Pierwszy zysk - nie zabezpieczaj za wcześnie<br>
+            • Nowe maksima - nie szukaj odwrócenia<br>
+            • Długie bezczynności - to nie bierność, to dyscyplina"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Radzenie Sobie z FOMO</h2>
+            <p>"Gryzą Cię pominięte okazje? Pamiętaj:<br>
+            → Rynek zawsze daje nowe szanse<br>
+            → Lepiej kilka dobrych wejść niż wiele złych<br>
+            → <em>Pusty wykres to czas na analizę, nie akcję</em>"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Mantra Cierpliwości</h2>
+            <p>"Czekam:<br>
+            Na odpowiedni sygnał<br>
+            Na właściwe ustawienie<br>
+            Na pełne potwierdzenie<br>
+            <em>Nie ma spóźnienia - jest tylko przedwczesność</em>"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Przełamanie Nawyków</h2>
+            <p>"Zmiana wymaga:<br>
+            ✓ Codziennej medytacji nad wykresami<br>
+            ✓ Dzienniczka emocji przy transakcjach<br>
+            ✓ Mechanicznych zasad wykonania<br>
+            ✓ Akceptacji 'straconych' ruchów"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Zaufanie do Systemu</h2>
+            <p>"Gdy pojawią się wątpliwości:<br>
+            1. Sprawdź zasady<br>
+            2. Przypomnij statystyki<br>
+            3. <em>Nigdy nie improwizuj w emocjach</em><br>
+            4. Zaakceptuj wynik - nawet negatywny"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Radzenie Sobie z Porażkami</h2>
+            <p>"Dobre straty to:<br>
+            ▶ Zgodne z planem<br>
+            ▶ Kontrolowane rozmiarem<br>
+            ▶ Bez emocjonalnego 'odrabiania'<br>
+            <em>Każda strata to opłata za naukę</em>"</p>
+        </div>
+
+        <div class="quote">
+            <h2>Ostateczna Prawda</h2>
+            <p>"Sukces w trend followingu to:<br>
+            10% system +<br>
+            20% zarządzanie ryzykiem +<br>
+            70% psychologia<br>
+            <em>Twoja głowa to najważniejszy wskaźnik</em>"</p>
+        </div>
     </div>
 
     <script>
