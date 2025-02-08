@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTS NemoN Simple Indicator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --accent-1: #26a326;
+            --accent-2: #9c27b0;
+            --accent-3: #2196f3;
+            --text-primary: #f0f0ff;
+            --glass-bg: rgba(25, 25, 45, 0.9);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            color: var(--accent-3);
+            font-size: 1.5rem;
+        }
+
+        pre {
+            background: var(--primary-bg);
+            padding: 1.5rem;
+            border-radius: calc(var(--border-radius) - 4px);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            tab-size: 4;
+        }
+
+        .code-keyword { color: #00bbd4; }
+        .code-function { color: #ff5252; }
+        .code-comment { color: #26a326; }
+        .code-string { color: #9c27b0; }
+        .code-number { color: #ffeb3b; }
+
+        .copy-btn {
+            background: var(--accent-3);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #1a73e8;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1rem; }
+            pre { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="code-header">
+            <h1>HTS NemoN Simple Indicator</h1>
+            <button class="copy-btn" onclick="copyCode()">
+                <i class="far fa-copy"></i> Copy Code
+            </button>
+        </div>
+        <pre><code>//@version=6
+indicator(<span class="code-string">"HTS_NemoN_simple"</span>, overlay=true)
+
+<span class="code-comment">// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗
+// ████╗  ██║██╔════╝████╗ ████║██╔═══██╗████╗  ██║
+// ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║
+// ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║
+// ██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║
+// ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝</span>
+
+<span class="code-comment">// INPUTS</span>
+<span class="code-comment">// ======</span>
+<span class="code-comment">// HTS Lengths</span>
+lenFast = input.int(33, <span class="code-string">"Fast MA Length"</span>, minval=1)
+lenSlow = input.int(144, <span class="code-string">"Slow MA Length"</span>, minval=1)
+
+<span class="code-comment">// Visual Customizations</span>
+HTSFastColor = input.color(#00bbd480, <span class="code-string">"Fast Band Color"</span>)
+HTSSlowColor = input.color(#ff525280, <span class="code-string">"Slow Band Color"</span>)
+lineWidth = input.int(1, <span class="code-string">"Line Width"</span>, minval=1, maxval=5)
+
+<span class="code-comment">// VALIDATION</span>
+<span class="code-comment">// ==========</span>
+if lenFast >= lenSlow
+    runtime.error(<span class="code-string">"Fast MA length must be smaller than Slow MA length"</span>)
+
+<span class="code-comment">// CALCULATIONS</span>
+<span class="code-comment">// ============</span>
+HTSFastHigh = ta.rma(high, lenFast)
+HTSFastLow = ta.rma(low, lenFast)
+HTSSlowHigh = ta.rma(high, lenSlow)
+HTSSlowLow = ta.rma(low, lenSlow)
+
+<span class="code-comment">// PLOTTING</span>
+<span class="code-comment">// ========</span>
+<span class="code-comment">// Fast Band</span>
+plotFastHigh = plot(HTSFastHigh, <span class="code-string">"Góra tnie w dół (FAST-high)"</span>, color=HTSFastColor, linewidth=lineWidth)
+plotFastLow = plot(HTSFastLow, <span class="code-string">"Dół tnie w górę(FAST-low)"</span>, color=HTSFastColor, linewidth=lineWidth)
+fill(plotFastHigh, plotFastLow, color.new(HTSFastColor, 90))
+
+<span class="code-comment">// Slow Band</span>
+plotSlowHigh = plot(HTSSlowHigh, <span class="code-string">"górę(slow_high)"</span>, color=HTSSlowColor, linewidth=lineWidth)
+plotSlowLow = plot(HTSSlowLow, <span class="code-string">"dół(slow_low)"</span>, color=HTSSlowColor, linewidth=lineWidth)
+fill(plotSlowHigh, plotSlowLow, color.new(HTSSlowColor, 90))
+
+<span class="code-comment">// ALERT SYSTEM</span>
+<span class="code-comment">// ============</span>
+alertcondition(ta.crossover(HTSFastLow, HTSSlowHigh), 
+  <span class="code-string">"Bullish Crossover"</span>, <span class="code-string">"Fast MA crossed above Slow MA"</span>)
+alertcondition(ta.crossunder(HTSFastHigh, HTSSlowLow), 
+  <span class="code-string">"Bearish Crossunder"</span>, <span class="code-string">"Fast MA crossed below Slow MA"</span>)
+
+<span class="code-comment">// CROSSOVER LOGIC</span>
+bullishCross = ta.crossover(HTSFastLow, HTSSlowHigh) <span class="code-comment">// Fast Low crosses above Slow High</span>
+bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) <span class="code-comment">// Fast High crosses below Slow Low</span>
+
+<span class="code-comment">// PLOT DOTS EXACTLY ON CROSSOVER LINES</span>
+plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, <span class="code-string">"Bullish Dot 🟢"</span>)
+plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">"Bearish Dot 🔴"</span>)</code></pre>
+    </div>
+
+    <script>
+        function copyCode() {
+            const code = document.querySelector('pre').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy code:', err);
+            });
+        }
+    </script>
+</body>
+</html>
