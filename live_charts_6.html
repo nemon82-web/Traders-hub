@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingView Charts</title>
+    <style>
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --glass-bg: rgba(25, 25, 45, 0.9);
+            --text-primary: #f0f0ff;
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 0.5rem;
+        }
+
+        .charts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            height: calc(100vh - 1rem);
+            width: 100%;
+        }
+
+        .chart-row {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .tradingview-widget-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            .chart-row {
+                flex-direction: column;
+            }
+            
+            .panel {
+                height: 50%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #26a326;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="charts-container">
+        <div class="chart-row">
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_f1e7f" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_e6c7b" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-row">
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_bbe76" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_c4f34" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New third row -->
+        <div class="chart-row">
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_5a6b7" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_8d3e2" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+        const widgetSettings = {
+            "autosize": true,
+            "interval": "60",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "enable_publishing": false,
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "gridColor": "rgba(255, 255, 255, 0.1)",
+            "allow_symbol_change": true,
+            "save_image": false,
+            "hide_volume": true,
+            "hide_legend": true,
+            "hide_top_toolbar": false,
+            "hideideas": true,
+            "studies": [ ],
+            "disabled_features": [
+                "volume_force_overlay",
+                "header_widget",
+                "header_compare",
+                "compare_symbol",
+                "display_market_status",
+                "timeframes_toolbar"
+            ],
+            "overrides": {
+                "paneProperties.background": "#00000000",
+                "paneProperties.vertGridProperties.color": "#00000000",
+                "paneProperties.horzGridProperties.color": "#00000000"
+            }
+        };
+
+        // Initialize all 6 widgets
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:EURUSD",
+            "container_id": "tradingview_f1e7f"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:GBPUSD",
+            "container_id": "tradingview_e6c7b"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:NZDUSD",
+            "container_id": "tradingview_bbe76"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:USDCAD",
+            "container_id": "tradingview_c4f34"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:AUDUSD",
+            "container_id": "tradingview_5a6b7"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:USDJPY",
+            "container_id": "tradingview_8d3e2"
+        });
+    </script>
+</body>
+</html>
