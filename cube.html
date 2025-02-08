@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate 3D Cube Experience</title>
+    <style>
+        :root {
+            --cube-color: #ff6b6b;
+            --bg-color: #1a1a1a;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg-color);
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .cube-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+            transition: transform 0.3s;
+        }
+
+        .cube-container:hover {
+            animation-play-state: paused;
+        }
+
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,107,107,0.15);
+            border: 3px solid var(--cube-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(255,107,107,0.3);
+            transition: all 0.3s;
+        }
+
+        .front  { transform: translateZ(150px); }
+        .back   { transform: translateZ(-150px) rotateY(180deg); }
+        .right  { transform: translateX(150px) rotateY(90deg); }
+        .left   { transform: translateX(-150px) rotateY(-90deg); }
+        .top    { transform: translateY(-150px) rotateX(90deg); }
+        .bottom { transform: translateY(150px) rotateX(-90deg); }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            background: var(--cube-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--cube-color);
+        }
+
+        .particles {
+            position: fixed;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotateX(0) rotateY(0); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--cube-color), transparent 60%);
+            filter: blur(100px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="particles"></div>
+
+    <div class="cube-container" id="cube">
+        <div class="face front">FRONT</div>
+        <div class="face back">BACK</div>
+        <div class="face right">RIGHT</div>
+        <div class="face left">LEFT</div>
+        <div class="face top">TOP</div>
+        <div class="face bottom">BOTTOM</div>
+    </div>
+
+    <div class="controls">
+        <button onclick="toggleRotation()">⏯️ Toggle Spin</button>
+        <button onclick="changeColor()">🎨 Random Color</button>
+        <button onclick="toggleWireframe()">🔲 Wireframe</button>
+    </div>
+
+    <script>
+        // Cube Controls
+        let rotating = true;
+        const cube = document.getElementById('cube');
+        
+        function toggleRotation() {
+            rotating = !rotating;
+            cube.style.animationPlayState = rotating ? 'running' : 'paused';
+        }
+
+        function changeColor() {
+            const hue = Math.floor(Math.random() * 360);
+            document.documentElement.style.setProperty('--cube-color', `hsl(${hue}, 70%, 60%)`);
+            document.documentElement.style.setProperty('--bg-color', `hsl(${hue}, 30%, 10%)`);
+        }
+
+        function toggleWireframe() {
+            cube.classList.toggle('wireframe');
+            document.querySelectorAll('.face').forEach(face => {
+                face.style.backgroundColor = face.style.backgroundColor ? '' : 'transparent';
+            });
+        }
+
+        // Interactive Mouse Rotation
+        let rotateX = 0;
+        let rotateY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!rotating) {
+                const sensitivity = 0.3;
+                rotateX = (e.clientY - window.innerHeight/2) * sensitivity;
+                rotateY = (e.clientX - window.innerWidth/2) * sensitivity;
+                cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            }
+        });
+
+        // Particles
+        const particlesContainer = document.querySelector('.particles');
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 6}px;
+                height: ${Math.random() * 6}px;
+                background: var(--cube-color);
+                border-radius: 50%;
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: float ${5 + Math.random() * 10}s infinite linear;
+                opacity: ${0.2 + Math.random() * 0.5};
+            `;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Dynamic glow follow
+        document.addEventListener('mousemove', (e) => {
+            document.querySelector('.glow').style.transform = 
+                `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+        });
+    </script>
+</body>
+</html>
