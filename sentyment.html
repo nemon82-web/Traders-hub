@@ -90,12 +90,12 @@
         .menu-item:nth-child(2) i { color: #ff5722; }
         .menu-item:nth-child(3) i { color: var(--accent-2); }
         .menu-item:nth-child(4) i { color: #00bcd4; }
-		.menu-item:nth-child(5) i { color: #e91e63; } /* Example: Pink */
-		.menu-item:nth-child(6) i { color: #ffeb3b; } /* Example: Yellow */
-        .menu-item:nth-child(7) i { color: #4caf50; } /* Example: Green */
-		.menu-item:nth-child(8) i { color: #e91e63; } /* Example pink */
-        .menu-item:nth-child(9) i { color: #795548; } /* Example brown */
-        .menu-item:nth-child(10) i { color: #607d8b; } /* Example blue-gray */
+		.menu-item:nth-child(5) i { color: #e91e63; }
+		.menu-item:nth-child(6) i { color: #ffeb3b; }
+        .menu-item:nth-child(7) i { color: #4caf50; }
+		.menu-item:nth-child(8) i { color: #e91e63; }
+        .menu-item:nth-child(9) i { color: #795548; }
+        .menu-item:nth-child(10) i { color: #607d8b; }
 
         .menu-item:hover {
             background: linear-gradient(145deg, #202040 0%, #252550 100%);
@@ -138,31 +138,6 @@
 
         .myfxbookLink:hover {
             opacity: 1;
-        }
-
-        .widgets-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            width: 550px;
-        }
-
-        .widget {
-            height: 430px;
-            padding: 1rem;
-        }
-
-        .tradingview-widget-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        .tradingview-widget-copyright {
-            font-size: 0.8rem;
-            color: var(--text-primary);
-            opacity: 0.7;
-            text-align: center;
-            margin-top: 0.5rem;
         }
 
         @keyframes fadeIn {
@@ -217,8 +192,7 @@
                 <i class="fas fa-cog"></i>
                 -------
             </a>
-			            </a>
-			            <a href="https://kick.com/zsuirad-nezrok" class="menu-item" target="_self">
+            <a href="https://kick.com/zsuirad-nezrok" class="menu-item" target="_self">
                 <i class="fas fa-cat"></i>
                 Kik_Nezrok
             </a>
@@ -244,78 +218,6 @@
             </a>
             <script type="text/javascript">showOutlookWidget()</script>
         </section>
-
-        <aside class="widgets-panel">
-            <div class="panel widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <div class="tradingview-widget-copyright">
-                        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-                            Track all markets on TradingView
-                        </a>
-                    </div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                    {
-                        "symbol": "FX:USDCAD",
-                        "width": "100%",
-                        "isTransparent": true,
-                        "colorTheme": "dark",
-                        "locale": "en"
-                    }
-                    </script>
-                </div>
-            </div>
-
-            <div class="panel widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                    {
-                        "colorTheme": "dark",
-                        "dateRange": "1D",
-                        "showChart": true,
-                        "locale": "en",
-                        "isTransparent": true,
-                        "width": "100%",
-                        "height": "100%",
-                        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-                        "plotLineColorFalling": "rgba(255, 0, 0, 1)",
-                        "gridLineColor": "rgba(42, 46, 57, 0)",
-                        "scaleFontColor": "rgba(209, 212, 220, 1)",
-                        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-                        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-                        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-                        "tabs": [
-                            {
-                                "title": "Moje",
-                                "symbols": [
-                                    { "s": "FX:EURUSD" },
-                                    { "s": "FX:GBPUSD" },
-                                    { "s": "FX:USDCAD" },
-                                    { "s": "FX:AUDUSD" },
-                                    { "s": "FX:NZDUSD" },
-                                    { "s": "FX:USDCHF" },
-                                    { "s": "FX:EURAUD" },
-                                    { "s": "FX:EURGBP" },
-                                    { "s": "FX:USDJPY" }
-                                ]
-                            },
-                            {
-                                "title": "Reszta",
-                                "symbols": [
-                                    { "s": "CAPITALCOM:US100" },
-                                    { "s": "CAPITALCOM:US500" },
-                                    { "s": "CAPITALCOM:DE40" },
-                                    { "s": "GPW:WIG20" },
-                                    { "s": "CAPITALCOM:GOLD" }
-                                ]
-                            }
-                        ]
-                    }
-                    </script>
-                </div>
-            </div>
-        </aside>
     </div>
 
     <script>
