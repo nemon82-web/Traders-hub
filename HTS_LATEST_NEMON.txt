@@ -35,13 +35,13 @@ HTSSlowLow = ta.rma(low, lenSlow)
 // PLOTTING
 // ========
 // Fast Band
-plotFastHigh = plot(HTSFastHigh, title="Góra tnie w dół", color=HTSFastColor, linewidth=lineWidth)
-plotFastLow = plot(HTSFastLow, title="Dół tnie w górę", color=HTSFastColor, linewidth=lineWidth)
+plotFastHigh = plot(HTSFastHigh, title="Góra tnie w dół (FAST-high)", color=HTSFastColor, linewidth=lineWidth)
+plotFastLow = plot(HTSFastLow, title="Dół tnie w górę(FAST-low)", color=HTSFastColor, linewidth=lineWidth)
 fill(plotFastHigh, plotFastLow, color.new(HTSFastColor, 90))
 
 // Slow Band
-plotSlowHigh = plot(HTSSlowHigh, title="górę", color=HTSSlowColor, linewidth=lineWidth)
-plotSlowLow = plot(HTSSlowLow, title="dół", color=HTSSlowColor, linewidth=lineWidth)
+plotSlowHigh = plot(HTSSlowHigh, title="górę(slow_high)", color=HTSSlowColor, linewidth=lineWidth)
+plotSlowLow = plot(HTSSlowLow, title="dół(slow_low)", color=HTSSlowColor, linewidth=lineWidth)
 fill(plotSlowHigh, plotSlowLow, color.new(HTSSlowColor, 90))
 
 // ALERT SYSTEM
