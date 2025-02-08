@@ -43,7 +43,6 @@
         .chart-row {
             display: flex;
             gap: 0.5rem;
-            height: 50%;
             flex: 1;
         }
 
@@ -114,6 +113,20 @@
                 </div>
             </div>
         </div>
+
+        <!-- New third row -->
+        <div class="chart-row">
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_5a6b7" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_8d3e2" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -132,10 +145,9 @@
             "save_image": false,
             "hide_volume": true,
             "hide_legend": true,
-			"hide_top_toolbar": false, // schowaj pasek
+            "hide_top_toolbar": false,
             "hideideas": true,
-             "studies": [ ],
-  
+            "studies": [ ],
             "disabled_features": [
                 "volume_force_overlay",
                 "header_widget",
@@ -151,6 +163,7 @@
             }
         };
 
+        // Initialize all 6 widgets
         new TradingView.widget({
             ...widgetSettings,
             "symbol": "OANDA:EURUSD",
@@ -173,6 +186,18 @@
             ...widgetSettings,
             "symbol": "OANDA:USDCAD",
             "container_id": "tradingview_c4f34"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:AUDUSD",
+            "container_id": "tradingview_5a6b7"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            "symbol": "OANDA:USDJPY",
+            "container_id": "tradingview_8d3e2"
         });
     </script>
 </body>
