@@ -113,7 +113,7 @@
             height: 900px;
             transform: translateY(-50%) translateX(-620px);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
+            z-index: 1100; /* Increased z-index */
             overflow: visible;
             cursor: pointer;
         }
@@ -138,6 +138,7 @@
             box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
             pointer-events: none;
             transition: all 0.3s ease;
+            z-index: 1101; /* Label above calendar */
         }
 
         #week-calendar {
@@ -148,7 +149,7 @@
             height: 900px;
             transform: translateY(-50%) translateX(620px);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
+            z-index: 1100; /* Increased z-index */
             overflow: visible;
             cursor: pointer;
         }
@@ -173,12 +174,15 @@
             box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
             pointer-events: none;
             transition: all 0.3s ease;
+            z-index: 1101; /* Label above calendar */
         }
 
         #economic-calendar iframe, #week-calendar iframe {
             width: 100% !important;
             height: 100% !important;
             min-height: 900px !important;
+            position: relative;
+            z-index: 1100;
         }
 
         @keyframes fadeIn {
@@ -208,6 +212,7 @@
                 width: 650px;
                 height: 900px;
                 margin-top: 2rem;
+                z-index: 1;
             }
             
             #economic-calendar::before, #week-calendar::before {
