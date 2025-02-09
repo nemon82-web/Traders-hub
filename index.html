@@ -72,7 +72,6 @@
             transition: color 0.3s ease;
         }
 
-        /* Menu Item Colors */
         .menu-item:nth-child(1) i { color: var(--accent-1); }
         .menu-item:nth-child(2) i { color: #ff5722; }
         .menu-item:nth-child(3) i { color: var(--accent-2); }
@@ -85,109 +84,85 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        #calendars-container {
+        .calendar-tab {
+            position: fixed;
+            top: 50%;
+            width: 40px;
+            height: 120px;
+            background: var(--secondary-bg);
+            cursor: pointer;
+            z-index: 1101;
+            transition: all 0.3s ease;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 2rem;
-            max-width: 1850px;
-            width: 100%;
-            margin: 0 auto;
-            animation: fadeIn 1s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .calendar-tab::before {
+            content: 'Daily Calendar';
+            position: absolute;
+            white-space: nowrap;
+            transform: rotate(-90deg);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-tab.left {
+            left: 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .calendar-tab.right {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .calendar-tab.right::before {
+            content: 'Week Calendar';
+        }
+
+        .calendar-tab:hover {
+            background: var(--accent-1);
+            width: 45px;
         }
 
         #economic-calendar {
             position: fixed;
-            left: 0;
+            left: -650px;
             top: 50%;
             width: 650px;
             height: 900px;
-            transform: translateY(-50%) translateX(-620px);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1100; /* Increased z-index */
-            overflow: visible;
-            cursor: pointer;
-        }
-
-        #economic-calendar:hover {
-            transform: translateY(-50%) translateX(0);
-        }
-
-        #economic-calendar::before {
-            content: 'Daily Calendar';
-            position: absolute;
-            right: -60px;
-            top: 50%;
-            transform: translateY(-50%) rotate(90deg);
-            color: var(--text-primary);
-            background: var(--secondary-bg);
-            padding: 12px 20px;
-            border-radius: 8px 8px 0 0;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 1101; /* Label above calendar */
+            transform: translateY(-50%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1100;
         }
 
         #week-calendar {
             position: fixed;
-            right: 0;
+            right: -650px;
             top: 50%;
             width: 650px;
             height: 900px;
-            transform: translateY(-50%) translateX(620px);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1100; /* Increased z-index */
-            overflow: visible;
-            cursor: pointer;
+            transform: translateY(-50%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1100;
         }
 
+        .calendar-tab.left:hover ~ #economic-calendar,
+        #economic-calendar:hover {
+            left: 0;
+        }
+
+        .calendar-tab.right:hover ~ #week-calendar,
         #week-calendar:hover {
-            transform: translateY(-50%) translateX(0);
-        }
-
-        #week-calendar::before {
-            content: 'Week Calendar';
-            position: absolute;
-            left: -60px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-90deg);
-            color: var(--text-primary);
-            background: var(--secondary-bg);
-            padding: 12px 20px;
-            border-radius: 8px 8px 0 0;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 1101; /* Label above calendar */
+            right: 0;
         }
 
         #economic-calendar iframe, #week-calendar iframe {
             width: 100% !important;
             height: 100% !important;
             min-height: 900px !important;
-            position: relative;
-            z-index: 1100;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideDown {
@@ -203,20 +178,18 @@
                 padding: 0.8rem;
             }
 
+            .calendar-tab {
+                display: none;
+            }
+
             #economic-calendar, #week-calendar {
                 position: relative;
-                transform: none;
-                top: auto;
-                left: auto;
-                right: auto;
+                left: auto !important;
+                right: auto !important;
                 width: 650px;
                 height: 900px;
-                margin-top: 2rem;
-                z-index: 1;
-            }
-            
-            #economic-calendar::before, #week-calendar::before {
-                display: none;
+                margin: 2rem auto;
+                transform: none !important;
             }
 
             body {
@@ -263,24 +236,31 @@
         </a>
     </nav>
 
-    <div id="calendars-container">
-        <div class="panel" id="economic-calendar">
-            <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
-        </div>
+    <div class="calendar-tab left"></div>
+    <div class="calendar-tab right"></div>
 
-        <div class="panel" id="week-calendar">
-            <iframe class="calendar-iframe" 
-                src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1" 
-                allowtransparency="true">
-            </iframe>
-        </div>
+    <div id="economic-calendar">
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <div id="week-calendar">
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
     <script>
-        setTimeout(() => {
-            const loader = document.querySelector('.loader');
-            if(loader) loader.style.display = 'none';
-        }, 3000);
+        // Simple hover detection for mobile devices
+        const calendars = {
+            economic: document.getElementById('economic-calendar'),
+            week: document.getElementById('week-calendar')
+        };
+
+        document.querySelector('.calendar-tab.left').addEventListener('touchstart', () => {
+            calendars.economic.style.left = '0';
+        });
+        
+        document.querySelector('.calendar-tab.right').addEventListener('touchstart', () => {
+            calendars.week.style.right = '0';
+        });
     </script>
 </body>
 
