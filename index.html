@@ -84,23 +84,54 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .calendar-tab {
+        .calendar-container {
             position: fixed;
             top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1100;
+        }
+
+        #economic-calendar {
+            left: -650px;
+            width: 650px;
+            height: 900px;
+        }
+
+        #week-calendar {
+            right: -650px;
+            width: 650px;
+            height: 900px;
+        }
+
+        .calendar-tab {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             width: 40px;
             height: 120px;
             background: var(--secondary-bg);
             cursor: pointer;
-            z-index: 1101;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1101;
+        }
+
+        #economic-calendar .calendar-tab {
+            right: -40px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        #week-calendar .calendar-tab {
+            left: -40px;
+            border-radius: 8px 0 0 8px;
         }
 
         .calendar-tab::before {
-            content: 'Daily Calendar';
+            content: '';
             position: absolute;
             white-space: nowrap;
             transform: rotate(-90deg);
@@ -108,18 +139,20 @@
             letter-spacing: 0.5px;
         }
 
-        .calendar-tab.left {
-            left: 0;
-            border-radius: 0 8px 8px 0;
+        #economic-calendar .calendar-tab::before {
+            content: 'Daily Calendar';
         }
 
-        .calendar-tab.right {
-            right: 0;
-            border-radius: 8px 0 0 8px;
-        }
-
-        .calendar-tab.right::before {
+        #week-calendar .calendar-tab::before {
             content: 'Week Calendar';
+        }
+
+        #economic-calendar:hover {
+            left: 0;
+        }
+
+        #week-calendar:hover {
+            right: 0;
         }
 
         .calendar-tab:hover {
@@ -127,39 +160,7 @@
             width: 45px;
         }
 
-        #economic-calendar {
-            position: fixed;
-            left: -650px;
-            top: 50%;
-            width: 650px;
-            height: 900px;
-            transform: translateY(-50%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1100;
-        }
-
-        #week-calendar {
-            position: fixed;
-            right: -650px;
-            top: 50%;
-            width: 650px;
-            height: 900px;
-            transform: translateY(-50%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1100;
-        }
-
-        .calendar-tab.left:hover ~ #economic-calendar,
-        #economic-calendar:hover {
-            left: 0;
-        }
-
-        .calendar-tab.right:hover ~ #week-calendar,
-        #week-calendar:hover {
-            right: 0;
-        }
-
-        #economic-calendar iframe, #week-calendar iframe {
+        .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
             min-height: 900px !important;
@@ -178,11 +179,7 @@
                 padding: 0.8rem;
             }
 
-            .calendar-tab {
-                display: none;
-            }
-
-            #economic-calendar, #week-calendar {
+            .calendar-container {
                 position: relative;
                 left: auto !important;
                 right: auto !important;
@@ -190,6 +187,10 @@
                 height: 900px;
                 margin: 2rem auto;
                 transform: none !important;
+            }
+
+            .calendar-tab {
+                display: none;
             }
 
             body {
@@ -236,30 +237,27 @@
         </a>
     </nav>
 
-    <div class="calendar-tab left"></div>
-    <div class="calendar-tab right"></div>
-
-    <div id="economic-calendar">
+    <div class="calendar-container" id="economic-calendar">
+        <div class="calendar-tab"></div>
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div id="week-calendar">
+    <div class="calendar-container" id="week-calendar">
+        <div class="calendar-tab"></div>
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
     <script>
-        // Simple hover detection for mobile devices
-        const calendars = {
-            economic: document.getElementById('economic-calendar'),
-            week: document.getElementById('week-calendar')
-        };
-
-        document.querySelector('.calendar-tab.left').addEventListener('touchstart', () => {
-            calendars.economic.style.left = '0';
-        });
+        // Mobile touch support
+        const economicCalendar = document.getElementById('economic-calendar');
+        const weekCalendar = document.getElementById('week-calendar');
         
-        document.querySelector('.calendar-tab.right').addEventListener('touchstart', () => {
-            calendars.week.style.right = '0';
+        document.querySelector('#economic-calendar .calendar-tab').addEventListener('touchstart', () => {
+            economicCalendar.style.left = '0';
+        });
+
+        document.querySelector('#week-calendar .calendar-tab').addEventListener('touchstart', () => {
+            weekCalendar.style.right = '0';
         });
     </script>
 </body>
