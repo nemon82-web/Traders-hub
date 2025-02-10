@@ -4,14 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradingView Professional Dashboard</title>
+    <title>NemoN's HUB</title>
+    <link rel="icon" href="cal_ico.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <style>
         :root {
             --primary-bg: #0a0a14;
             --secondary-bg: #1a1a2f;
-            --glass-bg: rgba(25, 25, 45, 0.9);
+            --accent-1: #26a326;
+            --accent-2: #9c27b0;
+            --accent-3: #2196f3;
             --text-primary: #f0f0ff;
+            --glass-bg: rgba(25, 25, 45, 0.9);
             --border-radius: 16px;
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
         }
 
         * {
@@ -20,88 +29,183 @@
             padding: 0;
         }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
-
         body {
             background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
+            min-height: 100vh;
             color: var(--text-primary);
             font-family: 'Segoe UI', system-ui, sans-serif;
-            padding: 0.5rem;
+            padding: 2rem;
+            padding-top: 80px;
+            overflow-x: hidden;
         }
 
-        .charts-container {
+        .cyber-globe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .top-menu {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            height: calc(100vh - 1rem);
-            width: 100%;
-        }
-
-        .chart-row {
-            display: flex;
-            gap: 0.5rem;
-            flex: 1;
-        }
-
-        .panel {
+            gap: 1rem;
+            padding: 1rem;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            flex: 1;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
         }
 
-        .tradingview-widget-container {
-            width: 100%;
-            height: 100%;
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
         }
 
-        .chart-row:first-child .panel:first-child {
-            border: 2px solid #1f89f2;
-            position: relative;
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            transition: color 0.3s ease;
         }
 
-        .chart-row:first-child .panel:first-child::after {
-            content: "";
+        .menu-item:nth-child(1) i { color: var(--accent-1); }
+        .menu-item:nth-child(2) i { color: #ff5722; }
+        .menu-item:nth-child(3) i { color: var(--accent-2); }
+        .menu-item:nth-child(4) i { color: #00bcd4; }
+        .menu-item:nth-child(5) i { color: #8bc34a; }
+
+        .menu-item:hover {
+            background: linear-gradient(145deg, #202040 0%, #252550 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .calendar-container {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1100;
+        }
+
+        #economic-calendar {
+            left: -650px;
+            width: 650px;
+            height: 900px;
+        }
+
+        #week-calendar {
+            right: -650px;
+            width: 650px;
+            height: 900px;
+        }
+
+        .calendar-tab {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: var(--border-radius);
-            box-shadow: inset 0 0 12px #1f89f2;
-            pointer-events: none;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 220px;
+            background: var(--secondary-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1101;
         }
 
-        .chart-row:first-child .panel:last-child {
-            border: 2px solid #26a326;
-            position: relative;
+        #economic-calendar .calendar-tab {
+            right: -40px;
+            border-radius: 0 8px 8px 0;
         }
 
-        .chart-row:first-child .panel:last-child::after {
-            content: "";
+        #week-calendar .calendar-tab {
+            left: -40px;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .calendar-tab::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: var(--border-radius);
-            box-shadow: inset 0 0 12px #26a326;
-            pointer-events: none;
+            white-space: nowrap;
+            transform: rotate(-90deg);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        @media (max-width: 1200px) {
-            .chart-row {
-                flex-direction: column;
+        #economic-calendar .calendar-tab::before {
+            content: 'Daily Calendar';
+        }
+
+        #week-calendar .calendar-tab::before {
+            content: 'Week Calendar';
+        }
+
+        #economic-calendar:hover {
+            left: 0;
+        }
+
+        #week-calendar:hover {
+            right: 0;
+        }
+
+        .calendar-tab:hover {
+            background: var(--accent-1);
+            width: 45px;
+        }
+
+        .calendar-container iframe {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 900px !important;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translate(-50%, -20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        @media (max-width: 1600px) {
+            .top-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                max-width: 90%;
+                padding: 0.8rem;
             }
-            
-            .panel {
-                height: 50%;
+
+            .calendar-container {
+                position: relative;
+                left: auto !important;
+                right: auto !important;
+                width: 650px;
+                height: 900px;
+                margin: 2rem auto;
+                transform: none !important;
+            }
+
+            .calendar-tab {
+                display: none;
+            }
+
+            body {
+                padding-top: 140px;
             }
         }
 
@@ -114,153 +218,95 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #26a326;
+            background: var(--accent-1);
             border-radius: 4px;
         }
     </style>
 </head>
 
 <body>
-    <div class="charts-container">
-        <!-- Top Row: US100 & DE40 -->
-        <div class="chart-row">
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_5a6b7"></div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_8d3e2"></div>
-                </div>
-            </div>
-        </div>
+    <canvas class="cyber-globe" id="globe"></canvas>
+    
+    <nav class="top-menu">
+        <a href="./live_charts.html" class="menu-item" target="_self">
+            <i class="fas fa-chart-bar"></i>
+            Live Charts
+        </a>
+        <a href="./hts.html" class="menu-item" target="_self">
+            <i class="fas fa-exclamation"></i>
+            H-T-S
+        </a>
+        <a href="./sentyment.html" class="menu-item" target="_self">
+            <i class="fas fa-chart-pie"></i>
+            Sentyment-Linki-RRS
+        </a>
+        <a href="./advanced_tetris.html" class="menu-item" target="_self">
+            <i class="fas fa-gamepad"></i>
+            Ułóż tetris!
+        </a>
+        <a href="./snake.html" class="menu-item" target="_self">
+            <i class="fas fa-worm"></i>
+            Zajeb w snejka!
+        </a>
+    </nav>
 
-        <!-- Middle Row: NZDUSD & USDCAD -->
-        <div class="chart-row">
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_bbe76"></div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_c4f34"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Row: EURUSD & GBPUSD -->
-        <div class="chart-row">
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_e6c7b"></div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_f1e7f"></div>
-                </div>
-            </div>
-        </div>
+    <div class="calendar-container" id="economic-calendar">
+        <div class="calendar-tab"></div>
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script type="text/javascript">
-        // CORRECT PRIVATE INDICATOR CONFIGURATION
-        const htsNemonStudy = {
-            id: "PUB:minobav576/PCbbx7ty",
-            inputs: {
-                "Fast MA Length": 33,
-                "Slow MA Length": 144,
-                "Fast Band Color": "#00bbd480",
-                "Slow Band Color": "#ff525280",
-                "Line Width": 1
-            }
-        };
+    <div class="calendar-container" id="week-calendar">
+        <div class="calendar-tab"></div>
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    </div>
 
-        const baseConfig = {
-            autosize: true,
-            interval: "60",
-            timezone: "Etc/UTC",
-            theme: "dark",
-            style: "1",
-            locale: "en",
-            enable_publishing: false,
-            backgroundColor: "rgba(0, 0, 0, 0)",
-            gridColor: "rgba(255, 255, 255, 0.1)",
-            allow_symbol_change: true,
-            save_image: false,
-            hide_volume: true,
-            hide_legend: true,
-            hide_top_toolbar: false,
-            hideideas: true,
-            studies: [htsNemonStudy],
-            disabled_features: [
-                "volume_force_overlay",
-                "header_widget",
-                "header_compare",
-                "compare_symbol",
-                "display_market_status",
-                "timeframes_toolbar"
-            ],
-            overrides: {
-                "paneProperties.background": "#00000000",
-                "paneProperties.vertGridProperties.color": "#00000000",
-                "paneProperties.horzGridProperties.color": "#00000000"
-            }
-        };
+    <script>
+        // 3D Globe Visualization
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.querySelector('#globe'),
+            alpha: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const geometry = new THREE.SphereGeometry(5, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00f3ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+        camera.position.z = 15;
 
-        // Top row special configuration
-        const topRowConfig = {
-            ...baseConfig,
-            interval: "15",
-            style: "3",
-            overrides: {
-                ...baseConfig.overrides,
-                "mainSeriesProperties.style": 3,
-                "mainSeriesProperties.areaStyle.color": "#26a32633",
-                "mainSeriesProperties.areaStyle.linecolor": "#1f89f2",
-                "mainSeriesProperties.areaStyle.linewidth": 2
-            }
-        };
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
 
-        // Initialize all charts with indicator
-        new TradingView.widget({
-            ...topRowConfig,
-            symbol: "CAPITALCOM:US100",
-            container_id: "tradingview_5a6b7"
+        // Mobile touch support
+        const economicCalendar = document.getElementById('economic-calendar');
+        const weekCalendar = document.getElementById('week-calendar');
+        
+        document.querySelector('#economic-calendar .calendar-tab').addEventListener('touchstart', () => {
+            economicCalendar.style.left = '0';
         });
 
-        new TradingView.widget({
-            ...topRowConfig,
-            symbol: "CAPITALCOM:DE40",
-            container_id: "tradingview_8d3e2"
+        document.querySelector('#week-calendar .calendar-tab').addEventListener('touchstart', () => {
+            weekCalendar.style.right = '0';
         });
 
-        new TradingView.widget({
-            ...baseConfig,
-            symbol: "OANDA:NZDUSD",
-            container_id: "tradingview_bbe76"
-        });
-
-        new TradingView.widget({
-            ...baseConfig,
-            symbol: "OANDA:USDCAD",
-            container_id: "tradingview_c4f34"
-        });
-
-        new TradingView.widget({
-            ...baseConfig,
-            symbol: "OANDA:EURUSD",
-            container_id: "tradingview_e6c7b"
-        });
-
-        new TradingView.widget({
-            ...baseConfig,
-            symbol: "OANDA:GBPUSD",
-            container_id: "tradingview_f1e7f"
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
+
 </html>
