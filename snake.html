@@ -170,8 +170,6 @@ const gameOverElement = document.getElementById('gameOver');
 class Powerup {
     constructor() {
         this.type = POWERUP_TYPES[Math.floor(Math.random() * POWERUP_TYPES.length)];
-        this.x = Math.floor(Math.random() * GRID_SIZE);
-        this.y = Math.floor(Math.random() * GRID_SIZE);
         this.color = POWERUP_COLORS[POWERUP_TYPES.indexOf(this.type)];
         this.duration = this.type === 'slow' ? 10000 : 5000;
         this.createdAt = Date.now();
@@ -181,23 +179,9 @@ class Powerup {
         activePowerups.push({...this, expiresAt: Date.now() + this.duration});
         SFX.powerup();
         
-        switch(this.type) {
-            case 'speed':
-                gameSpeed = Math.max(50, gameSpeed - 100);
-                break;
-            case 'shield':
-                // Shield effect handled in collision detection
-                break;
-            case 'double':
-                score += 50;
-                break;
-            case 'slow':
-                gameSpeed += 200;
-                break;
+        if (this.type === 'double') {
+            score += 50;
         }
-        
-        clearInterval(gameLoop);
-        gameLoop = setInterval(gameStep, gameSpeed);
     }
 }
 
@@ -206,13 +190,25 @@ function generateFood() {
     const weights = [0.7, 0.2, 0.1];
     
     while(food.length < 3) {
-        const type = types[weights.reduce((acc, w, i) => acc > w ? acc : i, Math.random())];
+        let sum = weights.reduce((a, b) => a + b, 0);
+        let rand = Math.random() * sum;
+        let cumulative = 0;
+        let typeIndex = 0;
+        
+        for (let i = 0; i < weights.length; i++) {
+            cumulative += weights[i];
+            if (rand < cumulative) {
+                typeIndex = i;
+                break;
+            }
+        }
+        
         const newFood = {
             x: Math.floor(Math.random() * GRID_SIZE),
             y: Math.floor(Math.random() * GRID_SIZE),
-            type: type,
-            color: type === 'special' ? '#FF4081' : 
-                   type === 'powerup' ? '#FFD700' : '#F44336'
+            type: types[typeIndex],
+            color: types[typeIndex] === 'special' ? '#FF4081' : 
+                   types[typeIndex] === 'powerup' ? '#FFD700' : '#F44336'
         };
         
         if (!snake.some(s => s.x === newFood.x && s.y === newFood.y) &&
@@ -262,7 +258,6 @@ function drawSnake() {
         const color = rainbowMode ? `hsl(${hue}, 100%, 50%)` : 
                      activePowerups.some(p => p.type === 'shield') ? '#00FF0088' : '#4CAF50';
         
-        // Head shape
         if (head) {
             ctx.beginPath();
             ctx.arc(
@@ -275,7 +270,6 @@ function drawSnake() {
             ctx.fillStyle = color;
             ctx.fill();
             
-            // Eyes
             const eyeOffset = CELL_SIZE/4;
             ctx.fillStyle = '#000';
             ctx.beginPath();
@@ -286,7 +280,6 @@ function drawSnake() {
             );
             ctx.fill();
         }
-        // Tail shape
         else if (tail) {
             ctx.beginPath();
             ctx.arc(
@@ -299,7 +292,6 @@ function drawSnake() {
             ctx.fillStyle = color;
             ctx.fill();
         }
-        // Body segments
         else {
             ctx.fillStyle = color;
             ctx.fillRect(
@@ -334,10 +326,17 @@ function updateStats() {
 function gameStep() {
     if (paused) return;
     
-    // Update active powerups
     activePowerups = activePowerups.filter(p => Date.now() < p.expiresAt);
     
-    // Move snake
+    let speedModifier = 0;
+    activePowerups.forEach(p => {
+        if (p.type === 'speed') speedModifier -= 100;
+        if (p.type === 'slow') speedModifier += 200;
+    });
+    
+    let baseSpeed = INITIAL_SPEED - Math.floor(snake.length / 3) * 10;
+    gameSpeed = Math.max(50, baseSpeed + speedModifier);
+    
     direction = nextDirection;
     const head = {...snake[0]};
     
@@ -348,7 +347,6 @@ function gameStep() {
         case 'right': head.x++; break;
     }
     
-    // Check collisions
     const hasShield = activePowerups.some(p => p.type === 'shield');
     const wallCollision = head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE;
     const selfCollision = snake.some(s => s.x === head.x && s.y === head.y);
@@ -365,7 +363,6 @@ function gameStep() {
     
     snake.unshift(head);
     
-    // Check food collision
     let ateFood = false;
     food = food.filter(f => {
         if (head.x === f.x && head.y === f.y) {
@@ -399,8 +396,6 @@ function gameStep() {
         generateFood();
     }
     
-    // Update game speed based on length
-    gameSpeed = Math.max(50, INITIAL_SPEED - Math.floor(snake.length / 3) * 10);
     clearInterval(gameLoop);
     gameLoop = setInterval(gameStep, gameSpeed);
     
@@ -411,7 +406,6 @@ function drawGame() {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Draw grid
     ctx.strokeStyle = '#ffffff10';
     for(let x = 0; x <= GRID_SIZE; x++) {
         ctx.beginPath();
@@ -426,7 +420,6 @@ function drawGame() {
         ctx.stroke();
     }
     
-    // Draw food
     food.forEach(f => {
         ctx.fillStyle = f.color;
         ctx.beginPath();
@@ -439,7 +432,6 @@ function drawGame() {
         );
         ctx.fill();
         
-        // Food glow
         ctx.shadowColor = f.color;
         ctx.shadowBlur = 15;
         ctx.fill();
@@ -495,7 +487,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Initialize game
 resetGame();
 </script>
 </body>
