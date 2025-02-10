@@ -95,13 +95,13 @@
         #economic-calendar {
             left: -650px;
             width: 650px;
-            height: 900px;
+            height: 675px; /* Reduced to 75% */
         }
 
         #week-calendar {
             right: -650px;
             width: 650px;
-            height: 900px;
+            height: 675px; /* Reduced to 75% */
         }
 
         .calendar-tab {
@@ -163,13 +163,13 @@
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
-            min-height: 900px !important;
+            min-height: 675px !important; /* Adjusted to match container */
         }
 
         /* Updated Market Outlook Widget Styles */
         #fx-outlook {
             position: fixed;
-            bottom: -460px;
+            bottom: -500px;
             left: 50%;
             transform: translateX(-50%);
             width: 800px;
@@ -177,7 +177,10 @@
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border-radius: var(--border-radius) var(--border-radius) 0 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Split border */
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: none; /* Removed bottom border */
             box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
             z-index: 999;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -192,7 +195,7 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
+            width: 250px;
             height: 40px;
             background: var(--secondary-bg);
             border-radius: 8px 8px 0 0;
@@ -206,7 +209,7 @@
         }
 
         .outlook-tab:hover {
-            background: var(--accent-1);
+            background: var(--accent-3);
         }
 
         @keyframes slideDown {
@@ -227,7 +230,7 @@
                 left: auto !important;
                 right: auto !important;
                 width: 650px;
-                height: 900px;
+                height: 675px; /* Adjusted to 75% */
                 margin: 2rem auto;
                 transform: none !important;
             }
