@@ -15,7 +15,7 @@
             --accent-1: #26a326;
             --accent-2: #9c27b0;
             --accent-3: #2196f3;
-			--accent-4: #EA193D;
+            --accent-4: #EA193D;
             --text-primary: #f0f0ff;
             --glass-bg: rgba(25, 25, 45, 0.9);
             --border-radius: 16px;
@@ -34,6 +34,24 @@
             font-family: 'Segoe UI', system-ui, sans-serif;
             padding: 2rem;
             padding-top: 80px;
+        }
+
+         .ascii-art {
+            position: fixed;
+            bottom: -15px;
+            left: 0px;
+            color: var(--accent-1);
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            line-height: 1.4;
+            z-index: 500;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .ascii-corner {
+                display: none;
+            }
         }
 
         .top-menu {
@@ -262,6 +280,12 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .ascii-art {
+                display: none;
+            }
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -278,6 +302,17 @@
 </head>
 
 <body>
+    <div class="ascii-art">
+        <pre>
+// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗
+// ████╗  ██║██╔════╝████╗ ████║██╔═══██╗████╗  ██║
+// ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║
+// ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║
+// ██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║
+// ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+        </pre>
+    </div>
+
     <nav class="top-menu">
         <a href="./live_charts.html" class="menu-item" target="_self">
             <i class="fas fa-chart-bar"></i>
