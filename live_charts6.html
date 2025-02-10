@@ -138,6 +138,20 @@
             </div>
         </div>
 
+        <!-- Middle Row: NZDUSD & USDCAD -->
+        <div class="chart-row">
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_bbe76" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_c4f34" style="height:100%;width:100%"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Bottom Row: GBPUSD & EURUSD (swapped) -->
         <div class="chart-row">
             <div class="panel">
@@ -212,6 +226,19 @@
             ...topRowSettings,
             symbol: "CAPITALCOM:DE40",
             container_id: "tradingview_8d3e2"
+        });
+
+        // Initialize middle row
+        new TradingView.widget({
+            ...widgetSettings,
+            symbol: "OANDA:NZDUSD",
+            container_id: "tradingview_bbe76"
+        });
+
+        new TradingView.widget({
+            ...widgetSettings,
+            symbol: "OANDA:USDCAD",
+            container_id: "tradingview_c4f34"
         });
 
         // Initialize bottom row (swapped)
