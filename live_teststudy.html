@@ -95,13 +95,13 @@
         #economic-calendar {
             left: -650px;
             width: 650px;
-            height: 675px; /* Reduced to 75% */
+            height: 675px;
         }
 
         #week-calendar {
             right: -650px;
             width: 650px;
-            height: 675px; /* Reduced to 75% */
+            height: 675px;
         }
 
         .calendar-tab {
@@ -140,11 +140,11 @@
         }
 
         #economic-calendar .calendar-tab::before {
-            content: 'Daily Calendar';
+            content: 'Today';
         }
 
         #week-calendar .calendar-tab::before {
-            content: 'Week Calendar';
+            content: 'This Week';
         }
 
         #economic-calendar:hover {
@@ -163,24 +163,23 @@
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
-            min-height: 675px !important; /* Adjusted to match container */
+            min-height: 775px !important;
         }
 
-        /* Updated Market Outlook Widget Styles */
+        /* Updated Market Outlook Widget */
         #fx-outlook {
             position: fixed;
-            bottom: -500px;
+            bottom: -600px;
             left: 50%;
             transform: translateX(-50%);
             width: 800px;
-            height: 500px;
+            height: 600px;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border-radius: var(--border-radius) var(--border-radius) 0 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Split border */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: none; /* Removed bottom border */
             box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
             z-index: 999;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -209,7 +208,15 @@
         }
 
         .outlook-tab:hover {
-            background: var(--accent-3);
+            background: var(--accent-1);
+        }
+
+        /* Fix for MyFXBook widget height */
+        #fx-outlook > div,
+        #fx-outlook iframe {
+            height: 100% !important;
+            width: 100% !important;
+            border: none !important;
         }
 
         @keyframes slideDown {
@@ -230,7 +237,7 @@
                 left: auto !important;
                 right: auto !important;
                 width: 650px;
-                height: 675px; /* Adjusted to 75% */
+                height: 675px;
                 margin: 2rem auto;
                 transform: none !important;
             }
@@ -295,7 +302,7 @@
         </a>
     </nav>
 
-    <!-- Updated Market Outlook Widget -->
+    <!-- Market Outlook Widget -->
     <div id="fx-outlook">
         <div class="outlook-tab">Market Outlook</div>
         <script class="powered" type="text/javascript"
@@ -335,5 +342,4 @@
         });
     </script>
 </body>
-
 </html>
