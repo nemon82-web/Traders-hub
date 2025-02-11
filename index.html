@@ -135,12 +135,30 @@
             height: 675px;
         }
 
+        #zulu-trader {
+            top: 50%;
+            left: -1000px;
+            transform: translateY(-50%);
+            width: 1000px;
+            height: 675px;
+            z-index: 1050;
+        }
+
         #week-calendar {
             top: 50%;
             right: -650px;
             transform: translateY(-50%);
             width: 650px;
             height: 675px;
+        }
+
+        #kick-widget {
+            top: 50%;
+            right: -1000px;
+            transform: translateY(-50%);
+            width: 1000px;
+            height: 675px;
+            z-index: 1050;
         }
 
         #outlook-widget {
@@ -179,9 +197,27 @@
             border-radius: 0 8px 8px 0;
         }
 
+        #zulu-trader .calendar-tab {
+            right: -30px;
+            top: 75%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 220px;
+            border-radius: 0 8px 8px 0;
+        }
+
         #week-calendar .calendar-tab {
             left: -30px;
             top: 40%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 220px;
+            border-radius: 8px 0 0 8px;
+        }
+
+        #kick-widget .calendar-tab {
+            left: -30px;
+            top: 75%;
             transform: translateY(-50%);
             width: 30px;
             height: 220px;
@@ -202,8 +238,18 @@
             transform: rotate(-90deg);
         }
 
+        #zulu-trader .calendar-tab::before {
+            content: 'ZuluTrade';
+            transform: rotate(-90deg);
+        }
+
         #week-calendar .calendar-tab::before {
             content: 'This Week';
+            transform: rotate(-90deg);
+        }
+
+        #kick-widget .calendar-tab::before {
+            content: 'MEDIA';
             transform: rotate(-90deg);
         }
 
@@ -211,7 +257,15 @@
             left: 0;
         }
 
+        #zulu-trader:hover {
+            left: 0;
+        }
+
         #week-calendar:hover {
+            right: 0;
+        }
+
+        #kick-widget:hover {
             right: 0;
         }
 
@@ -223,14 +277,21 @@
             background: var(--accent-1);
         }
 
+        #kick-widget .calendar-tab:hover {
+            background: var(--accent-4);
+        }
+
         #economic-calendar .calendar-tab:hover,
-        #week-calendar .calendar-tab:hover {
+        #week-calendar .calendar-tab:hover,
+        #zulu-trader .calendar-tab:hover,
+        #kick-widget .calendar-tab:hover {
             width: 45px;
         }
 
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
+            border: none;
         }
 
         /* Outlook Widget Fixes */
@@ -295,9 +356,9 @@
 <body>
     <div class="ascii-art">
         <pre>
-// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗
+// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗ 
 // ████╗  ██║██╔════╝████╗ ████║██╔═══██╗████╗  ██║
-// ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║
+// ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║    
 // ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║
 // ██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║
 // ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
@@ -332,9 +393,19 @@
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
+    <div class="calendar-container" id="zulu-trader">
+        <div class="calendar-tab"></div>
+        <iframe src="https://old.zulutrade.com/traders/winning/90"></iframe>
+    </div>
+
     <div class="calendar-container" id="week-calendar">
         <div class="calendar-tab"></div>
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <div class="calendar-container" id="kick-widget">
+        <div class="calendar-tab"></div>
+        <iframe src="https://kick.com/zsuirad-nezrok"></iframe>
     </div>
 
     <div class="calendar-container" id="outlook-widget">
