@@ -6,6 +6,7 @@
     <title>NemoN's HUB</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
     
     <style>
         :root {
@@ -158,6 +159,23 @@
             flex-direction: column;
         }
 
+        #commonninja-widget {
+            top: -645px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 650px;
+            height: 675px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        #commonninja-widget:hover {
+            top: 0;
+        }
+
         .calendar-tab {
             position: absolute;
             background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
@@ -188,6 +206,15 @@
             border-radius: 8px 0 0 8px;
         }
 
+        #commonninja-widget .calendar-tab {
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 30px;
+            border-radius: 0 0 8px 8px;
+        }
+
         .calendar-tab::before {
             content: '';
             position: absolute;
@@ -207,6 +234,10 @@
             transform: rotate(-90deg);
         }
 
+        #commonninja-widget .calendar-tab::before {
+            content: 'Common Ninja';
+        }
+
         #economic-calendar:hover {
             left: 0;
         }
@@ -223,6 +254,11 @@
             background: var(--accent-1);
         }
 
+        #commonninja-widget .calendar-tab:hover {
+            background: var(--accent-3);
+            height: 35px;
+        }
+
         #economic-calendar .calendar-tab:hover,
         #week-calendar .calendar-tab:hover {
             width: 45px;
@@ -231,6 +267,13 @@
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
+        }
+
+        .commonninja_component {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
         }
 
         /* Outlook Widget Fixes */
@@ -326,6 +369,11 @@
             Zajeb w snejka!
         </a>
     </nav>
+
+    <div class="calendar-container" id="commonninja-widget">
+        <div class="calendar-tab"></div>
+        <div class="commonninja_component pid-ed3f12d2-ba84-477a-b601-b83c5a898cdf"></div>
+    </div>
 
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab"></div>
