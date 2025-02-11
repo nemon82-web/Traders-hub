@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Economic Calendar</title>
+    <style>
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --accent-daily: #26a326;
+            --accent-weekly: #d92020;
+            --text-primary: #f0f0ff;
+            --glass-bg: rgba(25, 25, 45, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Launch Menu - Unchanged */
+        .launch-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item {
+            width: 100%;
+            max-width: 300px;
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item:active {
+            transform: scale(0.98);
+        }
+
+        .menu-item.daily {
+            --accent: var(--accent-daily);
+            box-shadow: 0 8px 32px rgba(38, 163, 38, 0.15);
+        }
+
+        .menu-item.weekly {
+            --accent: var(--accent-weekly);
+            box-shadow: 0 8px 32px rgba(217, 32, 32, 0.15);
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-text h2 {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .menu-text p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Calendar Containers - Modified Size */
+        .calendar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .calendar-container.active {
+            transform: translateY(0);
+        }
+
+        .calendar-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            height: 60px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        iframe {
+            width: 120%;
+            height: 120%;
+            border: none;
+            transform: scale(0.85);
+            transform-origin: top left;
+            margin-top: 20px;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Launch Menu -->
+    <div class="launch-menu" id="launchMenu">
+        <a href="#" class="menu-item daily" data-calendar="daily">
+            <div class="menu-icon">
+                <i class="fas fa-calendar-day"></i>
+            </div>
+            <div class="menu-text">
+                <h2>Daily Calendar</h2>
+                <p>Real-time economic events</p>
+            </div>
+        </a>
+
+        <a href="#" class="menu-item weekly" data-calendar="weekly">
+            <div class="menu-icon">
+                <i class="fas fa-calendar-week"></i>
+            </div>
+            <div class="menu-text">
+                <h2>Weekly Overview</h2>
+                <p>Market-moving events this week</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Calendars -->
+    <div class="calendar-container" id="dailyCalendar">
+        <div class="calendar-header">
+            <h2>Daily Economic Calendar</h2>
+            <button class="close-btn" onclick="showLaunchMenu()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <div class="calendar-container" id="weeklyCalendar">
+        <div class="calendar-header">
+            <h2>Weekly Economic Calendar</h2>
+            <button class="close-btn" onclick="showLaunchMenu()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        const launchMenu = document.getElementById('launchMenu');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const calendars = {
+            daily: document.getElementById('dailyCalendar'),
+            weekly: document.getElementById('weeklyCalendar')
+        };
+
+        // Handle menu selection
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const type = item.dataset.calendar;
+                launchMenu.style.opacity = '0';
+                setTimeout(() => {
+                    launchMenu.style.display = 'none';
+                    calendars[type].classList.add('active');
+                }, 400);
+            });
+        });
+
+        // Show launch menu
+        function showLaunchMenu() {
+            Object.values(calendars).forEach(cal => cal.classList.remove('active'));
+            launchMenu.style.display = 'flex';
+            setTimeout(() => launchMenu.style.opacity = '1', 50);
+        }
+
+        // Handle hardware back button
+        window.onpopstate = showLaunchMenu;
+    </script>
+</body>
+</html>
