@@ -38,7 +38,7 @@
 
         .ascii-art {
             position: fixed;
-            bottom: -15px;
+            bottom: 12px;
             left: 0px;
             color: var(--accent-1);
             font-family: 'Courier New', monospace;
@@ -164,14 +164,7 @@
             border-radius: 8px 0 0 8px;
         }
 
-        #outlook-widget .calendar-tab {
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 40px;
-            border-radius: 8px 8px 0 0;
-        }
+     
 
         .calendar-tab::before {
             content: '';
@@ -192,11 +185,7 @@
             transform: rotate(-90deg);
         }
 
-       < #outlook-widget .calendar-tab::before {
-            content: 'Outlook';
-            transform: rotate(0deg);
-            position: static;
-        }
+      
 
         #economic-calendar:hover {
             left: 0;
@@ -219,11 +208,7 @@
             width: 45px;
         }
 
-        #outlook-widget .calendar-tab:hover {
-            height: 45px;
-            top: -45px;
-			
-        }
+       
 
         .calendar-container iframe {
             width: 100% !important;
@@ -264,6 +249,33 @@
             background: var(--accent-1);
             border-radius: 4px;
         }
+		
+		
+		 /* Myfxbook Widget Tab Styles Start */
+        #outlook-widget .calendar-tab {
+            top: -15px;
+            left: 50%;
+			
+            transform: translate(-50%, -50%) rotate(90deg);
+            width: 30px;
+            height: 20px;
+            border-radius: 0px 0px  0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #outlook-widget .calendar-tab::before {
+            content: 'Outlook';
+            position: absolute;
+            transform: translate(-0%, -50%) rotate(270deg);
+			
+        }
+
+        #outlook-widget .calendar-tab:hover {
+            background: var(--accent-4);
+        }
+        /* Myfxbook Widget Tab Styles End */
+		
+		
     </style>
 </head>
 
