@@ -97,6 +97,30 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
+        @media (max-width: 768px) {
+            .top-menu {
+                flex-direction: column;
+                width: 90%;
+                max-width: 300px;
+                top: 10px;
+                padding: 0.5rem;
+                gap: 0.5rem;
+                overflow-y: auto;
+                max-height: 90vh;
+            }
+
+            .menu-item {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+                white-space: normal;
+                align-items: flex-start;
+            }
+
+            .menu-item i {
+                margin-top: 2px;
+            }
+        }
+
         .calendar-container {
             position: fixed;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -164,8 +188,6 @@
             border-radius: 8px 0 0 8px;
         }
 
-     
-
         .calendar-tab::before {
             content: '';
             position: absolute;
@@ -184,8 +206,6 @@
             content: 'This Week';
             transform: rotate(-90deg);
         }
-
-      
 
         #economic-calendar:hover {
             left: 0;
@@ -207,8 +227,6 @@
         #week-calendar .calendar-tab:hover {
             width: 45px;
         }
-
-       
 
         .calendar-container iframe {
             width: 100% !important;
@@ -249,13 +267,11 @@
             background: var(--accent-1);
             border-radius: 4px;
         }
-		
-		
-		 /* Myfxbook Widget Tab Styles Start */
+        
+        /* Myfxbook Widget Tab Styles Start */
         #outlook-widget .calendar-tab {
             top: -15px;
             left: 50%;
-			
             transform: translate(-50%, -50%) rotate(90deg);
             width: 30px;
             height: 20px;
@@ -267,15 +283,12 @@
             content: 'Outlook';
             position: absolute;
             transform: translate(-0%, -50%) rotate(270deg);
-			
         }
 
         #outlook-widget .calendar-tab:hover {
             background: var(--accent-4);
         }
         /* Myfxbook Widget Tab Styles End */
-		
-		
     </style>
 </head>
 
