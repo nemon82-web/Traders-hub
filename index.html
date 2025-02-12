@@ -65,6 +65,30 @@
             animation: slideDown 0.5s ease-out;
         }
 
+        .tradingview-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55%;
+            height: 70%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 900;
+            overflow: hidden;
+        }
+
+        .tradingview-widget-copyright .blue-text {
+            color: var(--accent-3) !important;
+        }
+
+        .tradingview-widget-container {
+            height: 100% !important;
+        }
+
         .menu-item {
             display: flex;
             align-items: center;
@@ -118,6 +142,11 @@
 
             .menu-item i {
                 margin-top: 2px;
+            }
+
+            .tradingview-container {
+                width: 95%;
+                height: 60%;
             }
         }
 
@@ -294,7 +323,6 @@
             border: none;
         }
 
-        /* Outlook Widget Fixes */
         #outlook-widget {
             height: 600px !important;
         }
@@ -329,7 +357,6 @@
             border-radius: 4px;
         }
         
-        /* Myfxbook Widget Tab Styles Start */
         #outlook-widget .calendar-tab {
             top: -15px;
             left: 50%;
@@ -349,7 +376,6 @@
         #outlook-widget .calendar-tab:hover {
             background: var(--accent-4);
         }
-        /* Myfxbook Widget Tab Styles End */
     </style>
 </head>
 
@@ -388,6 +414,38 @@
         </a>
     </nav>
 
+    <div class="tradingview-container">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+           
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+                "autosize": true,
+                "symbol": "FX:USDCAD",
+                "interval": "D",
+                "timezone": "Europe/Warsaw",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "backgroundColor": "rgba(10, 10, 20, 1)",
+                "withdateranges": true,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "watchlist": [
+                    "FX:EURUSD",
+                    "FX:GBPUSD",
+                    "FX:NZDUSD",
+                    "FX:USDCAD",
+                    "CAPITALCOM:US100"
+                ],
+                "calendar": false,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com"
+            }
+            </script>
+        </div>
+    </div>
+
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab"></div>
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
@@ -417,7 +475,6 @@
     </div>
 
     <script>
-        // Hover persistence logic
         const calendars = document.querySelectorAll('.calendar-container');
         
         calendars.forEach(calendar => {
