@@ -54,6 +54,46 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
+        #world-clocks {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+        }
+
+        .world-clock {
+            background: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            min-width: 180px;
+        }
+
+        .world-clock div:first-child {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .world-clock div:last-child {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-1);
+            text-shadow: 0 0 8px rgba(38, 163, 38, 0.3);
+        }
+
+        .world-clock:nth-child(1) div:last-child { color: #FF6B6B; }
+        .world-clock:nth-child(2) div:last-child { color: #4ECDC4; }
+        .world-clock:nth-child(3) div:last-child { color: #FF9F43; }
+        .world-clock:nth-child(4) div:last-child { color: #9B59B6; }
+
         .ascii-art {
             position: fixed;
             bottom: 12px;
@@ -165,6 +205,25 @@
             .tradingview-container {
                 width: 95%;
                 height: 60%;
+            }
+
+            #world-clocks {
+                top: 100px;
+                right: 10px;
+                gap: 8px;
+            }
+            
+            .world-clock {
+                min-width: 160px;
+                padding: 10px 15px;
+            }
+            
+            .world-clock div:first-child {
+                font-size: 0.8rem;
+            }
+            
+            .world-clock div:last-child {
+                font-size: 1rem;
             }
         }
 
@@ -399,6 +458,25 @@
 
 <body>
     <div id="time-display">00:00:00</div>
+    
+    <div id="world-clocks">
+        <div class="world-clock">
+            <div>Sydney</div>
+            <div id="sydney-time">00:00:00</div>
+        </div>
+        <div class="world-clock">
+            <div>Tokyo</div>
+            <div id="tokyo-time">00:00:00</div>
+        </div>
+        <div class="world-clock">
+            <div>London</div>
+            <div id="london-time">00:00:00</div>
+        </div>
+        <div class="world-clock">
+            <div>New York</div>
+            <div id="newyork-time">00:00:00</div>
+        </div>
+    </div>
 
     <div class="ascii-art">
         <pre>
@@ -506,27 +584,37 @@
     </div>
 
     <script>
-        // Time display functionality
         function updateTime() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('en-GB', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            document.getElementById('time-display').textContent = timeString;
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
+            
+            // Local time
+            document.getElementById('time-display').textContent = 
+                now.toLocaleTimeString('en-GB', {hour12: false});
 
-        // Calendar hover functionality
+            // World clocks
+            const options = {hour12: false};
+            
+            document.getElementById('sydney-time').textContent = 
+                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Australia/Sydney'});
+            
+            document.getElementById('tokyo-time').textContent = 
+                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Asia/Tokyo'});
+            
+            document.getElementById('london-time').textContent = 
+                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Europe/London'});
+            
+            document.getElementById('newyork-time').textContent = 
+                now.toLocaleTimeString('en-GB', {...options, timeZone: 'America/New_York'});
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
         const calendars = document.querySelectorAll('.calendar-container');
         calendars.forEach(calendar => {
             calendar.addEventListener('mouseenter', () => {
                 calendar.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             });
-            
             calendar.addEventListener('mouseleave', () => {
                 calendar.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             });
