@@ -35,6 +35,25 @@
             padding-top: 80px;
             overflow: hidden;
         }
+		
+		        /* New Time Display Styles */
+        #time-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-1);
+            text-shadow: 0 0 10px rgba(38, 163, 38, 0.4);
+            z-index: 1001;
+            background: rgba(10, 10, 20, 0.7);
+            padding: 8px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
 
         .ascii-art {
             position: fixed;
@@ -398,7 +417,7 @@
         </a>
         <a href="./hts.html" class="menu-item" target="_self">
             <i class="fas fa-bolt"></i>
-            HTS Method
+            HTS
         </a>
         <a href="./sentyment.html" class="menu-item" target="_self">
             <i class="fas fa-chart-pie"></i>
@@ -422,23 +441,35 @@
             {
                 "autosize": true,
                 "symbol": "FX:USDCAD",
-                "interval": "D",
+                "interval": "60",
+				
                 "timezone": "Europe/Warsaw",
                 "theme": "dark",
                 "style": "1",
                 "locale": "en",
                 "backgroundColor": "rgba(10, 10, 20, 1)",
+                "show_popup_button": true,
                 "withdateranges": true,
                 "allow_symbol_change": true,
                 "save_image": false,
                 "watchlist": [
+				    "🚀", 
                     "FX:EURUSD",
                     "FX:GBPUSD",
                     "FX:NZDUSD",
-                    "FX:USDCAD",
-                    "CAPITALCOM:US100"
+                    "FX:AUDUSD",
+					"FX:USDCAD",
+					"FX:USDJPY",
+					"📊 ",
+                    "CAPITALCOM:US100",
+					"DE40",
+					
+					"VIX",
+					"📌",
+					"XAUUSD",
+					"OANDA:GBPPLN"
                 ],
-                "calendar": false,
+                "calendar": true,
                 "hide_volume": true,
                 "support_host": "https://www.tradingview.com"
             }
@@ -475,6 +506,22 @@
     </div>
 
     <script>
+	        // Time Display Update Function
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('time-display').textContent = timeString;
+        }
+
+        // Update time immediately and then every second
+        updateTime();
+        setInterval(updateTime, 1000);
+		
         const calendars = document.querySelectorAll('.calendar-container');
         
         calendars.forEach(calendar => {
