@@ -36,6 +36,24 @@
             overflow: hidden;
         }
 
+        #time-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-1);
+            text-shadow: 0 0 10px rgba(38, 163, 38, 0.4);
+            z-index: 1001;
+            background: rgba(10, 10, 20, 0.7);
+            padding: 8px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
         .ascii-art {
             position: fixed;
             bottom: 12px;
@@ -380,6 +398,8 @@
 </head>
 
 <body>
+    <div id="time-display">00:00:00</div>
+
     <div class="ascii-art">
         <pre>
 // ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗ 
@@ -423,7 +443,6 @@
                 "autosize": true,
                 "symbol": "FX:USDCAD",
                 "interval": "60",
-				
                 "timezone": "Europe/Warsaw",
                 "theme": "dark",
                 "style": "1",
@@ -434,21 +453,17 @@
                 "allow_symbol_change": true,
                 "save_image": false,
                 "watchlist": [
-				    "🚀", 
+                    "🚀 FX", 
                     "FX:EURUSD",
                     "FX:GBPUSD",
                     "FX:NZDUSD",
                     "FX:AUDUSD",
-					"FX:USDCAD",
-					"FX:USDJPY",
-					"📊 ",
+                    "FX:USDCAD",
+                    "FX:USDJPY",
+                    "📊 ----------",
                     "CAPITALCOM:US100",
-					"DE40",
-					
-					"VIX",
-					"📌",
-					"XAUUSD",
-					"OANDA:GBPPLN"
+                    "DE40",
+                    "XAUUSD"
                 ],
                 "calendar": true,
                 "hide_volume": true,
@@ -487,8 +502,22 @@
     </div>
 
     <script>
+        // Time display functionality
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('time-display').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Calendar hover functionality
         const calendars = document.querySelectorAll('.calendar-container');
-        
         calendars.forEach(calendar => {
             calendar.addEventListener('mouseenter', () => {
                 calendar.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
