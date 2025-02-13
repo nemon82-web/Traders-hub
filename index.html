@@ -520,25 +520,51 @@
             <i class="fas fa-chart-bar"></i>
             Live Charts
         </a>
-        <a href="#" class="menu-item" onclick="window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', 'noopener,noreferrer,width=1500,height=900'); return false;">
-                 <i class="fas fa-chart-line"></i>
-                      CmC
-					 
-           </a>
+<a href="#" class="menu-item" onclick="
+    const width = 1500;
+    const height = 900;
+    const leftPos = (window.screen.width / 2) - (width / 2);
+    const topPos = 0;
+    window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+    return false;
+">
+    <i class="fas fa-chart-line"></i>
+    CmC
+</a>
+
+
 
     <a href="#" class="menu-item" onclick="window.open('./sentyment.html', '_blank', 'noopener,noreferrer,width=800,height=600'); return false;">
     <i class="fas fa-globe"></i>
     Linki-RRS
     </a>
 
-        <a href="./advanced_tetris.html" class="menu-item" target="_self">
-            <i class="fas fa-gamepad"></i>
-            Ułóż tetris!
-        </a>
-        <a href="./snake.html" class="menu-item" target="_self">
-            <i class="fas fa-worm"></i>
-            Zajeb w snejka!
-        </a>
+<a href="#" class="menu-item" onclick="
+    const width = 800;
+    const height = 1000;
+    const leftPos = (window.screen.width / 2) - (width / 2);
+    const topPos = (window.screen.height / 2) - (height / 2);
+    window.open('./advanced_tetris.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+    return false;
+">
+    <i class="fas fa-gamepad"></i>
+    Ułóż tetris!
+</a>
+
+
+ <a href="#" class="menu-item" onclick="
+    const width = 800;
+    const height = 600;
+    const leftPos = (window.screen.width / 2) - (width / 2);
+    const topPos = (window.screen.height / 2) - (height / 2);
+    window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+    return false;
+">
+    <i class="fas fa-worm"></i>
+    Zajeb w snejka!
+</a>
+
+
     </nav>
 
     <div class="tradingview-container">
