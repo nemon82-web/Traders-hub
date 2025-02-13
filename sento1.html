@@ -57,8 +57,7 @@
         #world-clocks {
             position: fixed;
             bottom: 52px;
-            
-			left: 50%;
+            left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
             display: flex;
@@ -107,8 +106,8 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		    .ascii-artHTS {
+
+        .ascii-artHTS {
             position: fixed;
             bottom: 12px;
             right: 10px;
@@ -119,8 +118,6 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		
 
         .top-menu {
             position: fixed;
@@ -361,7 +358,7 @@
         }
 
         #zulu-trader .calendar-tab::before {
-            content: 'ZuluTrade';
+            content: 'H T S';
             transform: rotate(-90deg);
         }
 
@@ -504,8 +501,8 @@
 // ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
         </pre>
     </div>
-	
-	    <div class="ascii-artHTS">
+
+    <div class="ascii-artHTS">
         <pre>
 -- ██╗  ██╗ ██╗  ██╗ ███████╗
 -- ██║  ██║ ██║  ██║ ██╔══██╗
@@ -520,9 +517,10 @@
             <i class="fas fa-chart-bar"></i>
             Live Charts
         </a>
-        <a href="./hts.html" class="menu-item" target="_self">
-            <i class="fas fa-bolt"></i>
-            HTS
+        <a href="#" class="menu-item" onclick="window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', 'noopener,noreferrer,width=1500,height=900'); return false;">
+            <i class="fas fa-rocket"></i>
+            CmC
+            <i class="fas fa-rocket"></i>
         </a>
         <a href="./sentyment.html" class="menu-item" target="_self">
             <i class="fas fa-chart-pie"></i>
@@ -541,7 +539,6 @@
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-           
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
             {
                 "autosize": true,
@@ -556,32 +553,27 @@
                 "withdateranges": true,
                 "allow_symbol_change": true,
                 "save_image": false,
-			    "studies": ["STD;MA%Ribbon],
-			       
-	
-	
-
                 "watchlist": [
-                    "🚀 FX", 
+                    "🚀 FX",
                     "FX:EURUSD",
                     "FX:GBPUSD",
                     "FX:NZDUSD",
                     "FX:AUDUSD",
                     "FX:USDCAD",
+                    "FX:USDCHF",
                     "FX:USDJPY",
                     "📊",
                     "CAPITALCOM:US100",
-					"CAPITALCOM:US500",
+                    "CAPITALCOM:US500",
                     "DE40",
-					"VIX",
-					"📌",
+                    "VIX",
+                    "📌",
                     "XAUUSD",
-					"OANDA:GBPPLN"
+                    "OANDA:GBPPLN"
                 ],
                 "calendar": true,
                 "hide_volume": true,
                 "support_host": "https://www.tradingview.com"
-				
             }
             </script>
         </div>
@@ -594,7 +586,7 @@
 
     <div class="calendar-container" id="zulu-trader">
         <div class="calendar-tab"></div>
-        <iframe src="https://old.zulutrade.com/traders/winning/90"></iframe>
+        <iframe src="https://nemon82-web.github.io/Traders-hub/hts.html"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -616,14 +608,56 @@
     </div>
 
     <script>
+        // Sound functions
+        function playSlideInSound() {
+            try {
+                const context = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = context.createOscillator();
+                const gainNode = context.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(880, context.currentTime);
+                gainNode.gain.setValueAtTime(0.1, context.currentTime);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(context.destination);
+
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.15);
+                oscillator.stop(context.currentTime + 0.2);
+            } catch (e) {
+                console.log("Audio not supported");
+            }
+        }
+
+        function playSlideOutSound() {
+            try {
+                const context = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = context.createOscillator();
+                const gainNode = context.createGain();
+
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(440, context.currentTime);
+                gainNode.gain.setValueAtTime(0.1, context.currentTime);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(context.destination);
+
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.1);
+                oscillator.stop(context.currentTime + 0.15);
+            } catch (e) {
+                console.log("Audio not supported");
+            }
+        }
+
+        // Time functions
         function updateTime() {
             const now = new Date();
             
-            // Local time
             document.getElementById('time-display').textContent = 
                 now.toLocaleTimeString('en-GB', {hour12: false});
 
-            // World clocks
             const options = {hour12: false};
             
             document.getElementById('sydney-time').textContent = 
@@ -642,13 +676,16 @@
         setInterval(updateTime, 1000);
         updateTime();
 
+        // Calendar interactions
         const calendars = document.querySelectorAll('.calendar-container');
         calendars.forEach(calendar => {
             calendar.addEventListener('mouseenter', () => {
                 calendar.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                playSlideInSound();
             });
             calendar.addEventListener('mouseleave', () => {
                 calendar.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                playSlideOutSound();
             });
         });
     </script>
