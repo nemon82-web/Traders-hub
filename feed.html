@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Feed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Maintain original color scheme and base styles */
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --accent-1: #26a326;
+            --accent-2: #9c27b0;
+            --accent-3: #2196f3;
+            --text-primary: #f0f0ff;
+            --glass-bg: rgba(25, 25, 45, 0.9);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        #dashboard-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1850px;
+            width: 100%;
+            animation: fadeIn 1s ease-out;
+            gap: 2rem;
+        }
+
+        /* News Panel Styling */
+        .news-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            width: 600px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* News Content Styling */
+        .news-panel h2 {
+            color: var(--accent-3);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .news-panel a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .news-panel a:hover {
+            color: var(--accent-3);
+        }
+
+        /* Maintain original animations and scrollbar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1600px) {
+            #dashboard-container {
+                flex-wrap: wrap;
+            }
+            
+            .news-panel {
+                width: 100%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard-container">
+        <div class="panel news-panel">
+            <h2>Market News Feed</h2>
+            <!-- Myfxbook News Widget -->
+            <div>
+                <script class="powered" type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxTopNews.js"></script>
+            </div>
+            <div style="font-size: 12px; margin-top: 1rem; text-align: center;">
+                <a href="https://www.myfxbook.com/news" title="Forex News" class="myfxbookLink" target="_self" rel="noopener">
+                    
+                </a> 
+            </div>
+            <script type="text/javascript">showTopNewsWidget()</script>
+        </div>
+    </div>
+</body>
+</html>
