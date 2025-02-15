@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTS NemoN Indicator + Forex Pairs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* COLOR SCHEME FROM ORIGINAL */
+        .code-keyword { color: #00bbd4; }
+        .code-function { color: #ff5252; }
+        .code-comment { color: #26a326; }
+        .code-string { color: #9c27b0; }
+        .code-number { color: #ffeb3b; }
+
+        /* REST OF THE CSS REMAINS THE SAME */
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --accent-green: #26a326;
+            --accent-blue: #2196f3;
+            --text-primary: #f0f0ff;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 6px;
+            border: 3px solid var(--primary-bg);
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .container-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1800px;
+            margin: 0 auto;
+            min-height: 95vh;
+        }
+
+        .code-container {
+            width: 900px;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        .forex-container {
+            width: 600px;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-left: 30px;
+        }
+
+        .code-header, .forex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        pre {
+            background: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            tab-size: 4;
+            line-height: 1.5;
+        }
+
+        .pair-list pre {
+            color: var(--accent-green);
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        @media (max-width: 1600px) {
+            .container-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .code-container,
+            .forex-container {
+                width: 95%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="code-container">
+            <div class="code-header">
+                <h1>HTS NemoN Indicator</h1>
+                <button class="copy-btn" onclick="copyCode()">
+                    <i class="far fa-copy"></i> Copy Code
+                </button>
+            </div>
+            <pre><code><span class="code-comment">//@version=6</span>
+indicator(<span class="code-string">"HTS_NemoN_simple"</span>, overlay=true)
+
+<span class="code-comment">// ██╗  ██╗  ███████╗ ███████╗
+// ██║  ██║ ╚══██╔══╝ ██╔════╝
+// ███████║    ██║    ███████╗
+// ██║  ██║    ██║    ╚════██║
+// ██╝  ██╝    ╚═╝    ███████╝</span>
+
+<span class="code-comment">// INPUTS</span>
+<span class="code-comment">// ======</span>
+<span class="code-comment">// HTS Lengths</span>
+lenFast = input.int(<span class="code-number">33</span>, <span class="code-string">"Fast MA Length"</span>, minval=1)
+lenSlow = input.int(<span class="code-number">144</span>, <span class="code-string">"Slow MA Length"</span>, minval=1)
+
+<span class="code-comment">// Visual Customizations</span>
+HTSFastColor = input.color(#00bbd480, <span class="code-string">"Fast Band Color"</span>)
+HTSSlowColor = input.color(#ff525280, <span class="code-string">"Slow Band Color"</span>)
+lineWidth = input.int(<span class="code-number">1</span>, <span class="code-string">"Line Width"</span>, minval=1, maxval=5)
+
+<span class="code-comment">// VALIDATION</span>
+<span class="code-comment">// ==========</span>
+if lenFast >= lenSlow
+    runtime.error(<span class="code-string">"Fast MA length must be smaller than Slow MA length"</span>)
+
+<span class="code-comment">// CALCULATIONS</span>
+<span class="code-comment">// ============</span>
+HTSFastHigh = ta.rma(high, lenFast)
+HTSFastLow = ta.rma(low, lenFast)
+HTSSlowHigh = ta.rma(high, lenSlow)
+HTSSlowLow = ta.rma(low, lenSlow)
+
+<span class="code-comment">// PLOTTING</span>
+<span class="code-comment">// ========</span>
+<span class="code-comment">// Fast Band</span>
+plotFastHigh = plot(HTSFastHigh, <span class="code-string">"Góra tnie w dół (FAST-high)"</span>, color=HTSFastColor, linewidth=lineWidth)
+plotFastLow = plot(HTSFastLow, <span class="code-string">"Dół tnie w górę(FAST-low)"</span>, color=HTSFastColor, linewidth=lineWidth)
+fill(plotFastHigh, plotFastLow, color.new(HTSFastColor, 90))
+
+<span class="code-comment">// Slow Band</span>
+plotSlowHigh = plot(HTSSlowHigh, <span class="code-string">"górę(slow_high)"</span>, color=HTSSlowColor, linewidth=lineWidth)
+plotSlowLow = plot(HTSSlowLow, <span class="code-string">"dół(slow_low)"</span>, color=HTSSlowColor, linewidth=lineWidth)
+fill(plotSlowHigh, plotSlowLow, color.new(HTSSlowColor, 90))
+
+<span class="code-comment">// ALERT SYSTEM</span>
+<span class="code-comment">// ============</span>
+alertcondition(ta.crossover(HTSFastLow, HTSSlowHigh), 
+  <span class="code-string">"Bullish Crossover"</span>, <span class="code-string">"Fast MA crossed above Slow MA"</span>)
+alertcondition(ta.crossunder(HTSFastHigh, HTSSlowLow), 
+  <span class="code-string">"Bearish Crossunder"</span>, <span class="code-string">"Fast MA crossed below Slow MA"</span>)
+
+<span class="code-comment">// CROSSOVER LOGIC</span>
+bullishCross = ta.crossover(HTSFastLow, HTSSlowHigh) <span class="code-comment">// Fast Low crosses above Slow High</span>
+bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) <span class="code-comment">// Fast High crosses below Slow Low</span>
+
+<span class="code-comment">// PLOT DOTS EXACTLY ON CROSSOVER LINES</span>
+plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, <span class="code-string">title="Bullish Dot 🟢"</span>)
+plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">title="Bearish Dot 🔴"</span>)</code></pre>
+        </div>
+
+        <div class="forex-container">
+            <div class="forex-header">
+                <h1>FOREX PAIRS LIST</h1>
+                <button class="copy-btn" onclick="copyPairs()">
+                    <i class="far fa-copy"></i> COPY ALL
+                </button>
+            </div>
+            <div class="pair-list">
+                <pre>AUDCAD
+AUDCHF
+AUDJPY
+AUDNZD
+AUDSGD
+AUDUSD
+CADCHF
+CADJPY
+CHFJPY
+EURAUD
+EURCAD
+EURCHF
+EURGBP
+EURJPY
+EURNOK
+EURNZD
+EURPLN
+EURSEK
+EURSGD
+EURUSD
+GBPAUD
+GBPCAD
+GBPCHF
+GBPJPY
+GBPNZD
+GBPPLN
+GBPSEK
+GBPUSD
+NZDCAD
+NZDCHF
+NZDJPY
+NZDUSD
+USDCAD
+USDCHF
+USDJPY
+USDNOK
+USDPLN
+USDSEK
+USDSGD</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCode() {
+            const code = document.querySelector('.code-container pre').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Indicator code copied to clipboard!');
+            }).catch(err => {
+                console.error('Copy error:', err);
+            });
+        }
+
+        function copyPairs() {
+            const pairsText = document.querySelector('.pair-list pre').textContent;
+            navigator.clipboard.writeText(pairsText).then(() => {
+                alert('Forex pairs copied to clipboard!');
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
+    </script>
+</body>
+</html>

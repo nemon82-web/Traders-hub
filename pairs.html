@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Pairs List - Copy Ready</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a14;
+            --secondary-bg: #1a1a2f;
+            --accent-green: #26a326;
+            --accent-blue: #2196f3;
+            --text-primary: #f0f0ff;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 6px;
+            border: 3px solid var(--primary-bg);
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 600px;
+            max-width: 95%;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .pair-list pre {
+            background: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            tab-size: 4;
+            color: var(--accent-green);
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FOREX PAIRS LIST</h1>
+            <button class="copy-btn" onclick="copyPairs()">
+                <i class="far fa-copy"></i> COPY ALL
+            </button>
+        </div>
+        <div class="pair-list">
+            <pre>AUDCAD
+AUDCHF
+AUDJPY
+AUDNZD
+AUDSGD
+AUDUSD
+CADCHF
+CADJPY
+CHFJPY
+EURAUD
+EURCAD
+EURCHF
+EURGBP
+EURJPY
+EURNOK
+EURNZD
+EURPLN
+EURSEK
+EURSGD
+EURUSD
+GBPAUD
+GBPCAD
+GBPCHF
+GBPJPY
+GBPNZD
+GBPPLN
+GBPSEK
+GBPUSD
+NZDCAD
+NZDCHF
+NZDJPY
+NZDUSD
+USDCAD
+USDCHF
+USDJPY
+USDNOK
+USDPLN
+USDSEK
+USDSGD</pre>
+        </div>
+    </div>
+
+    <script>
+        function copyPairs() {
+            const pairsText = document.querySelector('.pair-list pre').textContent;
+            navigator.clipboard.writeText(pairsText).then(() => {
+                alert('All pairs copied to clipboard!');
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
+    </script>
+</body>
+</html>
