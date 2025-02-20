@@ -24,7 +24,12 @@
         }
 		
 		
-    /* Custom Tab - Top Positioned (Outlook Style) */
+		
+		
+		
+		
+		
+    /* Custom main Tab start */
     #custom-tab {
         position: fixed;
         top: -800px;
@@ -62,7 +67,7 @@
     }
 
     #custom-tab .calendar-tab::before {
-        content: 'Bydgitezozi';
+        content: 'Traders';
         color: var(--text-primary);
         font-weight: 800;
         font-size: 0.9rem;
@@ -80,6 +85,145 @@
         /* Added subtle transform on hover */
         transform: translateX(-50%) translateY(-3px);
     }
+
+
+  /* Custom main Tab END */
+
+
+
+
+
+    /* Custom2 within Tab start*/
+    #custom2-tab {
+        position: fixed;
+        top: -600px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1300px;
+        height: 600px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        z-index: 2950;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    #custom2-tab .calendar-tab {
+        position: absolute;
+        bottom: -35px;
+        left: 5%;
+        transform: translateX(-50%);
+        width: 130px;
+        height: 35px;
+        /* Changed border radius to bottom */
+        border-radius: 0 0 8px 8px;
+        background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        pointer-events: auto;
+    }
+
+    #custom2-tab .calendar-tab::before {
+        content: 'Bydgitezozi';
+        color: var(--text-primary);
+        font-weight: 800;
+        font-size: 0.9rem;
+        /* Removed rotation */
+        transform: none;
+    }
+
+    #custom2-tab:hover {
+        top: 0;
+        pointer-events: auto;
+    }
+
+    #custom2-tab .calendar-tab:hover {
+        background: var(--accent-3);
+        /* Added subtle transform on hover */
+        transform: translateX(-50%) translateY(-3px);
+    }
+ 
+    /* Custom2 within Tab end*/
+
+
+
+
+
+    /* Custom3 within Tab start*/
+    #custom3-tab {
+        position: fixed;
+        top: -600px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1300px;
+        height: 600px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        z-index: 2950;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    #custom3-tab .calendar-tab {
+        position: absolute;
+        bottom: -35px;
+        left: 20%;
+        transform: translateX(-50%);
+        width: 130px;
+        height: 35px;
+        /* Changed border radius to bottom */
+        border-radius: 0 0 8px 8px;
+        background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        pointer-events: auto;
+    }
+
+    #custom3-tab .calendar-tab::before {
+        content: 'Amostil';
+        color: var(--text-primary);
+        font-weight: 800;
+        font-size: 0.9rem;
+        /* Removed rotation */
+        transform: none;
+    }
+
+    #custom3-tab:hover {
+        top: 0;
+        pointer-events: auto;
+    }
+
+    #custom3-tab .calendar-tab:hover {
+        background: var(--accent-3);
+        /* Added subtle transform on hover */
+        transform: translateX(-50%) translateY(-3px);
+    }
+ 
+    /* Custom3 within Tab end*/
+
+
+
+
+
+
+
+
+
+
 
 
         * {
@@ -713,10 +857,26 @@
     </div>
 	
 	
-	<div class="calendar-container" id="custom-tab">
-    <div class="calendar-tab"></div>
-    <iframe src="https://old.zulutrade.com/trader/427511/trading?t=90"></iframe>
-</div>
+	                   <div class="calendar-container" id="custom-tab">
+                           <div class="calendar-tab"></div>
+                           <iframe src="https://old.zulutrade.com/traders/winning/90"></iframe>
+	
+	
+	
+	                   <div class="calendar-container" id="custom2-tab">
+                              <div class="calendar-tab"></div>
+                              <iframe src="https://old.zulutrade.com/trader/427511/trading?t=90"></iframe>
+	           
+			                  </div>
+							  
+							  
+			            <div class="calendar-container" id="custom3-tab">
+                              <div class="calendar-tab"></div>
+                              <iframe src="https://old.zulutrade.com/trader/412811/trading?t=90"></iframe>
+			   
+			   
+	
+                        </div>
 
     <script>
         function updateTime() {
