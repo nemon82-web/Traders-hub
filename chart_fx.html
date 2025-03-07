@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Darek's Trading Hub</title>
+  <link rel="icon" href="cal_ico.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #0a0a14;
+      --secondary-bg: #1a1a2f;
+      --accent-1: #26a326;
+      --accent-2: #9c27b0;
+      --accent-3: #2196f3;
+      --accent-4: #EA193D;
+      --text-primary: #f0f0ff;
+      --glass-bg: rgba(25, 25, 45, 0.9);
+      --border-radius: 16px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
+      min-height: 100vh;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+    /* Top Menu (Optional) */
+    nav.top-menu {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
+      border-radius: 12px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+      background: linear-gradient(145deg, #202040 0%, #252550 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    /* TradingView Widget Container */
+    .tradingview-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 70%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      z-index: 900;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Menu (Optional) -->
+  <nav class="top-menu">
+    <a href="#" class="menu-item"><i class="fas fa-home"></i>Home</a>
+    <a href="#" class="menu-item"><i class="fas fa-chart-line"></i>Charts</a>
+    <a href="#" class="menu-item"><i class="fas fa-cog"></i>Settings</a>
+  </nav>
+  
+  <!-- TradingView Widget Container -->
+  <div class="tradingview-container">
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+      <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+      {
+          "autosize": true,
+          "symbol": "FX:USDCAD",
+          "interval": "60",
+          "timezone": "Europe/Warsaw",
+          "theme": "dark",
+          "style": "2",
+          "locale": "en",
+          "backgroundColor": "rgba(10, 10, 20, 1)",
+          "show_popup_button": true,
+          "withdateranges": true,
+          "allow_symbol_change": true,
+          "save_image": false,
+          "watchlist": [
+              "AUDUSD",
+              "EURUSD",
+              "GBPUSD",
+              "NZDUSD",
+              "USDCAD",
+              "USDCHF",
+              "USDJPY",
+              "------",
+              "AUDCAD",
+              "AUDCHF",
+              "AUDJPY",
+              "AUDNZD",
+              "CADCHF",
+              "CADJPY",
+              "CHFJPY",
+              "EURAUD",
+              "EURCAD",
+              "EURCHF",
+              "EURGBP",
+              "EURJPY",
+              "EURNZD",
+              "GBPAUD",
+              "GBPCAD",
+              "GBPCHF",
+              "GBPJPY",
+              "GBPNZD",
+              "NZDCAD",
+              "NZDCHF",
+              "NZDJPY",
+              "------",
+              "AUDSGD",
+              "EURNOK",
+              "EURPLN",
+              "EURSEK",
+              "EURSGD",
+              "GBPPLN",
+              "GBPSEK",
+              "USDNOK",
+              "USDPLN",
+              "USDSEK",
+              "USDSGD"
+          ],
+          "calendar": true,
+          "hide_volume": true,
+          "support_host": "https://www.tradingview.com"
+      }
+      </script>
+    </div>
+  </div>
+</body>
+</html>
