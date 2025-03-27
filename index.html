@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-	
-	
-	
         :root {
             --primary-bg: #0a0a14;
             --secondary-bg: #1a1a2f;
@@ -22,281 +19,6 @@
             --glass-bg: rgba(25, 25, 45, 0.9);
             --border-radius: 16px;
         }
-		
-		
-		
-		
-		
-		
-		
-    /* Custom main Tab start */
-    #custom-tab {
-        position: fixed;
-        top: -800px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1300px;
-        height: 800px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        z-index: 2950;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
-
-    #custom-tab .calendar-tab {
-        position: absolute;
-        bottom: -35px;
-        left: 95%;
-        transform: translateX(-50%);
-        width: 130px;
-        height: 35px;
-        /* Changed border radius to bottom */
-        border-radius: 0 0 8px 8px;
-        background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        pointer-events: auto;
-    }
-
-    #custom-tab .calendar-tab::before {
-        content: 'tRaDeRs';
-        color: var(--text-primary);
-        font-weight: 800;
-        font-size: 0.9rem;
-        /* Removed rotation */
-        transform: none;
-    }
-
-    #custom-tab:hover {
-        top: 0;
-        pointer-events: auto;
-    }
-
-    #custom-tab .calendar-tab:hover {
-        background: var(--accent-3);
-        /* Added subtle transform on hover */
-        transform: translateX(-50%) translateY(-3px);
-    }
-
-
-  /* Custom main Tab END */
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   /* Customm main Tab start */
-    #customm-tab {
-        position: fixed;
-        top: -800px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1300px;
-        height: 800px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        z-index: 2950;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
-
-    #customm-tab .calendar-tab {
-        position: absolute;
-        bottom: -35px;
-        right: 85%;
-        transform: translateX(-50%);
-        width: 130px;
-        height: 35px;
-        /* Changed border radius to bottom */
-        border-radius: 0 0 8px 8px;
-        background: linear-gradient(145deg, var(--secondary-bg) 0%, #202040 100%);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        pointer-events: auto;
-    }
-
-    #customm-tab .calendar-tab::before {
-        content: 'KiCk';
-        color: var(--text-primary);
-        font-weight: 800;
-        font-size: 0.9rem;
-        /* Removed rotation */
-        transform: none;
-    }
-
-    #customm-tab:hover {
-        top: 0;
-        pointer-events: auto;
-    }
-
-    #customm-tab .calendar-tab:hover {
-        background: var(--accent-3);
-        /* Added subtle transform on hover */
-        transform: translateX(-50%) translateY(-3px);
-    }
-
-
-  /* Custom2 main Tab END */
-  
-  
-  
-  
-
-
-
-
-
-    /* Custom2 within Tab start*/
-    #custom2-tab {
-        position: fixed;
-        top: -600px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1300px;
-        height: 600px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        z-index: 2950;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
-
-    #custom2-tab .calendar-tab {
-        position: absolute;
-        bottom: -35px;
-        left: 60%;
-        transform: translateX(-50%);
-        width: 130px;
-        height: 35px;
-        /* Changed border radius to bottom */
-        border-radius: 0 0 65px 65px;
-        background: linear-gradient(145deg, #0c0c0c 0%, #2d2d2d 100%);
-        box-shadow: 0 4px 15px rgba(12, 12, 12, 0.6);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        pointer-events: auto;
-    }
-
-    #custom2-tab .calendar-tab::before {
-        content: 'Bydgitezozi';
-        color: var(--text-primary);
-        font-weight: 800;
-        font-size: 0.9rem;
-        /* Removed rotation */
-        transform: none;
-    }
-
-    #custom2-tab:hover {
-        top: 0;
-        pointer-events: auto;
-    }
-
-    #custom2-tab .calendar-tab:hover {
-        background: var(--accent-3);
-        /* Added subtle transform on hover */
-        transform: translateX(-50%) translateY(-3px);
-    }
- 
-    /* Custom2 within Tab end*/
-
-
-
-
-
-    /* Custom3 within Tab start*/
-    #custom3-tab {
-        position: fixed;
-        top: -600px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1300px;
-        height: 600px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        z-index: 2950;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
-
-    #custom3-tab .calendar-tab {
-        position: absolute;
-        bottom: -35px;
-        left: 71%;
-        transform: translateX(-50%);
-        width: 130px;
-        height: 35px;
-        /* Changed border radius to bottom */
-        border-radius: 0 0 65px 65px;
-        background: linear-gradient(145deg, #0c0c0c 0%, #2d2d2d 100%);
-        box-shadow: 0 4px 15px rgba(12, 12, 12, 0.6);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        pointer-events: auto;
-    }
-
-    #custom3-tab .calendar-tab::before {
-        content: 'Amostil';
-        color: var(--text-primary);
-        font-weight: 800;
-        font-size: 0.9rem;
-        /* Removed rotation */
-        transform: none;
-    }
-
-    #custom3-tab:hover {
-        top: 0;
-        pointer-events: auto;
-    }
-
-    #custom3-tab .calendar-tab:hover {
-        background: var(--accent-3);
-        /* Added subtle transform on hover */
-        transform: translateX(-50%) translateY(-3px);
-    }
- 
-    /* Custom3 within Tab end*/
-
-
-
-
-
-
-
-
-
-
-
 
         * {
             box-sizing: border-box;
@@ -312,6 +34,64 @@
             padding: 2rem;
             padding-top: 80px;
             overflow: hidden;
+        }
+
+        /* Left Charts Section */
+        .left-charts {
+            position: fixed;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%;
+            height: 60vh;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 4.0rem;
+        }
+
+        .chart-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .chart-panel:nth-child(1) {
+            border: 2px solid #1f89f2;
+            position: relative;
+        }
+
+        .chart-panel:nth-child(1)::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 12px #1f89f2;
+            pointer-events: none;
+        }
+
+        .chart-panel:nth-child(2) {
+            border: 2px solid #26a326;
+            position: relative;
+        }
+
+        .chart-panel:nth-child(2)::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 12px #26a326;
+            pointer-events: none;
         }
 
         #time-display {
@@ -335,8 +115,7 @@
         #world-clocks {
             position: fixed;
             bottom: 52px;
-            
-			left: 50%;
+            left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
             display: flex;
@@ -385,8 +164,8 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		    .ascii-artHTS {
+        
+        .ascii-artHTS {
             position: fixed;
             bottom: 12px;
             right: 10px;
@@ -397,8 +176,6 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		
 
         .top-menu {
             position: fixed;
@@ -420,9 +197,9 @@
         .tradingview-container {
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: 64%;
             transform: translate(-50%, -50%);
-            width: 75%;
+            width: 65%;
             height: 70%;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
@@ -433,6 +210,7 @@
             overflow: hidden;
         }
 
+        /* Rest of original styles */
         .tradingview-widget-copyright .blue-text {
             color: var(--accent-3) !important;
         }
@@ -474,6 +252,15 @@
         }
 
         @media (max-width: 768px) {
+            .left-charts {
+                display: none;
+            }
+            
+            .tradingview-container {
+                left: 50%;
+                width: 95%;
+            }
+            
             .top-menu {
                 flex-direction: column;
                 width: 90%;
@@ -494,11 +281,6 @@
 
             .menu-item i {
                 margin-top: 2px;
-            }
-
-            .tradingview-container {
-                width: 95%;
-                height: 60%;
             }
 
             #world-clocks {
@@ -753,6 +535,63 @@
 <body>
     <div id="time-display">00:00:00</div>
     
+    <!-- New Left Charts -->
+    <div class="left-charts">
+        <div class="chart-panel">
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:US100",
+                    "interval": "15",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(10, 10, 50, 1)",
+                    "show_popup_button": true	,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+					"hide_top_toolbar": true,
+					
+                    
+                   
+				   "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel">
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:DE40",
+                    "interval": "15",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(10, 30, 10, 1)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+    </div>
+
     <div id="world-clocks">
         <div class="world-clock">
             <div>Sydney</div>
@@ -782,8 +621,8 @@
 // ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
         </pre>
     </div>
-	
-	    <div class="ascii-artHTS">
+    
+    <div class="ascii-artHTS">
         <pre>
 -- ██╗  ██╗ ██╗  ██╗ ███████╗
 -- ██║  ██║ ██║  ██║ ██╔══██╗
@@ -794,136 +633,129 @@
     </div>
 
     <nav class="top-menu">
-<a href="./live_charts.html" class="menu-item" 
-   onclick="window.open(this.href, 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`); return false;">
-    <i class="fas fa-chart-bar"></i>
-    Live Charts
-</a>
-<a href="#" class="menu-item" onclick="
-    const width = 1500;
-    const height = 900;
-    const leftPos = (window.screen.width / 2) - (width / 2);
-    const topPos = 0;
-    window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-    return false;
-">
-    <i class="fas fa-chart-line"></i>
-    CmC
-</a>
+        <a href="./live_charts.html" class="menu-item" 
+           onclick="window.open(this.href, 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`); return false;">
+            <i class="fas fa-chart-bar"></i>
+            Live Charts
+        </a>
+        <a href="#" class="menu-item" onclick="
+            const width = 1500;
+            const height = 900;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = 0;
+            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            return false;
+        ">
+            <i class="fas fa-chart-line"></i>
+            CmC
+        </a>
 
+        <a href="#" class="menu-item" onclick="window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000'); return false;">
+            <i class="fas fa-globe"></i>
+            Odnośniki
+        </a>
 
+        <a href="#" class="menu-item" onclick="
+            const width = 800;
+            const height = 1000;
+            const leftPos = 0;
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('./advanced_tetris.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            return false;
+        ">
+            <i class="fas fa-gamepad"></i>
+            Tetris
+        </a>
 
-    <a href="#" class="menu-item" onclick="window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000'); return false;">
-    <i class="fas fa-globe"></i>
-    Odnośniki
-    </a>
-
-<a href="#" class="menu-item" onclick="
-    const width = 800;
-    const height = 1000;
-    const leftPos = 0;
-    const topPos = (window.screen.height / 2) - (height / 2);
-    window.open('./advanced_tetris.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-    return false;
-">
-    <i class="fas fa-gamepad"></i>
-    Tetris
-</a>
-
-
-
- <a href="#" class="menu-item" onclick="
-    const width = 800;
-    const height = 600;
-    const leftPos = (window.screen.width / 2) - (width / 2);
-    const topPos = (window.screen.height / 2) - (height / 2);
-    window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-    return false;
-">
-    <i class="fas fa-worm"></i>
-    Snake
-</a> 
-
-
+        <a href="#" class="menu-item" onclick="
+            const width = 800;
+            const height = 600;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            return false;
+        ">
+            <i class="fas fa-worm"></i>
+            Snake
+        </a> 
     </nav>
 
-<div class="tradingview-container">
-    <div class="tradingview-widget-container" style="height:100%;width:100%">
-        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-        {
-            "autosize": true,
-            "symbol": "FX:USDCAD",
-            "interval": "60",
-            "timezone": "Europe/Warsaw",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "backgroundColor": "rgba(10, 10, 20, 1)",
-            "show_popup_button": true,
-            "withdateranges": true,
-            "allow_symbol_change": true,
-            "save_image": false,
-            "watchlist": [
-			"✨",
-			    "EURUSD",
-				"GBPUSD",
-                "AUDUSD",                               
-                "NZDUSD",
-                "USDCAD",
-                "USDCHF",
-                "USDJPY",
-				"📌",
-                "AUDCAD",
-                "AUDCHF",
-                "AUDJPY",
-                "AUDNZD",
-                "CADCHF",
-                "CADJPY",
-                "CHFJPY",
-                "EURAUD",
-                "EURCAD",
-                "EURCHF",
-                "EURGBP",
-                "EURJPY",
-                "EURNZD",
-                "GBPAUD",
-                "GBPCAD",
-                "GBPCHF",
-                "GBPJPY",
-                "GBPNZD",
-                "NZDCAD",
-                "NZDCHF",
-                "NZDJPY",
-				"📎️",
-                "AUDSGD",
-                "EURNOK",
-                "EURPLN",
-                "EURSEK",
-                "EURSGD",
-                "GBPPLN",
-                "GBPSEK",
-                "USDNOK",
-                "USDPLN",
-                "USDSEK",
-                "USDSGD",
-				"📊",
-                "CAPITALCOM:US100",
-                "CAPITALCOM:US500",
-				"CAPITALCOM:US30",
-                "DE40",
-				"WIG20",
-                "VIX",
-                "XAUUSD"
-				
-            ],
-            "calendar": true,
-            "hide_volume": true,
-            "support_host": "https://www.tradingview.com"
-        }
-        </script>
+    <div class="tradingview-container">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+                "autosize": true,
+                "symbol": "FX:USDCAD",
+                "interval": "60",
+                "timezone": "Europe/Warsaw",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "backgroundColor": "rgba(10, 10, 20, 1)",
+                "show_popup_button": true,
+                "withdateranges": true,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "watchlist": [
+                "✨",
+                    "EURUSD",
+                    "GBPUSD",
+                    "AUDUSD",                               
+                    "NZDUSD",
+                    "USDCAD",
+                    "USDCHF",
+                    "USDJPY",
+                    "📌",
+                    "AUDCAD",
+                    "AUDCHF",
+                    "AUDJPY",
+                    "AUDNZD",
+                    "CADCHF",
+                    "CADJPY",
+                    "CHFJPY",
+                    "EURAUD",
+                    "EURCAD",
+                    "EURCHF",
+                    "EURGBP",
+                    "EURJPY",
+                    "EURNZD",
+                    "GBPAUD",
+                    "GBPCAD",
+                    "GBPCHF",
+                    "GBPJPY",
+                    "GBPNZD",
+                    "NZDCAD",
+                    "NZDCHF",
+                    "NZDJPY",
+                    "📎️",
+                    "AUDSGD",
+                    "EURNOK",
+                    "EURPLN",
+                    "EURSEK",
+                    "EURSGD",
+                    "GBPPLN",
+                    "GBPSEK",
+                    "USDNOK",
+                    "USDPLN",
+                    "USDSEK",
+                    "USDSGD",
+                    "📊",
+                    "CAPITALCOM:US100",
+                    "CAPITALCOM:US500",
+                    "CAPITALCOM:US30",
+                    "DE40",
+                    "WIG20",
+                    "VIX",
+                    "XAUUSD"
+                ],
+                "calendar": true,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com"
+            }
+            </script>
+        </div>
     </div>
-</div>
 
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab"></div>
@@ -952,47 +784,14 @@
         <a href="https://www.myfxbook.com" class="myfxbookLink" target="_self" rel="noopener"></a>
         <script type="text/javascript">showOutlookWidget()</script>
     </div>
-	
-	
-	                    <div class="calendar-container" id="customm-tab">
-                           <div class="calendar-tab"></div>
-                           <iframe src="https://kick.com/zsuirad-nezrok"></iframe>
-	
-	                        </div>
-	
-	
-	
-	
-	                   <div class="calendar-container" id="custom-tab">
-                           <div class="calendar-tab"></div>
-                           <iframe src="https://old.zulutrade.com/traders/winning/90"></iframe>
-	
-	
-	
-	                   <div class="calendar-container" id="custom2-tab">
-                              <div class="calendar-tab"></div>
-                              <iframe src="https://old.zulutrade.com/trader/427511/trading?t=90"></iframe>
-	           
-			                  </div>
-							  
-							  
-			            <div class="calendar-container" id="custom3-tab">
-                              <div class="calendar-tab"></div>
-                              <iframe src="https://old.zulutrade.com/trader/412811/trading?t=90"></iframe>
-			   
-			   
-	
-                        </div>
 
     <script>
         function updateTime() {
             const now = new Date();
             
-            // Local time
             document.getElementById('time-display').textContent = 
                 now.toLocaleTimeString('en-GB', {hour12: false});
 
-            // World clocks
             const options = {hour12: false};
             
             document.getElementById('sydney-time').textContent = 
