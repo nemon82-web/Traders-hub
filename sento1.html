@@ -96,12 +96,12 @@
 
         #time-display {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 40px;
+            left: 110px;
             font-family: 'Courier New', monospace;
-            font-size: 1.8rem;
+            font-size: 3.5rem;
             font-weight: 600;
-            color: var(--accent-1);
+            color: var(--accent-4);
             text-shadow: 0 0 10px rgba(38, 163, 38, 0.4);
             z-index: 1001;
             background: rgba(10, 10, 20, 0.7);
@@ -114,13 +114,13 @@
 
         #world-clocks {
             position: fixed;
-            bottom: 52px;
-            left: 50%;
+            bottom: 10px;
+            left: 84%;
             transform: translateX(-50%);
             z-index: 1001;
             display: flex;
             flex-direction: row;
-            gap: 20px;
+            gap: 5px;
         }
 
         .world-clock {
@@ -155,11 +155,11 @@
 
         .ascii-art {
             position: fixed;
-            bottom: 12px;
-            left: 0px;
+            bottom: 5px;
+            left: 5px;
             color: var(--accent-1);
             font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
@@ -167,11 +167,11 @@
         
         .ascii-artHTS {
             position: fixed;
-            bottom: 12px;
-            right: 10px;
+            bottom: 15px;
+            left: 300px;
             color: var(--accent-3);
             font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
+            font-size: 0.5rem;
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
@@ -180,7 +180,7 @@
         .top-menu {
             position: fixed;
             top: 20px;
-            left: 50%;
+            left: 53%;
             transform: translateX(-50%);
             display: flex;
             gap: 1rem;
@@ -196,11 +196,11 @@
 
         .tradingview-container {
             position: absolute;
-            top: 50%;
+            top: 52%;
             left: 64%;
             transform: translate(-50%, -50%);
             width: 65%;
-            height: 70%;
+            height: 75%;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border-radius: var(--border-radius);
@@ -613,22 +613,22 @@
 
     <div class="ascii-art">
         <pre>
-// ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗ 
-// ████╗  ██║██╔════╝████╗ ████║██╔═══██╗████╗  ██║
-// ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║    
-// ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║
-// ██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║
-// ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+ //  ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗ 
+ //  ████╗  ██║██╔════╝████╗ ████║██╔═══██╗████╗  ██║ 
+ //  ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║██╔██╗ ██║  
+ //  ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║ 
+ //  ██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║ 
+ //  ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ 
         </pre>
     </div>
     
     <div class="ascii-artHTS">
         <pre>
--- ██╗  ██╗ ██╗  ██╗ ███████╗
--- ██║  ██║ ██║  ██║ ██╔══██╗
--- ███████║ ██║  ██║ ██████╔╝
--- ██║  ██║ ██║  ██║ ██╔══██╗
--- ██╝  ██╝ ╚██████╝ ███████╝
+--  ██╗  ██╗ ██╗  ██╗ ███████╗
+--  ██║  ██║ ██║  ██║ ██╔══██╗
+--  ███████║ ██║  ██║ ██████╔╝
+--  ██║  ██║ ██║  ██║ ██╔══██╗
+--  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
     </div>
 
@@ -694,7 +694,7 @@
                 "locale": "en",
                 "backgroundColor": "rgba(10, 10, 20, 1)",
                 "show_popup_button": true,
-                "withdateranges": true,
+                
                 "allow_symbol_change": true,
                 "save_image": false,
                 "watchlist": [
