@@ -538,7 +538,9 @@
     <!-- Left Charts -->
     <div class="left-charts">
         <div class="chart-panel">
-            <div class="countdown" id="nasdaq-countdown"></div>
+            <div class="countdown" id="nasdaq-countdown">
+                <span style="font-weight: bold; color: #1f89f2;">NASDAQ 100</span> - <span></span>
+            </div>
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -564,7 +566,9 @@
             </div>
         </div>
         <div class="chart-panel">
-            <div class="countdown" id="dax-countdown"></div>
+            <div class="countdown" id="dax-countdown">
+                <span style="font-weight: bold; color: #26a326;">DAX 40</span> - <span></span>
+            </div>
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -669,9 +673,7 @@
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = (window.screen.height / 2) - (height / 2);
             window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-           
-
- return false;
+            return false;
         ">
             <i class="fas fa-worm"></i>
             Snake
@@ -880,9 +882,9 @@
                 const now = luxon.DateTime.now().setZone(nasdaqZone);
                 const diff = nasdaqTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
                 const timeStr = formatTime(diff);
-                document.getElementById('nasdaq-countdown').textContent = `${nasdaqTarget.label}: ${timeStr}`;
+                document.querySelector('#nasdaq-countdown span:last-child').textContent = `${nasdaqTarget.label}: ${timeStr}`;
             } else {
-                document.getElementById('nasdaq-countdown').textContent = 'Session closed';
+                document.querySelector('#nasdaq-countdown span:last-child').textContent = 'Session closed';
             }
 
             // For DAX
@@ -890,9 +892,9 @@
                 const now = luxon.DateTime.now().setZone(daxZone);
                 const diff = daxTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
                 const timeStr = formatTime(diff);
-                document.getElementById('dax-countdown').textContent = `${daxTarget.label}: ${timeStr}`;
+                document.querySelector('#dax-countdown span:last-child').textContent = `${daxTarget.label}: ${timeStr}`;
             } else {
-                document.getElementById('dax-countdown').textContent = 'Session closed';
+                document.querySelector('#dax-countdown span:last-child').textContent = 'Session closed';
             }
         }
 
