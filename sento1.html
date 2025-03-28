@@ -5,7 +5,7 @@
     <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #0a0a14;
@@ -42,14 +42,14 @@
         .left-charts {
             position: fixed;
             left: 70px;
-            top: 50%;
+            top: 52%;
             transform: translateY(-50%);
             width: 25%;
-            height: 60vh;
+            height: 70vh;
             z-index: 999;
             display: flex;
             flex-direction: column;
-            gap: 4.0rem;
+            gap: 2.0rem;
         }
 
         .chart-panel {
@@ -96,11 +96,29 @@
             pointer-events: none;
         }
 
+        /* Countdown Styling */
+        .countdown {
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        #nasdaq-countdown {
+            color: #1f89f2;
+        }
+
+        #dax-countdown {
+            color: #26a326;
+        }
+
         #time-display {
             position: fixed;
             top: 40px;
             left: 110px;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 3.5rem;
             font-weight: 700;
             color: var(--accent-gold);
@@ -520,6 +538,7 @@
     <!-- Left Charts -->
     <div class="left-charts">
         <div class="chart-panel">
+            <div class="countdown" id="nasdaq-countdown"></div>
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -545,6 +564,7 @@
             </div>
         </div>
         <div class="chart-panel">
+            <div class="countdown" id="dax-countdown"></div>
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -590,7 +610,6 @@
         </div>
     </div>
 
-    
     <div class="ascii-art">
         <pre>
  //  ███╗   ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗ 
@@ -650,7 +669,9 @@
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = (window.screen.height / 2) - (height / 2);
             window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-            return false;
+           
+
+ return false;
         ">
             <i class="fas fa-worm"></i>
             Snake
@@ -770,6 +791,7 @@
         <script type="text/javascript">showOutlookWidget()</script>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
     <script>
         function updateTime() {
             const now = new Date();
@@ -818,6 +840,64 @@
                 });
             }
         });
+
+        // Countdown functionality
+        const nasdaqOpen = { hour: 9, minute: 30, second: 0 };
+        const nasdaqClose = { hour: 16, minute: 0, second: 0 };
+        const nasdaqZone = 'America/New_York';
+
+        const daxOpen = { hour: 9, minute: 0, second: 0 };
+        const daxClose = { hour: 17, minute: 30, second: 0 };
+        const daxZone = 'Europe/Berlin';
+
+        function getTargetTime(zone, open, close) {
+            const nowLocal = luxon.DateTime.now().setZone(zone);
+            const todayOpen = nowLocal.set({ hour: open.hour, minute: open.minute, second: open.second });
+            const todayClose = nowLocal.set({ hour: close.hour, minute: close.minute, second: close.second });
+
+            if (nowLocal < todayOpen) {
+                return { target: todayOpen, label: 'Opens in' };
+            } else if (nowLocal < todayClose) {
+                return { target: todayClose, label: 'Closes in' };
+            } else {
+                return { target: null, label: 'Session closed' };
+            }
+        }
+
+        function formatTime(diff) {
+            const hours = Math.floor(diff.hours);
+            const minutes = Math.floor(diff.minutes);
+            const seconds = Math.floor(diff.seconds);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function updateCountdown() {
+            const nasdaqTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
+            const daxTarget = getTargetTime(daxZone, daxOpen, daxClose);
+
+            // For NASDAQ
+            if (nasdaqTarget.target) {
+                const now = luxon.DateTime.now().setZone(nasdaqZone);
+                const diff = nasdaqTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
+                const timeStr = formatTime(diff);
+                document.getElementById('nasdaq-countdown').textContent = `${nasdaqTarget.label}: ${timeStr}`;
+            } else {
+                document.getElementById('nasdaq-countdown').textContent = 'Session closed';
+            }
+
+            // For DAX
+            if (daxTarget.target) {
+                const now = luxon.DateTime.now().setZone(daxZone);
+                const diff = daxTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
+                const timeStr = formatTime(diff);
+                document.getElementById('dax-countdown').textContent = `${daxTarget.label}: ${timeStr}`;
+            } else {
+                document.getElementById('dax-countdown').textContent = 'Session closed';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
