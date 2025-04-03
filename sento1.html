@@ -159,7 +159,7 @@
 #time-display {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 30px;
     font-family: 'Orbitron', sans-serif;
     font-size: 3.5rem;
     font-weight: 700;
@@ -172,7 +172,11 @@
     backdrop-filter: blur(8px);
     border: 5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 1s infinite ease-in-out;
+    animation: glowPulse 2s infinite ease-in-out;
+	
+	box-sizing: border-box; /* Ensures padding & border are included in width */
+    width: 350px;         /* Set a fixed width (adjust as needed) */
+    text-align: center;   /* Center digits within the container */
 }
 
 
