@@ -42,14 +42,14 @@
         .left-charts {
             position: fixed;
             left: 70px;
-            top: 52%;
-            transform: translateY(-50%);
+            top: 0;
+            bottom: 0;
             width: 25%;
-            height: 70vh;
             z-index: 999;
             display: flex;
             flex-direction: column;
             gap: 2.0rem;
+            padding: 1rem 0; /* Optional padding for spacing */
         }
 
         .chart-panel {
@@ -101,7 +101,7 @@
             position: relative;
         }
 
-        .sp500-chartSnip::after {
+        .sp500-chart::after {
             content: "";
             position: absolute;
             top: 0;
@@ -159,7 +159,7 @@
         #time-display {
             position: fixed;
             top: 40px;
-            left: 110px;
+            right: 110px; /* Moved to top-right */
             font-family: 'Orbitron', sans-serif;
             font-size: 3.5rem;
             font-weight: 700;
@@ -232,7 +232,7 @@
         .ascii-art {
             position: fixed;
             bottom: 5px;
-            left: 5px;
+            right: 5px; /* Moved to bottom-right */
             color: #8ca8c3;
             font-family: 'Courier New', monospace;
             font-size: 0.6rem;
@@ -244,7 +244,7 @@
         .ascii-artHTS {
             position: fixed;
             bottom: 15px;
-            left: 300px;
+            right: 300px; /* Moved to bottom-right */
             color: #c3b08c;
             font-family: 'Courier New', monospace;
             font-size: 0.5rem;
@@ -985,7 +985,7 @@
 
         function updateCountdown() {
             // US-based charts (NASDAQ, S&P 500, VIX)
-            const usTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
+            const us的方式Target = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
             const nowUs = luxon.DateTime.now().setZone(nasdaqZone);
             const diffUs = usTarget.target.diff(nowUs);
             const timeStrUs = formatTime(diffUs);
