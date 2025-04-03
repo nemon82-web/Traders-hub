@@ -62,12 +62,12 @@
             overflow: hidden;
         }
 
-        .chart-panel:nth-child(1) {
+        .nasdaq-chart {
             border: 2px solid #1f89f2;
             position: relative;
         }
 
-        .chart-panel:nth-child(1)::after {
+        .nasdaq-chart::after {
             content: "";
             position: absolute;
             top: 0;
@@ -79,12 +79,12 @@
             pointer-events: none;
         }
 
-        .chart-panel:nth-child(2) {
+        .dax-chart {
             border: 2px solid #26a326;
             position: relative;
         }
 
-        .chart-panel:nth-child(2)::after {
+        .dax-chart::after {
             content: "";
             position: absolute;
             top: 0;
@@ -93,6 +93,40 @@
             bottom: 0;
             border-radius: var(--border-radius);
             box-shadow: inset 0 0 18px #26a326;
+            pointer-events: none;
+        }
+
+        .sp500-chart {
+            border: 2px solid #3498DB;
+            position: relative;
+        }
+
+        .sp500-chartSnip::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #3498DB;
+            pointer-events: none;
+        }
+
+        .vix-chart {
+            border: 2px solid #E67E22;
+            position: relative;
+        }
+
+        .vix-chart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #E67E22;
             pointer-events: none;
         }
 
@@ -112,6 +146,14 @@
 
         #dax-countdown {
             color: #26a326;
+        }
+
+        #sp500-countdown {
+            color: #3498DB;
+        }
+
+        #vix-countdown {
+            color: #E67E22;
         }
 
         #time-display {
@@ -537,7 +579,7 @@
 
     <!-- Left Charts -->
     <div class="left-charts">
-        <div class="chart-panel">
+        <div class="chart-panel nasdaq-chart">
             <div class="countdown" id="nasdaq-countdown">
                 <span style="font-weight: bold; color: #1f89f2;">NASDAQ 100</span> - <span></span>
             </div>
@@ -565,7 +607,7 @@
                 </script>
             </div>
         </div>
-        <div class="chart-panel">
+        <div class="chart-panel dax-chart">
             <div class="countdown" id="dax-countdown">
                 <span style="font-weight: bold; color: #26a326;">DAX 40</span> - <span></span>
             </div>
@@ -581,6 +623,62 @@
                     "style": "1",
                     "locale": "en",
                     "backgroundColor": "rgba(10, 30, 10, 1)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel sp500-chart">
+            <div class="countdown" id="sp500-countdown">
+                <span style="font-weight: bold; color: #3498DB;">S&P 500</span> - <span></span>
+            </div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:US500",
+                    "interval": "15",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(10, 10, 50, 1)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel vix-chart">
+            <div class="countdown" id="vix-countdown">
+                <span style="font-weight: bold; color: #E67E22;">VIX</span> - <span></span>
+            </div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "TRADU:VOLX",
+                    "interval": "15",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(10, 10, 50, 1)",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -746,7 +844,7 @@
                     "DE40",
                     "WIG20",
                     "VIX",
-					"TRADU:VOLX",
+                    "TRADU:VOLX",
                     "XAUUSD"
                 ],
                 "calendar": true,
@@ -886,16 +984,18 @@
         }
 
         function updateCountdown() {
-            const nasdaqTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
-            const daxTarget = getTargetTime(daxZone, daxOpen, daxClose);
+            // US-based charts (NASDAQ, S&P 500, VIX)
+            const usTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
+            const nowUs = luxon.DateTime.now().setZone(nasdaqZone);
+            const diffUs = usTarget.target.diff(nowUs);
+            const timeStrUs = formatTime(diffUs);
 
-            // For NASDAQ
-            const nowNasdaq = luxon.DateTime.now().setZone(nasdaqZone);
-            const diffNasdaq = nasdaqTarget.target.diff(nowNasdaq);
-            const timeStrNasdaq = formatTime(diffNasdaq);
-            document.querySelector('#nasdaq-countdown span:last-child').textContent = `${nasdaqTarget.label}: ${timeStrNasdaq}`;
+            ['nasdaq', 'sp500', 'vix'].forEach(id => {
+                document.querySelector(`#${id}-countdown span:last-child`).textContent = `${usTarget.label}: ${timeStrUs}`;
+            });
 
             // For DAX
+            const daxTarget = getTargetTime(daxZone, daxOpen, daxClose);
             const nowDax = luxon.DateTime.now().setZone(daxZone);
             const diffDax = daxTarget.target.diff(nowDax);
             const timeStrDax = formatTime(diffDax);
