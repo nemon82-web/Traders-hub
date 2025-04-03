@@ -114,7 +114,7 @@
         }
 
         .vix-chart {
-            border: 2px solid #E67E22;
+            border: 2px solid #78777a;
             position: relative;
         }
 
@@ -126,7 +126,7 @@
             right: 0;
             bottom: 0;
             border-radius: var(--border-radius);
-            box-shadow: inset 0 0 18px #E67E22;
+            box-shadow: inset 0 0 18px #78777a;
             pointer-events: none;
         }
 
@@ -153,33 +153,41 @@
         }
 
         #vix-countdown {
-            color: #E67E22;
+            color: #78777a;
         }
 
-        #time-display {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            text-shadow: 0 0 18px rgba(255, 177, 7, 0.8);
-            z-index: 1001;
-            background: rgba(10, 10, 20, 0.85);
-            padding: 12px 24px;
-            border-radius: 12px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            animation: glowPulse 3s infinite ease-in-out;
-        }
+#time-display {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ff0000; /* Bold red color */
+    text-shadow: 0 0 18px rgba(255, 0, 0, 0.8); /* Intense red glow */
+    z-index: 1001;
+    background: rgba(10, 10, 20, 0.85);
+    padding: 10px 20px;
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s infinite ease-in-out;
+}
+
 
         @keyframes glowPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
         }
-
+		
+		@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-30px);} 60% {transform: translateY(-15px);} }
+        @keyframes slideIn { from {transform: translateX(-100%);} to {transform: translateX(0);} }
+		@keyframes rotate { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+		@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
+		@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+		
+		
         #world-clocks {
             position: fixed;
             top: 10px;
@@ -665,7 +673,7 @@
         </div>
         <div class="chart-panel vix-chart">
             <div class="countdown" id="vix-countdown">
-                <span style="font-weight: bold; color: #E67E22;">VIX</span> - <span></span>
+                <span style="font-weight: bold; color: #78777a;">VOLX</span> - <span></span>
             </div>
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
