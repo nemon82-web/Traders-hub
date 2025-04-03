@@ -746,6 +746,7 @@
                     "DE40",
                     "WIG20",
                     "VIX",
+					"TRADU:VOLX",
                     "XAUUSD"
                 ],
                 "calendar": true,
@@ -854,22 +855,33 @@
 
         function getTargetTime(zone, open, close) {
             const nowLocal = luxon.DateTime.now().setZone(zone);
+            const weekday = nowLocal.weekday; // 1 = Monday, 7 = Sunday
+            const isTradingDay = weekday >= 1 && weekday <= 5;
+
             const todayOpen = nowLocal.set({ hour: open.hour, minute: open.minute, second: open.second });
             const todayClose = nowLocal.set({ hour: close.hour, minute: close.minute, second: close.second });
 
-            if (nowLocal < todayOpen) {
-                return { target: todayOpen, label: 'Opens in' };
-            } else if (nowLocal < todayClose) {
-                return { target: todayClose, label: 'Closes in' };
-            } else {
-                return { target: null, label: 'Session closed' };
+            if (isTradingDay) {
+                if (nowLocal < todayOpen) {
+                    return { target: todayOpen, label: 'Opens in' };
+                } else if (nowLocal < todayClose) {
+                    return { target: todayClose, label: 'Closes in' };
+                }
             }
+            // If not a trading day or after close on a trading day, find next trading day's open
+            let nextDay = isTradingDay ? nowLocal.plus({ days: 1 }) : nowLocal;
+            while (nextDay.weekday > 5) { // Skip Saturday (6) and Sunday (7)
+                nextDay = nextDay.plus({ days: 1 });
+            }
+            const nextOpen = nextDay.set({ hour: open.hour, minute: open.minute, second: open.second });
+            return { target: nextOpen, label: 'Opens in' };
         }
 
         function formatTime(diff) {
-            const hours = Math.floor(diff.hours);
-            const minutes = Math.floor(diff.minutes);
-            const seconds = Math.floor(diff.seconds);
+            const shifted = diff.shiftTo('hours', 'minutes', 'seconds').toObject();
+            const hours = Math.floor(shifted.hours);
+            const minutes = Math.floor(shifted.minutes);
+            const seconds = Math.floor(shifted.seconds);
             return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
@@ -878,24 +890,16 @@
             const daxTarget = getTargetTime(daxZone, daxOpen, daxClose);
 
             // For NASDAQ
-            if (nasdaqTarget.target) {
-                const now = luxon.DateTime.now().setZone(nasdaqZone);
-                const diff = nasdaqTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
-                const timeStr = formatTime(diff);
-                document.querySelector('#nasdaq-countdown span:last-child').textContent = `${nasdaqTarget.label}: ${timeStr}`;
-            } else {
-                document.querySelector('#nasdaq-countdown span:last-child').textContent = 'Session closed';
-            }
+            const nowNasdaq = luxon.DateTime.now().setZone(nasdaqZone);
+            const diffNasdaq = nasdaqTarget.target.diff(nowNasdaq);
+            const timeStrNasdaq = formatTime(diffNasdaq);
+            document.querySelector('#nasdaq-countdown span:last-child').textContent = `${nasdaqTarget.label}: ${timeStrNasdaq}`;
 
             // For DAX
-            if (daxTarget.target) {
-                const now = luxon.DateTime.now().setZone(daxZone);
-                const diff = daxTarget.target.diff(now, ['hours', 'minutes', 'seconds']).toObject();
-                const timeStr = formatTime(diff);
-                document.querySelector('#dax-countdown span:last-child').textContent = `${daxTarget.label}: ${timeStr}`;
-            } else {
-                document.querySelector('#dax-countdown span:last-child').textContent = 'Session closed';
-            }
+            const nowDax = luxon.DateTime.now().setZone(daxZone);
+            const diffDax = daxTarget.target.diff(nowDax);
+            const timeStrDax = formatTime(diffDax);
+            document.querySelector('#dax-countdown span:last-child').textContent = `${daxTarget.label}: ${timeStrDax}`;
         }
 
         setInterval(updateCountdown, 1000);
