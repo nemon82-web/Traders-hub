@@ -37,19 +37,6 @@
             padding-top: 80px;
             overflow: hidden;
         }
-		
-		.tradingview-ticker {
-                       
-            position: fixed;
-            top: 5px;
-            right: 400px;
-            
-            width: 45%;
-            
-            
-           z-index: 5000;
-            
-        }
 
         /* Left Charts Section */
         .left-charts {
@@ -207,7 +194,7 @@
 		
         #world-clocks {
             position: fixed;
-            bottom: 10px;
+            top: 10px;
             left: 55%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -221,8 +208,8 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -281,11 +268,11 @@
 
         .top-menu {
             position: fixed;
-            top: 75px;
+            bottom: 20px;
             left: 56%;
             transform: translateX(-50%);
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             padding: 1.2rem;
             background: transparent;
             border: none;
@@ -758,41 +745,6 @@
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
     </div> 
-	
-	    <!-- TradingView Ticker BEGIN -->
-    <div class="tradingview-ticker">
-      <div class="tradingview-widget-container__widget"></div>
-     
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-      {
-      "symbols": [
-        {
-          "description": "NQ",
-          "proName": "CAPITALCOM:US100"
-        },
-        {
-          "description": "DE",
-          "proName": "CAPITALCOM:DE40"
-        },
-        {
-          "description": "S&P",
-          "proName": "CAPITALCOM:US500"
-        },
-        {
-          "description": "VOLX",
-          "proName": "TRADU:VOLX"
-        }
-      ],
-      "isTransparent": true,
-      "showSymbolLogo": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }
-      </script>
-    </div>
-    <!-- TradingView Ticker END -->
-	
-	
 
     <nav class="top-menu" role="navigation">
         <a href="./live_charts.html" class="menu-item" 
