@@ -37,6 +37,20 @@
             padding-top: 80px;
             overflow: hidden;
         }
+		
+		
+				.tradingview-ticker {
+                       
+            position: fixed;
+            bottom: 35px;
+            right: 400px;
+            
+            width: 55%;
+            
+            
+           z-index: 5000;
+            
+        }
 
         /* Left Charts Section */
         .left-charts {
@@ -744,7 +758,46 @@
 --  ██║  ██║ ██║  ██║ ██╔══██╗
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
+		
+			
     </div> 
+	
+	
+	<div class="tradingview-ticker">
+  <div class="tradingview-widget-container__widget"></div>
+  
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "CAPITALCOM:US100",
+      "title": "nq"
+    },
+    {
+      "proName": "CAPITALCOM:US500",
+      "title": "sp500"
+    },
+    {
+      "proName": "CAPITALCOM:DE40",
+      "title": "dax"
+    },
+    {
+      "proName": "TRADU:VOLX",
+      "title": "volx"
+    }
+ 
+  ],
+  "showSymbolLogo": false,
+  "isTransparent": true,
+  "displayMode": "adaptive",
+  "colorTheme": "dark",
+  "locale": "en"
+}
+  </script>
+</div>
+	
+	
+	
 
     <nav class="top-menu" role="navigation">
         <a href="./live_charts.html" class="menu-item" 

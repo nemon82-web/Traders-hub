@@ -38,13 +38,14 @@
             overflow: hidden;
         }
 		
-		.tradingview-ticker {
+		
+				.tradingview-ticker {
                        
             position: fixed;
-            top: 5px;
-            right: 400px;
+            bottom: -10px;
+            left: 00px;
             
-            width: 45%;
+            width: 70%;
             
             
            z-index: 5000;
@@ -207,7 +208,7 @@
 		
         #world-clocks {
             position: fixed;
-            bottom: 10px;
+            top: 10px;
             left: 55%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -221,8 +222,8 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -281,11 +282,11 @@
 
         .top-menu {
             position: fixed;
-            top: 75px;
+            bottom: 20px;
             left: 56%;
             transform: translateX(-50%);
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             padding: 1.2rem;
             background: transparent;
             border: none;
@@ -757,40 +758,13 @@
 --  ██║  ██║ ██║  ██║ ██╔══██╗
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
+		
+			
     </div> 
 	
-	    <!-- TradingView Ticker BEGIN -->
-    <div class="tradingview-ticker">
-      <div class="tradingview-widget-container__widget"></div>
-     
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-      {
-      "symbols": [
-        {
-          "description": "NQ",
-          "proName": "CAPITALCOM:US100"
-        },
-        {
-          "description": "DE",
-          "proName": "CAPITALCOM:DE40"
-        },
-        {
-          "description": "S&P",
-          "proName": "CAPITALCOM:US500"
-        },
-        {
-          "description": "VOLX",
-          "proName": "TRADU:VOLX"
-        }
-      ],
-      "isTransparent": true,
-      "showSymbolLogo": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }
-      </script>
-    </div>
-    <!-- TradingView Ticker END -->
+	
+
+	
 	
 	
 
@@ -840,6 +814,53 @@
     </nav>
 
     <div class="tradingview-container">
+	
+	
+	
+	
+	
+	
+	
+	<div class="tradingview-ticker">
+  <div class="tradingview-widget-container__widget"></div>
+  
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "CAPITALCOM:US100",
+      "title": "nq"
+    },
+    {
+      "proName": "CAPITALCOM:US500",
+      "title": "sp500"
+    },
+    {
+      "proName": "CAPITALCOM:DE40",
+      "title": "dax"
+    },
+    {
+      "proName": "TRADU:VOLX",
+      "title": "volx"
+    }
+ 
+  ],
+  "showSymbolLogo": false,
+  "isTransparent": true,
+  "displayMode": "adaptive",
+  "colorTheme": "dark",
+  "locale": "en"
+}
+  </script>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
