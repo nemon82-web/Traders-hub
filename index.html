@@ -60,27 +60,6 @@
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
             flex: 1;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-header {
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 10px;
-        }
-
-        .label {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: #78777a;
-        }
-
-        .percentage-change {
-            font-size: 0.9rem;
-            font-weight: bold;
         }
 
         .nasdaq-chart {
@@ -158,6 +137,7 @@
             padding: 0.2rem;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 8px;
+            margin-bottom: 0.5rem;
         }
 
         #nasdaq-countdown {
@@ -172,56 +152,46 @@
             color: #FFD700;
         }
 
-        #time-display {
-            position: fixed;
-            bottom: 10px;
-            right: 60px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ff0000; /* Bold red color */
-            text-shadow: 0 0 18px rgba(255, 0, 0, 0.8); /* Intense red glow */
-            z-index: 1001;
-            background: rgba(10, 10, 20, 0.85);
-            padding: 10px 20px;
-            border-radius: 18px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            animation: glowPulse 3s infinite ease-in-out;
-            box-sizing: border-box; /* Ensures padding & border are included in width */
-            width: 250px;         /* Set a fixed width (adjust as needed) */
-            text-align: center;   /* Center digits within the container */
+        #vix-countdown {
+            color: #78777a;
         }
+
+#time-display {
+    position: fixed;
+    bottom: 10px;
+    right: 60px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff0000; /* Bold red color */
+    text-shadow: 0 0 18px rgba(255, 0, 0, 0.8); /* Intense red glow */
+    z-index: 1001;
+    background: rgba(10, 10, 20, 0.85);
+    padding: 10px 20px;
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: glowPulse 3s infinite ease-in-out;
+	
+	box-sizing: border-box; /* Ensures padding & border are included in width */
+    width: 250px;         /* Set a fixed width (adjust as needed) */
+    text-align: center;   /* Center digits within the container */
+}
+
 
         @keyframes glowPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
         }
-
-        @keyframes bounce { 
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
-            40% {transform: translateY(-30px);} 
-            60% {transform: translateY(-15px);} 
-        }
-        @keyframes slideIn { 
-            from {transform: translateX(-100%);} 
-            to {transform: translateX(0);} 
-        }
-        @keyframes rotate { 
-            from {transform: rotate(0deg);} 
-            to {transform: rotate(360deg);} 
-        }
-        @keyframes shake { 
-            0%, 100% { transform: translateX(0); } 
-            20%, 60% { transform: translateX(-10px); } 
-            40%, 80% { transform: translateX(10px); } 
-        }
-        @keyframes fadeIn { 
-            from {opacity: 0;} 
-            to {opacity: 1;} 
-        }
-
+		
+		@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-30px);} 60% {transform: translateY(-15px);} }
+        @keyframes slideIn { from {transform: translateX(-100%);} to {transform: translateX(0);} }
+		@keyframes rotate { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+		@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
+		@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+		
+		
         #world-clocks {
             position: fixed;
             top: 10px;
@@ -284,7 +254,7 @@
         }
 
         .ascii-artHTS {
-            display: none !important;
+		                    display: none !important;
             position: fixed;
             top: 40px;
             right: 70px;
@@ -623,14 +593,11 @@
     <!-- Left Charts -->
     <div class="left-charts">
         <div class="chart-panel nasdaq-chart">
-            <div class="chart-header">
-                <div class="countdown" id="nasdaq-countdown">
-                    <span style="font-weight: bold; color: #1f89f2;">NASDAQ 100</span> - <span></span>
-                </div>
-                <span class="percentage-change" id="nasdaq-change">Loading...</span>
+            <div class="countdown" id="nasdaq-countdown">
+                <span style="font-weight: bold; color: #1f89f2;">NASDAQ 100</span> - <span></span>
             </div>
-            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
-                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
                     "autosize": true,
@@ -654,14 +621,11 @@
             </div>
         </div>
         <div class="chart-panel dax-chart">
-            <div class="chart-header">
-                <div class="countdown" id="dax-countdown">
-                    <span style="font-weight: bold; color: #26a326;">DAX 40</span> - <span></span>
-                </div>
-                <span class="percentage-change" id="dax-change">Loading...</span>
+            <div class="countdown" id="dax-countdown">
+                <span style="font-weight: bold; color: #26a326;">DAX 40</span> - <span></span>
             </div>
-            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
-                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
                     "autosize": true,
@@ -685,14 +649,11 @@
             </div>
         </div>
         <div class="chart-panel sp500-chart">
-            <div class="chart-header">
-                <div class="countdown" id="sp500-countdown">
-                    <span style="font-weight: bold; color: #FFD700;">S&P 500</span> - <span></span>
-                </div>
-                <span class="percentage-change" id="sp500-change">Loading...</span>
+            <div class="countdown" id="sp500-countdown">
+                <span style="font-weight: bold; color: #FFD700;">S&P 500</span> - <span></span>
             </div>
-            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
-                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
                     "autosize": true,
@@ -716,12 +677,11 @@
             </div>
         </div>
         <div class="chart-panel vix-chart">
-            <div class="chart-header">
-                <div class="label">VOLX</div>
-                <span class="percentage-change" id="vix-change">Loading...</span>
+            <div class="countdown" id="vix-countdown">
+                <span style="font-weight: bold; color: #78777a;">VOLX</span> - <span></span>
             </div>
-            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
-                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
                     "autosize": true,
@@ -790,6 +750,7 @@
         <a href="./live_charts.html" class="menu-item" 
            onclick="window.open(this.href, 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`); return false;">
             <i class="fas fa-chart-bar"></i>
+            
         </a>
         <a href="#" class="menu-item" onclick="
             const width = 1500;
@@ -800,9 +761,11 @@
             return false;
         ">
             <i class="fas fa-chart-line"></i>
+            
         </a>
         <a href="#" class="menu-item" onclick="window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000'); return false;">
             <i class="fas fa-globe"></i>
+            
         </a>
         <a href="#" class="menu-item" onclick="
             const width = 800;
@@ -813,6 +776,7 @@
             return false;
         ">
             <i class="fas fa-gamepad"></i>
+            
         </a>
         <a href="#" class="menu-item" onclick="
             const width = 800;
@@ -823,6 +787,7 @@
             return false;
         ">
             <i class="fas fa-worm"></i>
+            
         </a>
     </nav>
 
@@ -942,8 +907,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
     <script>
-        const API_KEY = 'YOUR_ALPHA_VANTAGE_API_KEY'; // Replace with your Alpha Vantage API key
-
         function updateTime() {
             const now = new Date();
             document.getElementById('time-display').textContent = 
@@ -1034,13 +997,13 @@
         }
 
         function updateCountdown() {
-            // US-based charts (NASDAQ, S&P 500)
+            // US-based charts (NASDAQ, S&P 500, VIX)
             const usTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
             const nowUs = luxon.DateTime.now().setZone(nasdaqZone);
             const diffUs = usTarget.target.diff(nowUs);
             const timeStrUs = formatTime(diffUs);
 
-            ['nasdaq', 'sp500'].forEach(id => {
+            ['nasdaq', 'sp500', 'vix'].forEach(id => {
                 document.querySelector(`#${id}-countdown span:last-child`).textContent = `${usTarget.label}: ${timeStrUs}`;
             });
 
@@ -1054,26 +1017,6 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // Fetch percentage change
-        async function fetchPercentageChange(symbol, elementId) {
-            const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const changePercent = data['Global Quote']['10. change percent'];
-                document.getElementById(elementId).textContent = changePercent;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                document.getElementById(elementId).textContent = 'Error';
-            }
-        }
-
-        // Update percentage change for each chart
-        fetchPercentageChange('NDX', 'nasdaq-change'); // NASDAQ 100
-        fetchPercentageChange('DAX', 'dax-change');    // DAX 40
-        fetchPercentageChange('SPX', 'sp500-change');  // S&P 500
-        fetchPercentageChange('VIX', 'vix-change');    // VOLX (VIX)
     </script>
 </body>
 </html>
