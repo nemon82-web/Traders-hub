@@ -585,26 +585,30 @@
             border-radius: 5px;
         }
 
-        /* New styles for the clickable icons */
+        /* Updated styles for the clickable icons */
         .icon-tab {
             position: fixed;
             right: 10px;
-            width: 20px;
-            height: 20px;
+            width: 50px;
+            height: 50px;
             background-color: var(--accent-1);
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            background-size: cover;
+            background-position: center;
         }
 
         #bbc-icon {
             top: 75vh;
             background-color: var(--accent-3);
+            background-image: url('bbc.png');
         }
 
         #cnbc-icon {
-            top: 80vh;
+            top: 83vh;
             background-color: var(--accent-4);
+            background-image: url('cnbc.png');
         }
 
         .icon-tab:hover {
@@ -964,7 +968,7 @@
         <script type="text/javascript">showOutlookWidget()</script>
     </div>
 
-    <!-- New clickable icons -->
+    <!-- Clickable icons with images -->
     <div class="icon-tab" id="bbc-icon" title="Open BBC News" onclick="openBBC()"></div>
     <div class="icon-tab" id="cnbc-icon" title="Open CNBC" onclick="openCNBC()"></div>
 
