@@ -208,11 +208,13 @@
             from { transform: rotate(0deg); } 
             to { transform: rotate(360deg); } 
         }
-        @keyframes shake {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            20%, 60% { transform: translate(-10px, -8px) rotate(-5deg); }
-            40%, 80% { transform零件: translate(10px, 8px) rotate(5deg); }
-        }
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-1.5%, -1%) rotate(-2deg); }
+    50% { transform: translate(1.5%, 1%) rotate(2deg); }
+    75% { transform: translate(-1.5%, -1%) rotate(-2deg); }
+}
+
         @keyframes fadeIn { 
             from { opacity: 0; } 
             to { opacity: 1; } 
@@ -293,7 +295,7 @@
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
-            animation: shake 15s infinite ease-in-out;
+            animation: shake 5s infinite ease-in-out;
         }
 
         .ascii-artHTS {
