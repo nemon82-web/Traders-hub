@@ -211,7 +211,7 @@
         @keyframes shake {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             20%, 60% { transform: translate(-10px, -8px) rotate(-5deg); }
-            40%, 80% { transform: translate(10px, 8px) rotate(5deg); }
+            40%, 80% { transform零件: translate(10px, 8px) rotate(5deg); }
         }
         @keyframes fadeIn { 
             from { opacity: 0; } 
@@ -230,6 +230,7 @@
         }
 
         .world-clock {
+            position: relative;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(18, 18, 18, 0.85) 70%);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -256,16 +257,31 @@
             opacity: 0.9;
         }
 
-        .world-clock div:last-child {
+        .world-clock div:last-child:not(.clickable-icon) {
             font-size: 1.1rem;
             font-weight: 500;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
-        .world-clock:nth-child(1) div:last-child { color: #4682B4; }
-        .world-clock:nth-child(2) div:last-child { color: #6A5ACD; }
-        .world-clock:nth-child(3) div:last-child { color: #008080; }
-        .world-clock:nth-child(4) div:last-child { color: #DAA520; }
+        .world-clock:nth-child(1) div:last-child:not(.clickable-icon) { color: #4682B4; }
+        .world-clock:nth-child(2) div:last-child:not(.clickable-icon) { color: #6A5ACD; }
+        .world-clock:nth-child(3) div:last-child:not(.clickable-icon) { color: #008080; }
+        .world-clock:nth-child(4) div:last-child:not(.clickable-icon) { color: #DAA520; }
+
+        .clickable-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .clickable-icon:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+        }
 
         .ascii-art {
             position: fixed;
@@ -293,22 +309,6 @@
             pointer-events: none;
         } 
 
-        .top-menu {
-            position: fixed;
-            bottom: 20px;
-            right: calc(100vw - (63vw + 32.5vw));
-            left: auto;
-            transform: none;
-            display: flex;
-            gap: 1.2rem;
-            padding: 0;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            backdrop-filter: none;
-            z-index: 1000;
-        }
-
         .tradingview-container {
             position: absolute;
             top: 52%;
@@ -333,33 +333,6 @@
             height: 100% !important;
         }
 
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            padding: 1.2rem 1.8rem;
-            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
-            border-radius: 14px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            white-space: nowrap;
-        }
-
-        .menu-item i {
-            width: 26px;
-            text-align: center;
-            color: var(--accent-gold);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .menu-item:hover {
-            background: linear-gradient(145deg, #353560 0%, #404080 100%);
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
-        }
-
         @media (max-width: 768px) {
             .left-charts {
                 display: none;
@@ -368,28 +341,6 @@
             .tradingview-container {
                 left: 50%;
                 width: 95%;
-            }
-
-            .top-menu {
-                flex-direction: column;
-                width: 90%;
-                max-width: 320px;
-                top: 10px;
-                padding: 0.8rem;
-                gap: 0.6rem;
-                overflow-y: auto;
-                max-height: 90vh;
-            }
-
-            .menu-item {
-                padding: 1rem;
-                font-size: 0.95rem;
-                white-space: normal;
-                align-items: flex-start;
-            }
-
-            .menu-item i {
-                margin-top: 3px;
             }
 
             #world-clocks {
@@ -407,7 +358,7 @@
                 font-size: 0.8rem;
             }
 
-            .world-clock div:last-child {
+            .world-clock div:last-child:not(.clickable-icon) {
                 font-size: 1rem;
             }
         }
@@ -656,7 +607,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#4682B4",
+                    "backgroundColor": "rgba(70, 130, 180, 0.20)",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -703,7 +654,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#2E8B57",
+                    "backgroundColor": "rgba(46, 139, 87, 0.15)",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -750,7 +701,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#DAA520",
+                    "backgroundColor": "rgba(218, 165, 32, 0.08)",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -814,18 +765,22 @@
         <div class="world-clock">
             <div>Sydney</div>
             <div id="sydney-time">00:00:00</div>
+            <i class="fas fa-chart-line clickable-icon" onclick="openCMC()"></i>
         </div>
         <div class="world-clock">
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
+            <i class="fas fa-chart-bar clickable-icon" onclick="openLiveCharts()"></i>
         </div>
         <div class="world-clock">
             <div>London</div>
             <div id="london-time">00:00:00</div>
+            <i class="fas fa-globe clickable-icon" onclick="openLinki()"></i>
         </div>
         <div class="world-clock">
             <div>New York</div>
             <div id="newyork-time">00:00:00</div>
+            <i class="fas fa-worm clickable-icon" onclick="openSnake()"></i>
         </div>
     </div>
 
@@ -849,46 +804,6 @@
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
     </div> 
-
-    <nav class="top-menu" role="navigation">
-        <a href="./live_charts.html" class="menu-item" 
-           onclick="window.open(this.href, 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`); return false;">
-            <i class="fas fa-chart-bar"></i>
-        </a>
-        <a href="#" class="menu-item" onclick="
-            const width = 1500;
-            const height = 900;
-            const leftPos = (window.screen.width / 2) - (width / 2);
-            const topPos = 0;
-            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-            return false;
-        ">
-            <i class="fas fa-chart-line"></i>
-        </a>
-        <a href="#" class="menu-item" onclick="window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000'); return false;">
-            <i class="fas fa-globe"></i>
-        </a>
-        <a href="#" class="menu-item" onclick="
-            const width = 800;
-            const height = 1000;
-            const leftPos = 0;
-            const topPos = (window.screen.height / 2) - (height / 2);
-            window.open('./advanced_tetris.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-            return false;
-        ">
-            <i class="fas fa-gamepad"></i>
-        </a>
-        <a href="#" class="menu-item" onclick="
-            const width = 800;
-            const height = 600;
-            const leftPos = (window.screen.width / 2) - (width / 2);
-            const topPos = (window.screen.height / 2) - (height / 2);
-            window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
-            return false;
-        ">
-            <i class="fas fa-worm"></i>
-        </a>
-    </nav>
 
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
@@ -1112,6 +1027,30 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        function openCMC() {
+            const width = 1500;
+            const height = 900;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = 0;
+            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+        }
+
+        function openLiveCharts() {
+            window.open('./live_charts.html', 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`);
+        }
+
+        function openLinki() {
+            window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000');
+        }
+
+        function openSnake() {
+            const width = 800;
+            const height = 600;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+        }
     </script>
 </body>
 </html>
