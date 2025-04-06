@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #121212;       /* Slightly lighter dark gray */
-            --secondary-bg: #2a2a3a;     /* Soft dark blue-gray */
-            --accent-1: #4682B4;        /* Steel Blue - muted, elegant blue */
-            --accent-2: #6A5ACD;        /* Slate Blue - sophisticated purple-blue */
-            --accent-3: #008080;        /* Teal - deep, calm accent */
-            --accent-4: #2E8B57;        /* Sea Green - subtle green */
-            --accent-gold: #DAA520;     /* Goldenrod - softer, elegant gold */
-            --text-primary: #e0e0e0;    /* Light gray for readability */
-            --glass-bg: rgba(18, 18, 18, 0.95); /* Matches primary-bg with transparency */
+            --primary-bg: #121212;
+            --secondary-bg: #2a2a3a;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
+            --accent-gold: #DAA520;
+            --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 45px;
         }
 
@@ -38,7 +38,6 @@
             overflow: hidden;
         }
 
-        /* Left Charts Section */
         .left-charts {
             position: fixed;
             left: 55px;
@@ -75,7 +74,7 @@
         .label {
             font-size: 0.9rem;
             font-weight: bold;
-            color: #A9A9A9; /* Neutral gray for elegance */
+            color: #A9A9A9;
         }
 
         .nasdaq-chart {
@@ -146,7 +145,6 @@
             pointer-events: none;
         }
 
-        /* Countdown Styling */
         .countdown {
             text-align: center;
             font-size: 0.9rem;
@@ -177,7 +175,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
-            color: #00CED1; /* Dark Turquoise - bright yet elegant */
+            color: #00CED1;
             text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             z-index: 1001;
             background: rgba(18, 18, 18, 0.85);
@@ -264,16 +262,16 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
-        .world-clock:nth-child(1) div:last-child { color: #4682B4; } /* Sydney */
-        .world-clock:nth-child(2) div:last-child { color: #6A5ACD; } /* Tokyo */
-        .world-clock:nth-child(3) div:last-child { color: #008080; } /* London */
-        .world-clock:nth-child(4) div:last-child { color: #DAA520; } /* New York */
+        .world-clock:nth-child(1) div:last-child { color: #4682B4; }
+        .world-clock:nth-child(2) div:last-child { color: #6A5ACD; }
+        .world-clock:nth-child(3) div:last-child { color: #008080; }
+        .world-clock:nth-child(4) div:last-child { color: #DAA520; }
 
         .ascii-art {
             position: fixed;
             top: 25px;
             right: 20px;
-            color: #A9A9A9; /* Neutral gray for subtlety */
+            color: #A9A9A9;
             font-family: 'Courier New', monospace;
             font-size: 0.5rem;
             line-height: 1.4;
@@ -536,18 +534,22 @@
 
         #economic-calendar.open, #economic-calendar:hover {
             right: 0;
+            border-radius: var(--border-radius);
         }
 
         #zulu-trader.open, #zulu-trader:hover {
             right: 0;
+            border-radius: var(--border-radius);
         }
 
         #week-calendar.open, #week-calendar:hover {
             right: 0;
+            border-radius: var(--border-radius);
         }
 
         #kick-widget.open, #kick-widget:hover {
             right: 0;
+            border-radius: var(--border-radius);
         }
 
         #outlook-widget.open, #outlook-widget:hover {
@@ -597,7 +599,7 @@
         }
 
         @keyframes slideDown {
-            from { opacity stroom: 0; transform: translate(-50%, -25px); }
+            from { opacity: 0; transform: translate(-50%, -25px); }
             to { opacity: 1; transform: translate(-50%, 0); }
         }
 
@@ -654,7 +656,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#121212",
+                    "backgroundColor": "#4682B4",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -701,7 +703,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#121212",
+                    "backgroundColor": "#2E8B57",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -748,7 +750,7 @@
                     "theme": "dark",
                     "style": "1",
                     "locale": "en",
-                    "backgroundColor": "#121212",
+                    "backgroundColor": "#DAA520",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -1052,7 +1054,6 @@
             }
         });
 
-        // Countdown functionality
         const nasdaqOpen = { hour: 9, minute: 30, second: 0 };
         const nasdaqClose = { hour: 16, minute: 0, second: 0 };
         const nasdaqZone = 'America/New_York';
@@ -1063,7 +1064,7 @@
 
         function getTargetTime(zone, open, close) {
             const nowLocal = luxon.DateTime.now().setZone(zone);
-            const weekday = nowLocal.weekday; // 1 = Monday, 7 = Sunday
+            const weekday = nowLocal.weekday;
             const isTradingDay = weekday >= 1 && weekday <= 5;
 
             const todayOpen = nowLocal.set({ hour: open.hour, minute: open.minute, second: open.second });
