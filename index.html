@@ -585,26 +585,44 @@
             border-radius: 5px;
         }
 
-        /* New styles for the clickable icons */
-        .icon-tab {
-            position: fixed;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--accent-1);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
+        /* Updated styles for the clickable icons */
+/* Updated styles for the clickable icons with shadow and cool effects */
+.icon-tab {
+    position: fixed;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--accent-1);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Base shadow */
+	z-index: 1001;
+}
+
+.icon-tab:hover {
+    transform: scale(1.1) rotate(5deg); /* Subtle scale & rotate on hover 😎 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+}
+
+.icon-tab:active {
+    transform: scale(0.95); /* Slight shrink on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+}
+
 
         #bbc-icon {
-            top: 75vh;
+            top: 72vh;
             background-color: var(--accent-3);
+            background-image: url('bbc.png');
         }
 
         #cnbc-icon {
-            top: 80vh;
+            top: 81vh;
             background-color: var(--accent-4);
+            background-image: url('cnbc.png');
         }
 
         .icon-tab:hover {
@@ -964,7 +982,7 @@
         <script type="text/javascript">showOutlookWidget()</script>
     </div>
 
-    <!-- New clickable icons -->
+    <!-- Clickable icons with images -->
     <div class="icon-tab" id="bbc-icon" title="Open BBC News" onclick="openBBC()"></div>
     <div class="icon-tab" id="cnbc-icon" title="Open CNBC" onclick="openCNBC()"></div>
 
