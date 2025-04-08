@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News Feed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Maintain original color scheme and base styles */
         :root {
-            --primary-bg: #0a0a14;
-            --secondary-bg: #1a1a2f;
-            --accent-1: #26a326;
-            --accent-2: #9c27b0;
-            --accent-3: #2196f3;
-            --text-primary: #f0f0ff;
-            --glass-bg: rgba(25, 25, 45, 0.9);
+            --primary-bg: #121212;
+            --secondary-bg: #2a2a3a;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
+            --accent-gold: #DAA520;
+            --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 16px;
         }
 
@@ -25,10 +27,10 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--primary-bg) 0%, #151525 100%);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%);
             min-height: 100vh;
             color: var(--text-primary);
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Exo 2', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,9 +49,9 @@
         /* News Panel Styling */
         .news-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(22px);
             border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             padding: 1.5rem;
             width: 600px;
@@ -63,7 +65,7 @@
 
         /* News Content Styling */
         .news-panel h2 {
-            color: var(--accent-3);
+            color: var(--accent-1);
             text-align: center;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -77,17 +79,18 @@
         }
 
         .news-panel a:hover {
-            color: var(--accent-3);
+            color: var(--accent-1);
         }
 
-        /* Maintain original animations and scrollbar */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -96,7 +99,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--accent-1);
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         /* Responsive Design */
