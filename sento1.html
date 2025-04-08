@@ -190,9 +190,13 @@
             text-align: center;
         }
 
-        @keyframes glowPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.95; }
+        @keyframes Pulse {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            30% { transform: scale(0.95); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(0.98); }
+            100% { transform: scale(1); }
         }
 
         @keyframes bounce { 
@@ -213,9 +217,15 @@
 
         @keyframes shake {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-2.5%, -1%) rotate(-4deg); }
-            50% { transform: translate(2.5%, 1%) rotate(4deg); }
-            75% { transform: translate(-2.5%, -1%) rotate(-4deg); }
+            10% { transform: translate(-5%, -2%) rotate(-5deg); }
+            20% { transform: translate(5%, 2%) rotate(5deg); }
+            30% { transform: translate(-4%, -1.5%) rotate(-4deg); }
+            40% { transform: translate(4%, 1.5%) rotate(4deg); }
+            50% { transform: translate(-3%, -1%) rotate(-3deg); }
+            60% { transform: translate(3%, 1%) rotate(3deg); }
+            70% { transform: translate(-2%, -0.5%) rotate(-2deg); }
+            80% { transform: translate(2%, 0.5%) rotate(2deg); }
+            90% { transform: translate(-1%, -0.25%) rotate(-1deg); }
         }
 
         @keyframes fadeIn { 
@@ -291,14 +301,14 @@
         .ascii-art {
             position: fixed;
             top: 25px;
-            right: 10px;
+            right: 15px;
             color: #A9A9A9;
             font-family: 'Courier New', monospace;
             font-size: 0.5rem;
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
-            animation: shake 10s infinite ease-in-out;
+            animation: Pulse 4s infinite ease-in-out;
         }
 
         .ascii-artHTS {
@@ -391,16 +401,16 @@
             right: -650px;
             transform: translateY(-50%);
             width: 650px;
-            height: 675px;
+            height: 100vh;
             z-index: 1100;
         }
 
         #zulu-trader {
             top: 50%;
-            right: -1000px;
+            right: -600px;
             transform: translateY(-50%);
-            width: 1000px;
-            height: 675px;
+            width: 600px;
+            height: 100vh;
             z-index: 1090;
         }
 
@@ -409,17 +419,17 @@
             right: -650px;
             transform: translateY(-50%);
             width: 650px;
-            height: 675px;
+            height: 100vh;
             z-index: 1080;
         }
 
         #kick-widget {
             top: 50%;
-            right: -600px;
+            right: -1200px;
             transform: translateY(-50%);
-            width: 600px;
-            height: 500px;
-            z-index: 1070;
+            width: 1200px;
+            height: 100vh;
+            z-index: 1170;
         }
 
         #outlook-widget {
@@ -452,7 +462,7 @@
 
         #economic-calendar .calendar-tab {
             left: -45px;
-            top: 10%;
+            top: 20%;
             transform: translateY(-50%);
             width: 45px;
             height: 70px;
@@ -461,7 +471,7 @@
 
         #week-calendar .calendar-tab {
             left: -45px;
-            top: 25%;
+            top: 30%;
             transform: translateY(-50%);
             width: 45px;
             height: 70px;
@@ -470,7 +480,7 @@
 
         #zulu-trader .calendar-tab {
             left: -45px;
-            top: 50%;
+            top: 40%;
             transform: translateY(-50%);
             width: 45px;
             height: 70px;
@@ -479,7 +489,7 @@
 
         #kick-widget .calendar-tab {
             left: -45px;
-            top: 70%;
+            top: 55%;
             transform: translateY(-50%);
             width: 45px;
             height: 70px;
@@ -501,27 +511,27 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        #economic-calendar.open, #economic-calendar:hover {
+        #economic-calendar:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #zulu-trader.open, #zulu-trader:hover {
+        #zulu-trader:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #week-calendar.open, #week-calendar:hover {
+        #week-calendar:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #kick-widget.open, #kick-widget:hover {
+        #kick-widget:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #outlook-widget.open, #outlook-widget:hover {
+        #outlook-widget:hover {
             left: 0;
         }
 
@@ -585,33 +595,30 @@
             border-radius: 5px;
         }
 
-        /* Updated styles for the clickable icons */
-/* Updated styles for the clickable icons with shadow and cool effects */
-.icon-tab {
-    position: fixed;
-    right: 15px;
-    width: 60px;
-    height: 60px;
-    background-color: var(--accent-1);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Base shadow */
-	z-index: 1001;
-}
+        .icon-tab {
+            position: fixed;
+            right: 15px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-1);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+        }
 
-.icon-tab:hover {
-    transform: scale(1.1) rotate(5deg); /* Subtle scale & rotate on hover 😎 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
-}
+        .icon-tab:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
 
-.icon-tab:active {
-    transform: scale(0.95); /* Slight shrink on click */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow */
-}
-
+        .icon-tab:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
         #bbc-icon {
             top: 72vh;
@@ -665,7 +672,7 @@
                 {
                     "autosize": true,
                     "symbol": "CAPITALCOM:US100",
-                    "interval": "15",
+                    "interval": "60",
                     "timezone": "Europe/Warsaw",
                     "theme": "dark",
                     "style": "1",
@@ -712,7 +719,7 @@
                 {
                     "autosize": true,
                     "symbol": "CAPITALCOM:DE40",
-                    "interval": "15",
+                    "interval": "60",
                     "timezone": "Europe/Warsaw",
                     "theme": "dark",
                     "style": "1",
@@ -759,7 +766,7 @@
                 {
                     "autosize": true,
                     "symbol": "CAPITALCOM:US500",
-                    "interval": "15",
+                    "interval": "60",
                     "timezone": "Europe/Warsaw",
                     "theme": "dark",
                     "style": "1",
@@ -804,7 +811,7 @@
                 {
                     "autosize": true,
                     "symbol": "TRADU:VOLX",
-                    "interval": "15",
+                    "interval": "60",
                     "timezone": "Europe/Warsaw",
                     "theme": "dark",
                     "style": "1",
@@ -849,12 +856,13 @@
 
     <div class="ascii-art">
         <pre>
-  ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗ ©
+  ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗ 
   ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
   ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
   ██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
   ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
   ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
+                P O W E R E D  B Y  A I  
         </pre>
     </div>
 
@@ -874,7 +882,7 @@
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
             {
                 "autosize": true,
-                "symbol": "FX:USDCAD",
+                "symbol": "FX:NZDUSD",
                 "interval": "60",
                 "timezone": "Europe/Warsaw",
                 "theme": "dark",
@@ -885,7 +893,7 @@
                 "allow_symbol_change": true,
                 "save_image": false,
                 "watchlist": [
-                    "✨",
+                    "-MAIN-",
                     "EURUSD",
                     "GBPUSD",
                     "AUDUSD",
@@ -893,7 +901,7 @@
                     "USDCAD",
                     "USDCHF",
                     "USDJPY",
-                    "📌",
+                    "-MINOR-",
                     "AUDCAD",
                     "AUDCHF",
                     "AUDJPY",
@@ -915,7 +923,7 @@
                     "NZDCAD",
                     "NZDCHF",
                     "NZDJPY",
-                    "📎️",
+                    "-EGZO-",
                     "AUDSGD",
                     "EURNOK",
                     "EURPLN",
@@ -927,7 +935,7 @@
                     "USDPLN",
                     "USDSEK",
                     "USDSGD",
-                    "📊",
+                    "-INDI-",
                     "CAPITALCOM:US100",
                     "CAPITALCOM:US500",
                     "CAPITALCOM:US30",
@@ -936,7 +944,7 @@
                     "FXOPEN:VIX",
                     "TRADU:VOLX",
                     "XAUUSD",
-					"BTCUSD"
+                    "BTCUSD"
                 ],
                 "calendar": true,
                 "hide_volume": true,
@@ -969,7 +977,7 @@
 
     <div class="calendar-container" id="kick-widget">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show News Feed">
-            <i class="fas fa-newspaper" style="color: #008080;"></i>
+            <i class="fas fa-fire-alt" style="color: #E4080A;"></i>
         </div>
         <iframe loading="lazy" src="https://nemon82-web.github.io/Traders-hub/feed.html"></iframe>
     </div>
@@ -1042,12 +1050,32 @@
         setInterval(updateTime, 1000);
         updateTime();
 
+        // Initialize the slide sound
+        const slideSound = new Audio('slide.mp3');
+
+        // Handle hover sound for tabs
         const tabs = document.querySelectorAll('.calendar-tab');
         tabs.forEach(tab => {
+            let isHovered = false; // Track hover state to play sound only once per hover
+
+            tab.addEventListener('mouseover', () => {
+                const container = tab.parentElement;
+                if (!isHovered && !container.classList.contains('open')) {
+                    slideSound.play();
+                    isHovered = true;
+                }
+            });
+
+            tab.addEventListener('mouseout', () => {
+                isHovered = false; // Reset hover state when mouse leaves
+            });
+
+            // Existing click functionality (optional, kept for accessibility)
             tab.addEventListener('click', (e) => {
                 e.stopPropagation();
                 tab.parentElement.classList.toggle('open');
             });
+
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -1155,7 +1183,6 @@
             window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
-        // New functions for the icons
         function openBBC() {
             const width = screen.width / 2;
             const height = 800;
