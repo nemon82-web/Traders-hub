@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTS NemoN Indicator + Trading Psychology</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #0a0a14;
-            --secondary-bg: #1a1a2f;
-            --accent-green: #26a326;
-            --accent-blue: #2196f3;
-            --text-primary: #f0f0ff;
+            --primary-bg: #121212;
+            --secondary-bg: #2a2a3a;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
+            --accent-gold: #DAA520;
+            --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
+            --border-radius: 15px;
         }
 
         ::-webkit-scrollbar {
@@ -20,18 +26,20 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-green);
+            background: var(--accent-1);
             border-radius: 6px;
             border: 3px solid var(--primary-bg);
         }
 
         body {
-            background: var(--primary-bg);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%), 
+                        radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px;
             color: var(--text-primary);
-            font-family: 'Courier New', monospace;
+            font-family: 'Exo 2', sans-serif;
             margin: 0;
             padding: 20px;
-            overflow: auto; /* Changed from hidden to auto */
+            overflow: auto;
         }
 
         .container-wrapper {
@@ -39,33 +47,31 @@
             gap: 30px;
             max-width: 1800px;
             margin: 0 auto;
-            min-height: 95vh; /* Changed from height to min-height */
+            min-height: 95vh;
+        }
+
+        .code-container,
+        .quotes-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: center;
+            position: relative;
+            overflow-y: auto;
         }
 
         .code-container {
             width: 900px;
-            height: 100%;
-            background: var(--secondary-bg);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-origin: center;
-            position: relative;
-            overflow-y: auto; /* Added scroll for container */
         }
 
         .quotes-container {
             width: 800px;
-            height: 100%;
-            padding: 25px;
-            background: rgba(40, 40, 60, 0.95);
-            border-radius: 15px;
-            overflow-y: auto; /* Added scroll for container */
-            position: relative;
         }
 
-        /* Rest of the CSS remains the same */
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -74,30 +80,31 @@
         }
 
         h1 {
-            color: var(--accent-blue);
+            color: var(--accent-1);
             font-size: 1.8rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Orbitron', sans-serif;
         }
 
         pre {
-            background: #000000;
+            background: var(--secondary-bg);
             padding: 20px;
             border-radius: 10px;
-            overflow: hidden;
+            overflow-x: auto;
             white-space: pre-wrap;
             tab-size: 4;
             line-height: 1.5;
-            transform: translateZ(0);
+            font-family: 'Courier New', monospace;
         }
 
         .quote {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-4);
             padding: 25px;
             margin-bottom: 25px;
-            background: linear-gradient(145deg, #1a1a2f, #252540);
-            border-radius: 12px;
-            border-left: 5px solid var(--accent-green);
             transition: transform 0.3s ease;
-            backdrop-filter: blur(5px);
         }
 
         .quote:hover {
@@ -105,7 +112,7 @@
         }
 
         .quote h2 {
-            color: var(--accent-blue);
+            color: var(--accent-1);
             margin: 0 0 15px 0;
             font-size: 1.3rem;
         }
@@ -116,18 +123,18 @@
         }
 
         .quote em {
-            color: var(--accent-green);
+            color: var(--accent-4);
             font-style: italic;
         }
 
-        .code-keyword { color: #00bbd4; }
-        .code-function { color: #ff5252; }
-        .code-comment { color: #26a326; }
-        .code-string { color: #9c27b0; }
-        .code-number { color: #ffeb3b; }
+        .code-keyword { color: var(--accent-1); }
+        .code-function { color: var(--accent-2); }
+        .code-comment { color: var(--accent-4); }
+        .code-string { color: var(--accent-3); }
+        .code-number { color: var(--accent-gold); }
 
         .copy-btn {
-            background: var(--accent-blue);
+            background: var(--accent-1);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -139,37 +146,17 @@
             overflow: hidden;
         }
 
-        .copy-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
         .copy-btn:hover {
             background: #1976d2;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
-        }
-
-        .copy-btn:hover:before {
-            left: 100%;
+            box-shadow: 0 4px 15px rgba(70, 130, 180, 0.3);
         }
 
         @media (max-width: 1600px) {
             .container-wrapper {
                 flex-direction: column;
                 align-items: center;
-                height: auto;
+                gap: 20px;
             }
             
             .code-container,
@@ -252,42 +239,42 @@ plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(5
 plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, <span class="code-string">title="Bearish Dot 🔴"</span>)</code></pre>
         </div>
 
- <div class="quotes-container">
- <div class="quote">
-    <h2>Nassim Nicholas Taleb - Czarny łabędź</h2>
-    <p>"<em>Walka z trendem to walka z entropią wszechświata.</em> Prawdziwa mądrość nie polega na przewidywaniu punktów zwrotnych, lecz na budowaniu strategii, które kwitną w chaosie kierunku."</p>
-</div>
+        <div class="quotes-container">
+            <div class="quote">
+                <h2>Nassim Nicholas Taleb - Czarny łabędź</h2>
+                <p>"<em>Walka z trendem to walka z entropią wszechświata.</em> Prawdziwa mądrość nie polega na przewidywaniu punktów zwrotnych, lecz na budowaniu strategii, które kwitną w chaosie kierunku."</p>
+            </div>
 
-<div class="quote">
-    <h2>Daniel Kahneman - Myślenie. Szybkie i wolne</h2>
-    <p>"<em>Iluzja kontroli nad rynkiem to pułapka dla kontrtrendowych wojowników.</em> Trendy są jak rzeki – próba płynięcia pod prąd zużywa 90% twojej energii, zostawiając 10% na zarabianie."</p>
-</div>
+            <div class="quote">
+                <h2>Daniel Kahneman - Myślenie. Szybkie i wolne</h2>
+                <p>"<em>Iluzja kontroli nad rynkiem to pułapka dla kontrtrendowych wojowników.</em> Trendy są jak rzeki – próba płynięcia pod prąd zużywa 90% twojej energii, zostawiając 10% na zarabianie."</p>
+            </div>
 
- <div class="quote">
-    <h2>Rolf Dobelli - Sztuka Jasnego Myślenia</h2>
-    <p>"<em>Przewidywanie odwrócenia trendu to intelektualny narkotyk dla ambitnych.</em> Prawdziwe bogactwo buduje się poprzez mechaniczne powtarzanie prostych zasad, nie przez spektakularne proroctwa."</p>
-</div>
+            <div class="quote">
+                <h2>Rolf Dobelli - Sztuka Jasnego Myślenia</h2>
+                <p>"<em>Przewidywanie odwrócenia trendu to intelektualny narkotyk dla ambitnych.</em> Prawdziwe bogactwo buduje się poprzez mechaniczne powtarzanie prostych zasad, nie przez spektakularne proroctwa."</p>
+            </div>
 
-    <div class="quote">
-        <h2>Van Tharp - Super Trader</h2>
-        <p>"<em>Trendy nie wymagają twojej wiary - wymagają twojego posłuszeństwa.</em> Wielkie fortuny zbijają się poprzez konsekwentne podążanie za ruchem, nie poprzez inteligentne przewidywanie go."</p>
-    </div>
+            <div class="quote">
+                <h2>Van Tharp - Super Trader</h2>
+                <p>"<em>Trendy nie wymagają twojej wiary - wymagają twojego posłuszeństwa.</em> Wielkie fortuny zbijają się poprzez konsekwentne podążanie za ruchem, nie poprzez inteligentne przewidywanie go."</p>
+            </div>
 
-    <div class="quote"> <!-- ✨ NOWY -->
-        <h2>Jack D. Schwager - Market Wizards</h2>
-        <p>"<em>Walka z trendem to najdroższy sport na Wall Street.</em> Ludzie tracą fortuny, próbując udowodnić, że rynek się myli – tymczasem prawdziwy geniusz leży w podążaniu za tłumem, który ma rację."</p>
-    </div>
+            <div class="quote">
+                <h2>Jack D. Schwager - Market Wizards</h2>
+                <p>"<em>Walka z trendem to najdroższy sport na Wall Street.</em> Ludzie tracą fortuny, próbując udowodnić, że rynek się myli – tymczasem prawdziwy geniusz leży w podążaniu za tłumem, który ma rację."</p>
+            </div>
 
-    <div class="quote"> <!-- ✨ NOWY -->
-        <h2>Dr Alexander Elder - Trading dla Życia</h2>
-        <p>"<em>Kontrtrendowi gracze żyją adrenaliną, trendowi – konsekwencją.</em> Psychologiczna przemiana z łowcy punktów zwrotnych w surfera fal rynkowych wymaga pokory wobec siły tłumu."</p>
-    </div>
+            <div class="quote">
+                <h2>Dr Alexander Elder - Trading dla Życia</h2>
+                <p>"<em>Kontrtrendowi gracze żyją adrenaliną, trendowi – konsekwencją.</em> Psychologiczna przemiana z łowcy punktów zwrotnych w surfera fal rynkowych wymaga pokory wobec siły tłumu."</p>
+            </div>
 
-    <div class="quote"> <!-- ✨ NOWY -->
-        <h2>Edwin Lefèvre - Wspomnienia Gracza Giełdowego</h2>
-        <p>"<em>Nie szukaj dna ani szczytu – szukaj kierunku.</em> Trend jest twoim jedynym sojusznikiem; każda transakcja przeciw niemu to romans z katastrofą."</p>
-    </div>
-</div>
+            <div class="quote">
+                <h2>Edwin Lefèvre - Wspomnienia Gracza Giełdowego</h2>
+                <p>"<em>Nie szukaj dna ani szczytu – szukaj kierunku.</em> Trend jest twoim jedynym sojusznikiem; każda transakcja przeciw niemu to romans z katastrofą."</p>
+            </div>
+        </div>
     </div>
 
     <script>

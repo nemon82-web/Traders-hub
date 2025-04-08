@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTS NemoN Indicator + Forex Pairs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* COLOR SCHEME FROM ORIGINAL */
-        .code-keyword { color: #00bbd4; }
-        .code-function { color: #ff5252; }
-        .code-comment { color: #26a326; }
-        .code-string { color: #9c27b0; }
-        .code-number { color: #ffeb3b; }
-
-        /* REST OF THE CSS REMAINS THE SAME */
         :root {
-            --primary-bg: #0a0a14;
-            --secondary-bg: #1a1a2f;
-            --accent-green: #26a326;
-            --accent-blue: #2196f3;
-            --text-primary: #f0f0ff;
+            --primary-bg: #121212;
+            --secondary-bg: #2a2a3a;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
+            --accent-gold: #DAA520;
+            --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
+            --border-radius: 16px;
         }
 
         ::-webkit-scrollbar {
@@ -28,7 +26,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-green);
+            background: var(--accent-1);
             border-radius: 6px;
             border: 3px solid var(--primary-bg);
         }
@@ -36,7 +34,7 @@
         body {
             background: var(--primary-bg);
             color: var(--text-primary);
-            font-family: 'Courier New', monospace;
+            font-family: 'Exo 2', sans-serif;
             margin: 0;
             padding: 20px;
             overflow: auto;
@@ -53,8 +51,10 @@
 
         .code-container {
             width: 900px;
-            background: var(--secondary-bg);
-            border-radius: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             overflow-y: auto;
@@ -62,8 +62,10 @@
 
         .forex-container {
             width: 600px;
-            background: var(--secondary-bg);
-            border-radius: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin-left: 30px;
@@ -77,39 +79,41 @@
         }
 
         h1 {
-            color: var(--accent-blue);
+            color: var(--accent-1);
             font-size: 1.8rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         pre {
-            background: #000000;
+            background: var(--primary-bg);
             padding: 20px;
             border-radius: 10px;
             white-space: pre-wrap;
             tab-size: 4;
             line-height: 1.5;
+            font-family: 'Courier New', monospace;
         }
 
         .pair-list pre {
-            color: var(--accent-green);
+            color: var(--text-primary);
             font-size: 1.1rem;
         }
 
         .copy-btn {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 12px 24px;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
         .copy-btn:hover {
-            background: #1976d2;
+            background: var(--accent-1);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            box-shadow: 0 4px 15px rgba(70, 130, 180, 0.3);
         }
 
         @media (max-width: 1600px) {
@@ -124,6 +128,13 @@
                 margin: 10px 0;
             }
         }
+
+        /* Code syntax highlighting */
+        .code-keyword { color: var(--accent-1); }
+        .code-function { color: var(--accent-2); }
+        .code-comment { color: var(--accent-4); }
+        .code-string { color: var(--accent-3); }
+        .code-number { color: var(--accent-gold); }
     </style>
 </head>
 <body>
