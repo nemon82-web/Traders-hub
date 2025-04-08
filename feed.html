@@ -51,7 +51,6 @@
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
             border-radius: var(--border-radius);
-            
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             padding: 1.5rem;
             width: 600px;
@@ -68,7 +67,6 @@
             color: var(--accent-1);
             text-align: center;
             margin-bottom: 1.5rem;
-            
             padding-bottom: 1rem;
         }
 
@@ -119,16 +117,22 @@
     <div id="dashboard-container">
         <div class="panel news-panel">
             <h2>News</h2>
-            <!-- Myfxbook News Widget -->
-            <div>
-                <script class="powered" type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxTopNews.js"></script>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                {
+                "feedMode": "all_symbols",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "displayMode": "regular",
+                "width": "100%",
+                "height": "500",
+                "locale": "en"
+                }
+                </script>
             </div>
-            <div style="font-size: 12px; margin-top: 1rem; text-align: center;">
-                <a href="https://www.myfxbook.com/news" title="Forex News" class="myfxbookLink" target="_self" rel="noopener">
-                    
-                </a> 
-            </div>
-            <script type="text/javascript">showTopNewsWidget()</script>
+            <!-- TradingView Widget END -->
         </div>
     </div>
 </body>
