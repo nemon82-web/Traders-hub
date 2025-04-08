@@ -1,66 +1,23 @@
 <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
   <div class="tradingview-widget-container__widget"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
   {
-  "symbols": [
-    {
-      "description": "",
-      "proName": "PEPPERSTONE:HK50"
-    },
-    {
-      "description": "",
-      "proName": "CAPITALCOM:J225"
-    },
-    {
-      "description": "",
-      "proName": "CAPITALCOM:UK100"
-    },
-    {
-      "description": "",
-      "proName": "TICKMILL:WIG20"
-    }
+  "width": 550,
+  "height": 400,
+  "currencies": [
+    "EUR",
+    "USD",
+    "JPY",
+    "GBP",
+    "CHF",
+    "AUD",
+    "CAD",
+    "NZD",
+    "PLN"
   ],
   "isTransparent": true,
-  "showSymbolLogo": true,
-  "colorTheme": "dark",
-  "locale": "en"
-}
-  </script>
-</div>
-<!-- TradingView Widget END -->
-
-
-
-moving tape:
-
-
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-  {
-  "symbols": [
-    {
-      "description": "",
-      "proName": "PEPPERSTONE:HK50"
-    },
-    {
-      "description": "",
-      "proName": "CAPITALCOM:J225"
-    },
-    {
-      "description": "",
-      "proName": "CAPITALCOM:UK100"
-    },
-    {
-      "description": "",
-      "proName": "TICKMILL:WIG20"
-    }
-  ],
-  "showSymbolLogo": true,
-  "isTransparent": true,
-  "displayMode": "adaptive",
   "colorTheme": "dark",
   "locale": "en"
 }
