@@ -190,26 +190,14 @@
             text-align: center;
         }
 
-@keyframes Pulse {
-    0% {
-        transform: scale(1);
-    }
-    15% {  /* First beat (lub) */
-        transform: scale(1.2);
-    }
-    30% {  /* Quick contraction */
-        transform: scale(0.95);
-    }
-    45% {  /* Second beat (dub) */
-        transform: scale(1.1);
-    }
-    60% {  /* Begin recovery */
-        transform: scale(0.98);
-    }
-    100% { /* Full recovery */
-        transform: scale(1);
-    }
-}
+        @keyframes Pulse {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            30% { transform: scale(0.95); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
 
         @keyframes bounce { 
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
@@ -227,39 +215,18 @@
             to { transform: rotate(360deg); } 
         }
 
-@keyframes shake {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    10% {
-        transform: translate(-5%, -2%) rotate(-5deg);
-    }
-    20% {
-        transform: translate(5%, 2%) rotate(5deg);
-    }
-    30% {
-        transform: translate(-4%, -1.5%) rotate(-4deg);
-    }
-    40% {
-        transform: translate(4%, 1.5%) rotate(4deg);
-    }
-    50% {
-        transform: translate(-3%, -1%) rotate(-3deg);
-    }
-    60% {
-        transform: translate(3%, 1%) rotate(3deg);
-    }
-    70% {
-        transform: translate(-2%, -0.5%) rotate(-2deg);
-    }
-    80% {
-        transform: translate(2%, 0.5%) rotate(2deg);
-    }
-    90% {
-        transform: translate(-1%, -0.25%) rotate(-1deg);
-    }
-}
-
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-5%, -2%) rotate(-5deg); }
+            20% { transform: translate(5%, 2%) rotate(5deg); }
+            30% { transform: translate(-4%, -1.5%) rotate(-4deg); }
+            40% { transform: translate(4%, 1.5%) rotate(4deg); }
+            50% { transform: translate(-3%, -1%) rotate(-3deg); }
+            60% { transform: translate(3%, 1%) rotate(3deg); }
+            70% { transform: translate(-2%, -0.5%) rotate(-2deg); }
+            80% { transform: translate(2%, 0.5%) rotate(2deg); }
+            90% { transform: translate(-1%, -0.25%) rotate(-1deg); }
+        }
 
         @keyframes fadeIn { 
             from { opacity: 0; } 
@@ -544,27 +511,27 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        #economic-calendar.open, #economic-calendar:hover {
+        #economic-calendar:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #zulu-trader.open, #zulu-trader:hover {
+        #zulu-trader:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #week-calendar.open, #week-calendar:hover {
+        #week-calendar:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #kick-widget.open, #kick-widget:hover {
+        #kick-widget:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
 
-        #outlook-widget.open, #outlook-widget:hover {
+        #outlook-widget:hover {
             left: 0;
         }
 
@@ -628,33 +595,30 @@
             border-radius: 5px;
         }
 
-        /* Updated styles for the clickable icons */
-/* Updated styles for the clickable icons with shadow and cool effects */
-.icon-tab {
-    position: fixed;
-    right: 15px;
-    width: 60px;
-    height: 60px;
-    background-color: var(--accent-1);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Base shadow */
-	z-index: 1001;
-}
+        .icon-tab {
+            position: fixed;
+            right: 15px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-1);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+        }
 
-.icon-tab:hover {
-    transform: scale(1.1) rotate(5deg); /* Subtle scale & rotate on hover 😎 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
-}
+        .icon-tab:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
 
-.icon-tab:active {
-    transform: scale(0.95); /* Slight shrink on click */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow */
-}
-
+        .icon-tab:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
         #bbc-icon {
             top: 72vh;
@@ -979,7 +943,7 @@
                     "FXOPEN:VIX",
                     "TRADU:VOLX",
                     "XAUUSD",
-					"BTCUSD"
+                    "BTCUSD"
                 ],
                 "calendar": true,
                 "hide_volume": true,
@@ -1085,12 +1049,32 @@
         setInterval(updateTime, 1000);
         updateTime();
 
+        // Initialize the slide sound
+        const slideSound = new Audio('slide.mp3');
+
+        // Handle hover sound for tabs
         const tabs = document.querySelectorAll('.calendar-tab');
         tabs.forEach(tab => {
+            let isHovered = false; // Track hover state to play sound only once per hover
+
+            tab.addEventListener('mouseover', () => {
+                const container = tab.parentElement;
+                if (!isHovered && !container.classList.contains('open')) {
+                    slideSound.play();
+                    isHovered = true;
+                }
+            });
+
+            tab.addEventListener('mouseout', () => {
+                isHovered = false; // Reset hover state when mouse leaves
+            });
+
+            // Existing click functionality (optional, kept for accessibility)
             tab.addEventListener('click', (e) => {
                 e.stopPropagation();
                 tab.parentElement.classList.toggle('open');
             });
+
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -1198,7 +1182,6 @@
             window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
-        // New functions for the icons
         function openBBC() {
             const width = screen.width / 2;
             const height = 800;
