@@ -10,7 +10,6 @@
             --secondary-bg: #1a1a2f;
             --accent-daily: #26a326;
             --accent-weekly: #d92020;
-            --accent-chart: #1e90ff; /* Added for chart widget */
             --text-primary: #f0f0ff;
             --glass-bg: rgba(25, 25, 45, 0.95);
         }
@@ -30,7 +29,7 @@
             overflow: hidden;
         }
 
-        /* Launch Menu Styles */
+        /* Launch Menu - Unchanged */
         .launch-menu {
             position: fixed;
             top: 0;
@@ -78,11 +77,6 @@
             box-shadow: 0 8px 32px rgba(217, 32, 32, 0.15);
         }
 
-        .menu-item.chart {
-            --accent: var(--accent-chart);
-            box-shadow: 0 8px 32px rgba(30, 144, 255, 0.15);
-        }
-
         .menu-icon {
             width: 40px;
             height: 40px;
@@ -108,7 +102,7 @@
             opacity: 0.8;
         }
 
-        /* Container Styles */
+        /* Calendar Containers - Modified Size */
         .calendar-container {
             position: fixed;
             top: 0;
@@ -161,12 +155,6 @@
             margin-top: 20px;
         }
 
-        .chart-widget {
-            margin-top: 60px;
-            width: 100%;
-            height: calc(100% - 60px);
-        }
-
         ::-webkit-scrollbar {
             display: none;
         }
@@ -194,19 +182,9 @@
                 <p>Market-moving events this week</p>
             </div>
         </a>
-
-        <a href="#" class="menu-item chart" data-calendar="chart">
-            <div class="menu-icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <div class="menu-text">
-                <h2>Live Charts</h2>
-                <p>Real-time market data</p>
-            </div>
-        </a>
     </div>
 
-    <!-- Containers -->
+    <!-- Calendars -->
     <div class="calendar-container" id="dailyCalendar">
         <div class="calendar-header">
             <h2>Daily Economic Calendar</h2>
@@ -227,100 +205,13 @@
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div class="calendar-container" id="chartContainer">
-        <div class="calendar-header">
-            <h2>Live Market Charts</h2>
-            <button class="close-btn" onclick="showLaunchMenu()">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-        </div>
-        <div class="chart-widget tradingview-widget-container">
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-                "autosize": true,
-                "symbol": "FX:NZDUSD",
-                "interval": "60",
-                "timezone": "Europe/Warsaw",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "backgroundColor": "#121212",
-                "show_popup_button": true,
-                "allow_symbol_change": true,
-                "save_image": false,
-                "watchlist": [
-                    "🌍",
-                    "EURUSD",
-                    "GBPUSD",
-                    "AUDUSD",
-                    "NZDUSD",
-                    "USDCAD",
-                    "USDCHF",
-                    "USDJPY",
-                    "🧩",
-                    "AUDCAD",
-                    "AUDCHF",
-                    "AUDJPY",
-                    "AUDNZD",
-                    "CADCHF",
-                    "CADJPY",
-                    "CHFJPY",
-                    "EURAUD",
-                    "EURCAD",
-                    "EURCHF",
-                    "EURGBP",
-                    "EURJPY",
-                    "EURNZD",
-                    "GBPAUD",
-                    "GBPCAD",
-                    "GBPCHF",
-                    "GBPJPY",
-                    "GBPNZD",
-                    "NZDCAD",
-                    "NZDCHF",
-                    "NZDJPY",
-                    "🏝️",
-                    "AUDSGD",
-                    "EURNOK",
-                    "EURPLN",
-                    "EURSEK",
-                    "EURSGD",
-                    "GBPPLN",
-                    "GBPSEK",
-                    "USDNOK",
-                    "USDPLN",
-                    "USDSEK",
-                    "USDSGD",
-                    "📊 | 🔢",
-                    "CAPITALCOM:US100",
-                    "CAPITALCOM:US500",
-                    "CAPITALCOM:US30",
-                    "DE40",
-                    "TICKMILL:WIG20",
-                    "FXOPEN:VIX",
-                    "TRADU:VOLX",
-                    "BTCUSD",
-                    "⛏️ | 💰",
-                    "CFI:WTI",
-                    "XAUUSD"
-                ],
-                "calendar": true,
-                "hide_volume": true,
-                "support_host": "https://www.tradingview.com"
-            }
-            </script>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
         const launchMenu = document.getElementById('launchMenu');
         const menuItems = document.querySelectorAll('.menu-item');
         const calendars = {
             daily: document.getElementById('dailyCalendar'),
-            weekly: document.getElementById('weeklyCalendar'),
-            chart: document.getElementById('chartContainer')
+            weekly: document.getElementById('weeklyCalendar')
         };
 
         // Handle menu selection
