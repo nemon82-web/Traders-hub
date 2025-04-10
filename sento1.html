@@ -94,7 +94,7 @@
             pointer-events: none;
         }
 
-        .dax-chart {
+        .dax-domain {
             border: 2px solid #2E8B57;
             position: relative;
         }
@@ -423,6 +423,11 @@
         .calendar-container {
             position: fixed;
             transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .calendar-container.open {
+            right: 0;
+            border-radius: var(--border-radius);
         }
 
         #economic-calendar {
