@@ -846,7 +846,7 @@
         <div class="world-clock">
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
-            <i class="fas fa-chart-bar clickable-icon" onclick="openLiveCharts()"></i>
+            <i class="fas fa-heading clickable-icon" onclick="openHtsFx()"></i>
         </div>
         <div class="world-clock">
             <div>London</div>
@@ -1177,8 +1177,8 @@
             window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
-        function openLiveCharts() {
-            window.open('./live_charts.html', 'newwindow', `width=${screen.width},height=${screen.height},left=0,top=0`);
+        function openHtsFx() {
+            window.open('./htsfx.html', 'newwindow', `width=${screen.width/3},height=${screen.height},left=0,top=0`);
         }
   
         function openLinki() {
