@@ -1201,13 +1201,16 @@
             window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width/3},height=${height},left=${left},top=${top}`);
         }
 
-        function openCNBC() {
-            const width = screen.width / 2;
-            const height = 800;
-            const left = screen.width / 2;
-            const top = (screen.height - height) / 2;
-            window.open('https://www.cnbc.com/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
-        }
+function openCNBC() {
+    const bbcWidth = screen.width / 3; // Match BBC's width
+    const width = screen.width / 3; // Keep same width as BBC
+    const height = screen.height;
+    const left = bbcWidth; // Start at BBC's right edge
+    const top = 0;
+    
+    window.open('https://www.cnbc.com/', '_blank', 
+        `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+}
     </script>
 </body>
 </html>
