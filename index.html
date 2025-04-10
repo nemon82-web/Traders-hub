@@ -1194,11 +1194,11 @@
         }
 
         function openBBC() {
-            const width = screen.width / 2;
-            const height = 800;
+            const width = screen.width ;
+            const height = screen.height;
             const left = 0;
-            const top = (screen.height - height) / 2;
-            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+            const top = 0;
+            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width/3},height=${height},left=${left},top=${top}`);
         }
 
         function openCNBC() {
