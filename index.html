@@ -434,11 +434,11 @@
             z-index: 1100;
         }
 
-        #hts-trader {
+        #cmc-trader {
             top: 50%;
-            right: -600px;
+            right: -90vw;
             transform: translateY(-50%);
-            width: 600px;
+            width: 90vw;
             height: 100vh;
             z-index: 1090;
         }
@@ -500,7 +500,7 @@
             border-radius: 15px 0 0 15px;
         }
 
-        #hts-trader .calendar-tab {
+        #cmc-trader .calendar-tab {
             left: -45px;
             top: 40%;
             transform: translateY(-50%);
@@ -538,7 +538,7 @@
             border-radius: var(--border-radius);
         }
 
-        #hts-trader:hover {
+        #cmc-trader:hover {
             right: 0;
             border-radius: var(--border-radius);
         }
@@ -972,11 +972,11 @@
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%232E8B57&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div class="calendar-container" id="hts-trader">
+    <div class="calendar-container" id="cmc-trader">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-heading" style="color: #4682B4;"></i>
         </div>
-        <iframe loading="lazy" src="https://nemon82-web.github.io/Traders-hub/htsfx.html"></iframe>
+        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
