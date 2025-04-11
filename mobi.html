@@ -23,81 +23,97 @@
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
             {
-                "autosize": true,
-                "symbol": "FX:NZDUSD",
-                "interval": "60",
-                "timezone": "Europe/Warsaw",
-                "theme": "dark",
-                "style": "1",
+                "colorTheme": "dark",
+                "dateRange": "12M",
+                "showChart": false,
                 "locale": "en",
-                "backgroundColor": "#121212",
-                "show_popup_button": true,
-                "allow_symbol_change": true,
-                "save_image": false,
-                "watchlist": [
-                    "🌍",
-                    "EURUSD",
-                    "GBPUSD",
-                    "AUDUSD",
-                    "NZDUSD",
-                    "USDCAD",
-                    "USDCHF",
-                    "USDJPY",
-                    "🧩",
-                    "AUDCAD",
-                    "AUDCHF",
-                    "AUDJPY",
-                    "AUDNZD",
-                    "CADCHF",
-                    "CADJPY",
-                    "CHFJPY",
-                    "EURAUD",
-                    "EURCAD",
-                    "EURCHF",
-                    "EURGBP",
-                    "EURJPY",
-                    "EURNZD",
-                    "GBPAUD",
-                    "GBPCAD",
-                    "GBPCHF",
-                    "GBPJPY",
-                    "GBPNZD",
-                    "NZDCAD",
-                    "NZDCHF",
-                    "NZDJPY",
-                    "🏝️",
-                    "AUDSGD",
-                    "EURNOK",
-                    "EURPLN",
-                    "EURSEK",
-                    "EURSGD",
-                    "GBPPLN",
-                    "GBPSEK",
-                    "USDNOK",
-                    "USDPLN",
-                    "USDSEK",
-                    "USDSGD",
-                    "📊 | 📈",
-                    "CAPITALCOM:US100",
-                    "CAPITALCOM:US500",
-                    "CAPITALCOM:US30",
-                    "DE40",
-                    "TICKMILL:WIG20",
-                    "CAPITALCOM:HK50",
-                    "CAPITALCOM:J225",
-                    "CAPITALCOM:UK100",
-                    "FXOPEN:VIX",
-                    "TRADU:VOLX",
-                    "BTCUSD",
-                    "⛏️ | 💰",
-                    "CFI:WTI",
-                    "XAUUSD"
-                ],
-                "calendar": true,
-                "hide_volume": true,
-                "support_host": "https://www.tradingview.com"
+                "largeChartUrl": "",
+                "isTransparent": false,
+                "showSymbolLogo": false,
+                "showFloatingTooltip": false,
+                "width": "100%",
+                "height": "100%",
+                "tabs": [
+                    {
+                        "title": "🌍",
+                        "symbols": [
+                            {"s": "EURUSD", "d": "EUR/USD"},
+                            {"s": "GBPUSD", "d": "GBP/USD"},
+                            {"s": "AUDUSD", "d": "AUD/USD"},
+                            {"s": "NZDUSD", "d": "NZD/USD"},
+                            {"s": "USDCAD", "d": "USD/CAD"},
+                            {"s": "USDCHF", "d": "USD/CHF"},
+                            {"s": "USDJPY", "d": "USD/JPY"}
+                        ]
+                    },
+                    {
+                        "title": "🧩",
+                        "symbols": [
+                            {"s": "AUDCAD", "d": "AUD/CAD"},
+                            {"s": "AUDCHF", "d": "AUD/CHF"},
+                            {"s": "AUDJPY", "d": "AUD/JPY"},
+                            {"s": "AUDNZD", "d": "AUD/NZD"},
+                            {"s": "CADCHF", "d": "CAD/CHF"},
+                            {"s": "CADJPY", "d": "CAD/JPY"},
+                            {"s": "CHFJPY", "d": "CHF/JPY"},
+                            {"s": "EURAUD", "d": "EUR/AUD"},
+                            {"s": "EURCAD", "d": "EUR/CAD"},
+                            {"s": "EURCHF", "d": "EUR/CHF"},
+                            {"s": "EURGBP", "d": "EUR/GBP"},
+                            {"s": "EURJPY", "d": "EUR/JPY"},
+                            {"s": "EURNZD", "d": "EUR/NZD"},
+                            {"s": "GBPAUD", "d": "GBP/AUD"},
+                            {"s": "GBPCAD", "d": "GBP/CAD"},
+                            {"s": "GBPCHF", "d": "GBP/CHF"},
+                            {"s": "GBPJPY", "d": "GBP/JPY"},
+                            {"s": "GBPNZD", "d": "GBP/NZD"},
+                            {"s": "NZDCAD", "d": "NZD/CAD"},
+                            {"s": "NZDCHF", "d": "NZD/CHF"},
+                            {"s": "NZDJPY", "d": "NZD/JPY"}
+                        ]
+                    },
+                    {
+                        "title": "🏝️",
+                        "symbols": [
+                            {"s": "AUDSGD", "d": "AUD/SGD"},
+                            {"s": "EURNOK", "d": "EUR/NOK"},
+                            {"s": "EURPLN", "d": "EUR/PLN"},
+                            {"s": "EURSEK", "d": "EUR/SEK"},
+                            {"s": "EURSGD", "d": "EUR/SGD"},
+                            {"s": "GBPPLN", "d": "GBP/PLN"},
+                            {"s": "GBPSEK", "d": "GBP/SEK"},
+                            {"s": "USDNOK", "d": "USD/NOK"},
+                            {"s": "USDPLN", "d": "USD/PLN"},
+                            {"s": "USDSEK", "d": "USD/SEK"},
+                            {"s": "USDSGD", "d": "USD/SGD"}
+                        ]
+                    },
+                    {
+                        "title": "📊 | 📈",
+                        "symbols": [
+                            {"s": "CAPITALCOM:US100", "d": "Nasdaq 100"},
+                            {"s": "CAPITALCOM:US500", "d": "S&P 500"},
+                            {"s": "CAPITALCOM:US30", "d": "Dow Jones 30"},
+                            {"s": "DE40", "d": "DAX 40"},
+                            {"s": "TICKMILL:WIG20", "d": "WIG20"},
+                            {"s": "CAPITALCOM:HK50", "d": "Hang Seng 50"},
+                            {"s": "CAPITALCOM:J225", "d": "Nikkei 225"},
+                            {"s": "CAPITALCOM:UK100", "d": "FTSE 100"},
+                            {"s": "FXOPEN:VIX", "d": "VIX"},
+                            {"s": "TRADU:VOLX", "d": "VOLX"},
+                            {"s": "BTCUSD", "d": "Bitcoin"}
+                        ]
+                    },
+                    {
+                        "title": "⛏️ | 💰",
+                        "symbols": [
+                            {"s": "CFI:WTI", "d": "WTI Crude Oil"},
+                            {"s": "XAUUSD", "d": "Gold"}
+                        ]
+                    }
+                ]
             }
             </script>
         </div>
