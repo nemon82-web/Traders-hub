@@ -915,7 +915,7 @@
                     "CAPITALCOM:US500",
                     "CAPITALCOM:US30",
                     "DE40",
-                    "TICKALYSE:WIG20",
+                    "TICKMILL:WIG20",
                     "CAPITALCOM:HK50",
                     "CAPITALCOM:J225",
                     "CAPITALCOM:UK100",
@@ -946,7 +946,7 @@
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-c" style="color: #4682B4;"></i>
         </div>
-        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
+        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl" ></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -1027,8 +1027,9 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Initialize the slide sound
+        // Initialize the slide sounds
         const slideSound = new Audio('slide.mp3');
+        const slideOutSound = new Audio('slide_old.mp3');
 
         // Handle click to lock/unlock tabs
         const calendarContainers = document.querySelectorAll('.calendar-container');
@@ -1037,9 +1038,11 @@
 
             tab.addEventListener('click', (e) => {
                 e.preventDefault(); // Prevent any default behavior
-                container.classList.toggle('locked');
-                if (container.classList.contains('locked')) {
-                    slideSound.play(); // Play sound when locking
+                const wasAdded = container.classList.toggle('locked');
+                if (wasAdded) {
+                    slideSound.play(); // Play slide-in sound when locking
+                } else {
+                    slideOutSound.play(); // Play slide-out sound when unlocking
                 }
             });
 
@@ -1047,9 +1050,11 @@
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    container.classList.toggle('locked');
-                    if (container.classList.contains('locked')) {
-                        slideSound.play();
+                    const wasAdded = container.classList.toggle('locked');
+                    if (wasAdded) {
+                        slideSound.play(); // Play slide-in sound when locking
+                    } else {
+                        slideOutSound.play(); // Play slide-out sound when unlocking
                     }
                 }
             });
