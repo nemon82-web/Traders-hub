@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window Integration Test</title>
+    <style>
+        :root {
+            --primary-bg: #1d2120;
+            --accent-1: #4682B4;
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: white;
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .integration-tab {
+            position: fixed;
+            right: 0;
+            top: 40%;
+            background: var(--accent-1);
+            color: white;
+            padding: 15px 10px;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .integration-tab:hover {
+            padding-right: 15px;
+            background: #5a9dd2;
+        }
+
+        iframe {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="integration-tab" onclick="openCMC()">
+        🚀 Open Trader
+    </div>
+
+    <h2 style="padding: 20px;">Main Application Window</h2>
+
+    <script>
+        let cmcWindow = null;
+
+        function openCMC() {
+            const mainWidth = window.innerWidth;
+            const mainHeight = window.innerHeight;
+            const cmcWidth = mainWidth * 0.7; // 70% of main window width
+            const leftPos = mainWidth - cmcWidth;
+
+            const features = `
+                width=${cmcWidth},
+                height=${mainHeight},
+                left=${leftPos},
+                top=0,
+                menubar=no,
+                toolbar=no,
+                location=no,
+                status=no,
+                resizable=yes,
+                scrollbars=yes
+            `;
+
+            // Close existing window if open
+            if (cmcWindow && !cmcWindow.closed) {
+                cmcWindow.close();
+            }
+
+            cmcWindow = window.open(
+                'https://platform.cmcmarkets.com/#/preloader',
+                'CMCWindow',
+                features
+            );
+
+            // Style the new window if possible
+            if (cmcWindow) {
+                try {
+                    cmcWindow.document.body.style.backgroundColor = "#1d2120";
+                    cmcWindow.document.body.style.margin = "0";
+                    cmcWindow.document.body.style.padding = "20px";
+                } catch (e) {
+                    console.log("Styling restricted due to cross-origin policy");
+                }
+            }
+        }
+
+        // Cleanup when main window closes
+        window.addEventListener('beforeunload', () => {
+            if (cmcWindow && !cmcWindow.closed) {
+                cmcWindow.close();
+            }
+        });
+    </script>
+</body>
+</html>
