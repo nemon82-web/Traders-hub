@@ -194,18 +194,32 @@
             color: #A9A9A9;
             text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        #time-text:hover {
+            transform: scale(1.1);
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        #time-text:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         #day-name {
             position: absolute;
             bottom: -10px;
             right: -15px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.4rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
             cursor: pointer;
+            text-transform: uppercase;
         }
 
         #day-name:hover {
@@ -649,8 +663,8 @@
 <body>
     <!-- Main Time Display -->
     <div id="time-display">
-        <div id="time-text"></div>
-        <div id="day-name" onclick="openBBC()" role="button" tabindex="0"></div>
+        <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
+        <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
     </div>
 
     <!-- Left Charts -->
@@ -1055,7 +1069,7 @@
         // Update Time and Day
         function updateTime() {
             const now = new Date();
-            const dayName = now.toLocaleString('en-US', { weekday: 'long' });
+            const dayName = now.toLocaleString('en-US', { weekday: 'short' });
             document.getElementById('day-name').textContent = dayName;
             document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
             const options = { hour12: false };
@@ -1218,21 +1232,19 @@
         }
 
         function openBBC() {
-            const width = screen.width;
+            const width = screen.width / 3;
             const height = screen.height;
             const left = 0;
             const top = 0;
-            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width/3},height=${height},left=${left},top=${top}`);
+            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
         }
 
         function openCNBC() {
-            const bbcWidth = screen.width / 3;
             const width = screen.width / 3;
             const height = screen.height;
-            const left = bbcWidth;
+            const left = screen.width / 3;
             const top = 0;
-            window.open('https://www.cnbc.com/', '_blank', 
-                `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+            window.open('https://www.cnbc.com/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
         }
     </script>
 </body>
