@@ -1,32 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Pip Calculator Tab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator wartości pipsa</title>
     <style>
         body {
-            background: #1d2120; /* Matches the dark theme of the main website */
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
         }
-        .applet-container {
-            width: 255px; /* Matches applet width */
-            height: 410px; /* Matches applet height */
-            background: #2d3434; /* Secondary background for contrast */
-            border-radius: 10px; /* Rounded corners for a polished look */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        .calculator-container {
+            margin: 20px;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="applet-container">
-<script type="text/javascript">DukascopyApplet = {"type":"pip_calculator","params":{"header":true,"orientation":"landscape","pipAmount":"100","accountCurrency":"USD","availableInstruments":"l:","width":"527","defaultInstrument":"EUR/USD","resultColor":"#696969","height":"237","adv":"hover","lang":"pl"}};</script><script type="text/javascript" src="https://freeserv-static.dukascopy.com/2.0/core.js"></script>
+    <div class="calculator-container">
+        <div id="pip-value-calculator-58493"></div>
     </div>
+
+    <script src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+    <script>
+        RemoteCalc({
+            "Url": "https://www.cashbackforex.com",
+            "ContainerWidth": "665",
+            "DefaultInstrument": "EUR.USD",
+            "HighlightColor": "#ffff00",
+            "IsDisplayTitle": false,
+            "IsShowChartLinks": false,
+            "IsShowEmbedButton": false,
+            "Lang": "pl",
+            "AccountCurrency": "PLN",
+            "CompactType": "large",
+            "Calculator": "pip-value-calculator",
+            "ContainerId": "pip-value-calculator-58493"
+        });
+    </script>
 </body>
 </html>
-
-
