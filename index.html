@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables */
         :root {
             --primary-bg: #1d2120;  
             --secondary-bg: #2d3434;
@@ -20,6 +21,7 @@
             --border-radius: 45px;
         }
 
+        /* Reset and Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -38,6 +40,7 @@
             overflow: hidden;
         }
 
+        /* Left Charts */
         .left-charts {
             position: fixed;
             left: 20px;
@@ -123,7 +126,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border kvinn-radius: var(--border-radius);
+            border-radius: var(--border-radius);
             box-shadow: inset 0 0 18px #DAA520;
             pointer-events: none;
         }
@@ -168,15 +171,11 @@
             color: #DAA520;
         }
 
+        /* Main Time Display */
         #time-display {
             position: fixed;
-            top: 20px;
-            left: 29.5vw;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.0rem;
-            font-weight: 700;
-            color: #A9A9A9;
-            text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
+            top: -70px;
+            left: 27.5vw; /* Aligned with main chart's left edge */
             z-index: 1001;
             background: rgba(18, 18, 18, 0.85);
             padding: 10px 20px;
@@ -184,11 +183,43 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
             width: 210px;
+            position: relative;
+        }
+
+        #time-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.0rem;
+            font-weight: 700;
+            color: #A9A9A9;
+            text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             text-align: center;
         }
 
+        #day-name {
+            position: absolute;
+            bottom: -10px;
+            right: -15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #DAA520;
+            text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            cursor: pointer;
+        }
+
+        #day-name:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        #day-name:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-1);
+        }
+
+        /* Animations */
         @keyframes Pulse {
             0% { transform: scale(1); filter: brightness(1); }
             15% { transform: scale(1.2); filter: brightness(1.5); }
@@ -198,20 +229,20 @@
             100% { transform: scale(1); filter: brightness(1); }
         }
 
-        @keyframes bounce { 
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
-            40% { transform: translateY(-30px); } 
-            60% { transform: translateY(-15px); } 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
         }
 
-        @keyframes slideIn { 
-            from { transform: translateX(-100%); } 
-            to { transform: translateX(0); } 
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
         }
 
-        @keyframes rotate { 
-            from { transform: rotate(0deg); } 
-            to { transform: rotate(360deg); } 
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes shake {
@@ -227,11 +258,12 @@
             90% { transform: translate(-1%, -0.25%) rotate(-1deg); }
         }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
+        /* World Clocks */
         #world-clocks {
             position: fixed;
             top: 10px;
@@ -297,6 +329,7 @@
             color: #FFD700;
         }
 
+        /* ASCII Art */
         .ascii-art {
             position: fixed;
             top: 25px;
@@ -321,8 +354,9 @@
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
-        } 
+        }
 
+        /* TradingView Container */
         .tradingview-container {
             position: absolute;
             top: 52%;
@@ -359,6 +393,7 @@
             height: 100% !important;
         }
 
+        /* Bottom Right Widget */
         .bottom-right-widget {
             position: fixed;
             bottom: -70px;
@@ -367,6 +402,7 @@
             z-index: 1000;
         }
 
+        /* Media Queries */
         @media (max-width: 768px) {
             .left-charts {
                 display: none;
@@ -402,12 +438,12 @@
             }
         }
 
+        /* Calendar Containers */
         .calendar-container {
             position: fixed;
             transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        /* General rule for hover and locked states */
         .calendar-container:hover,
         .calendar-container.locked {
             right: 0 !important;
@@ -552,6 +588,7 @@
             to { opacity: 1; transform: translate(-50%, 0); }
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -565,6 +602,7 @@
             border-radius: 5px;
         }
 
+        /* Icon Tabs */
         .icon-tab {
             position: fixed;
             right: 15px;
@@ -609,7 +647,11 @@
     </style>
 </head>
 <body>
-    <div id="time-display">00:00:00</div>
+    <!-- Main Time Display -->
+    <div id="time-display">
+        <div id="time-text"></div>
+        <div id="day-name" onclick="openBBC()" role="button" tabindex="0"></div>
+    </div>
 
     <!-- Left Charts -->
     <div class="left-charts">
@@ -801,6 +843,7 @@
         </div>
     </div>
 
+    <!-- World Clocks -->
     <div id="world-clocks">
         <div class="world-clock">
             <div>Sydney</div>
@@ -824,6 +867,7 @@
         </div>
     </div>
 
+    <!-- ASCII Art -->
     <div class="ascii-art">
         <pre>
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
@@ -844,8 +888,9 @@
 --  ██║  ██║ ██║  ██║ ██╔══██╗
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
-    </div> 
+    </div>
 
+    <!-- TradingView Container -->
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
@@ -861,7 +906,7 @@
                 "backgroundColor": "#121212",
                 "show_popup_button": true,
                 "allow_symbol_change": true,
-                "save_image": false,
+                "save informants": false,
                 "watchlist": [
                      "🌍",
                     "EURUSD",
@@ -931,6 +976,7 @@
         </div>
     </div>
 
+    <!-- Calendar Containers -->
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
             <i class="fas fa-calendar" style="color: #2E8B57;"></i>
@@ -966,7 +1012,7 @@
         <iframe loading="lazy" src="myfxbook.html"></iframe>
     </div>
 
-    <!-- Clickable icons with images -->
+    <!-- Clickable Icons -->
     <div class="icon-tab" id="bbc-icon" title="Open BBC News" onclick="openBBC()"></div>
     <div class="icon-tab" id="cnbc-icon" title="Open CNBC" onclick="openCNBC()"></div>
 
@@ -1003,34 +1049,33 @@
         </div>
     </div>
 
+    <!-- JavaScript Libraries and Custom Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
     <script>
+        // Update Time and Day
         function updateTime() {
             const now = new Date();
-            document.getElementById('time-display').textContent = 
-                now.toLocaleTimeString('en-GB', {hour12: false});
-            const options = {hour12: false};
-            document.getElementById('sydney-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Australia/Sydney'});
-            document.getElementById('tokyo-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Asia/Tokyo'});
-            document.getElementById('london-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Europe/London'});
-            document.getElementById('newyork-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'America/New_York'});
+            const dayName = now.toLocaleString('en-US', { weekday: 'long' });
+            document.getElementById('day-name').textContent = dayName;
+            document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+            const options = { hour12: false };
+            document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });
+            document.getElementById('tokyo-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
+            document.getElementById('london-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
+            document.getElementById('newyork-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
         }
 
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Initialize slide sounds
+        // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide_out.mp3');
 
-        // Handle hover sound and locking for tabs
+        // Handle Calendar Tab Interactions
         const tabs = document.querySelectorAll('.calendar-tab');
         tabs.forEach(tab => {
-            let isHovered = false; // Track hover state to play sound only once per hover
+            let isHovered = false;
             const container = tab.parentElement;
 
             tab.addEventListener('mouseover', () => {
@@ -1041,7 +1086,7 @@
             });
 
             tab.addEventListener('mouseout', () => {
-                isHovered = false; // Reset hover state when mouse leaves
+                isHovered = false;
             });
 
             tab.addEventListener('click', (e) => {
@@ -1049,9 +1094,9 @@
                 const wasLocked = container.classList.contains('locked');
                 container.classList.toggle('locked');
                 if (!wasLocked) {
-                    slideSound.play(); // Play slide-in sound when locking
+                    slideSound.play();
                 } else {
-                    slideOutSound.play(); // Play slide-out sound when unlocking
+                    slideOutSound.play();
                 }
             });
 
@@ -1061,15 +1106,14 @@
                     const wasLocked = container.classList.contains('locked');
                     container.classList.toggle('locked');
                     if (!wasLocked) {
-                        slideSound.play(); // Play slide-in sound when locking
+                        slideSound.play();
                     } else {
-                        slideOutSound.play(); // Play slide-out sound when unlocking
+                        slideOutSound.play();
                     }
                 }
             });
         });
 
-        // Optional: Close locked tabs when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.calendar-container')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
@@ -1088,6 +1132,7 @@
             }
         });
 
+        // Market Countdowns
         const nasdaqOpen = { hour: 9, minute: 30, second: 0 };
         const nasdaqClose = { hour: 16, minute: 0, second: 0 };
         const nasdaqZone = 'America/New_York';
@@ -1147,6 +1192,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // External Link Functions
         function openCMC() {
             const width = 1500;
             const height = 900;

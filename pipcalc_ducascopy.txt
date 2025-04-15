@@ -1,0 +1,1 @@
+<script type="text/javascript">DukascopyApplet = {"type":"pip_calculator","params":{"header":false,"orientation":"portrait","pipAmount":"100","accountCurrency":"USD","defaultInstrument":"EUR/USD","resultColor":"#696969","width":"255","height":"410","adv":"popup"}};</script><script type="text/javascript" src="https://freeserv-static.dukascopy.com/2.0/core.js"></script>
