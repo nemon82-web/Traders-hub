@@ -615,49 +615,6 @@
             background: var(--accent-1);
             border-radius: 5px;
         }
-
-        /* Icon Tabs */
-        .icon-tab {
-            position: fixed;
-            right: 15px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-1);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-        }
-
-        .icon-tab:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        }
-
-        .icon-tab:active {
-            transform: scale(0.95);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        #bbc-icon {
-            top: 72vh;
-            background-color: var(--accent-3);
-            background-image: url('bbc.png');
-        }
-
-        #cnbc-icon {
-            top: 81vh;
-            background-color: var(--accent-4);
-            background-image: url('cnbc.png');
-        }
-
-        .icon-tab:hover {
-            transform: scale(1.5);
-            background-color: var(--accent-2);
-        }
     </style>
 </head>
 <body>
@@ -1025,10 +982,6 @@
         </div>
         <iframe loading="lazy" src="myfxbook.html"></iframe>
     </div>
-
-    <!-- Clickable Icons -->
-    <div class="icon-tab" id="bbc-icon" title="Open BBC News" onclick="openBBC()"></div>
-    <div class="icon-tab" id="cnbc-icon" title="Open CNBC" onclick="openCNBC()"></div>
 
     <!-- Bottom Right Ticker Widget -->
     <div class="bottom-right-widget">
