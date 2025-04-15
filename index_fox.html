@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NemoN FOX</title>
+    <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables */
         :root {
             --primary-bg: #1d2120;  
             --secondary-bg: #2d3434;
@@ -20,6 +21,7 @@
             --border-radius: 45px;
         }
 
+        /* Reset and Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -38,6 +40,7 @@
             overflow: hidden;
         }
 
+        /* Left Charts */
         .left-charts {
             position: fixed;
             left: 20px;
@@ -168,15 +171,11 @@
             color: #DAA520;
         }
 
+        /* Main Time Display */
         #time-display {
             position: fixed;
-            top: 20px;
-            left: 29.5vw;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.0rem;
-            font-weight: 700;
-            color: #A9A9A9;
-            text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
+            top: -70px;
+            left: 27.5vw; /* Aligned with main chart's left edge */
             z-index: 1001;
             background: rgba(18, 18, 18, 0.85);
             padding: 10px 20px;
@@ -184,11 +183,57 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
             width: 210px;
-            text-align: center;
+            position: relative;
         }
 
+        #time-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.0rem;
+            font-weight: 700;
+            color: #A9A9A9;
+            text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        #time-text:hover {
+            transform: scale(1.1);
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        #time-text:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-1);
+        }
+
+        #day-name {
+            position: absolute;
+            bottom: -10px;
+            right: -15px;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.4rem;
+            color: #DAA520;
+            text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        #day-name:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        #day-name:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-1);
+        }
+
+        /* Animations */
         @keyframes Pulse {
             0% { transform: scale(1); filter: brightness(1); }
             15% { transform: scale(1.2); filter: brightness(1.5); }
@@ -198,20 +243,20 @@
             100% { transform: scale(1); filter: brightness(1); }
         }
 
-        @keyframes bounce { 
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
-            40% { transform: translateY(-30px); } 
-            60% { transform: translateY(-15px); } 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
         }
 
-        @keyframes slideIn { 
-            from { transform: translateX(-100%); } 
-            to { transform: translateX(0); } 
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
         }
 
-        @keyframes rotate { 
-            from { transform: rotate(0deg); } 
-            to { transform: rotate(360deg); } 
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes shake {
@@ -227,11 +272,12 @@
             90% { transform: translate(-1%, -0.25%) rotate(-1deg); }
         }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
+        /* World Clocks */
         #world-clocks {
             position: fixed;
             top: 10px;
@@ -297,6 +343,7 @@
             color: #FFD700;
         }
 
+        /* ASCII Art */
         .ascii-art {
             position: fixed;
             top: 25px;
@@ -321,8 +368,9 @@
             line-height: 1.4;
             z-index: 500;
             pointer-events: none;
-        } 
+        }
 
+        /* TradingView Container */
         .tradingview-container {
             position: absolute;
             top: 52%;
@@ -359,6 +407,7 @@
             height: 100% !important;
         }
 
+        /* Bottom Right Widget */
         .bottom-right-widget {
             position: fixed;
             bottom: -70px;
@@ -367,6 +416,7 @@
             z-index: 1000;
         }
 
+        /* Media Queries */
         @media (max-width: 768px) {
             .left-charts {
                 display: none;
@@ -402,13 +452,18 @@
             }
         }
 
-        /* Calendar Container Styles */
+        /* Calendar Containers */
         .calendar-container {
             position: fixed;
             transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        /* Initial positions */
+        .calendar-container:hover,
+        .calendar-container.locked {
+            right: 0 !important;
+            border-radius: var(--border-radius);
+        }
+
         #economic-calendar {
             top: 50%;
             right: -650px;
@@ -446,22 +501,12 @@
         }
 
         #myfxbook-tab {
-            top: 70%;
+            top: 88%;
             right: -750px;
             transform: translateY(-50%);
             width: 750px;
             height: 600px;
             z-index: 1050;
-        }
-
-        /* Hover and Locked States */
-        .calendar-container:hover,
-        .calendar-container .calendar-tab:hover {
-            right: 0 !important;
-        }
-
-        .calendar-container.locked {
-            right: 0 !important;
         }
 
         .calendar-tab {
@@ -505,7 +550,7 @@
 
         #news-feed .calendar-tab {
             left: -45px;
-            top: 63%;
+            top: 50%;
             transform: translateY(-50%);
             width: 45px;
             height: 50px;
@@ -514,7 +559,7 @@
 
         #myfxbook-tab .calendar-tab {
             left: -45px;
-            top: 23%;
+            top: 15%;
             transform: translateY(-50%);
             width: 45px;
             height: 50px;
@@ -557,11 +602,12 @@
             to { opacity: 1; transform: translate(-50%, 0); }
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
 
-        ::- Apoinwebkit-scrollbar-track {
+        ::-webkit-scrollbar-track {
             background: var(--primary-bg);
         }
 
@@ -570,6 +616,7 @@
             border-radius: 5px;
         }
 
+        /* Icon Tabs */
         .icon-tab {
             position: fixed;
             right: 15px;
@@ -614,7 +661,11 @@
     </style>
 </head>
 <body>
-    <div id="time-display">00:00:00</div>
+    <!-- Main Time Display -->
+    <div id="time-display">
+        <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
+        <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
+    </div>
 
     <!-- Left Charts -->
     <div class="left-charts">
@@ -806,11 +857,12 @@
         </div>
     </div>
 
+    <!-- World Clocks -->
     <div id="world-clocks">
         <div class="world-clock">
             <div>Sydney</div>
             <div id="sydney-time">00:00:00</div>
-            <i class="fas fa-chart-line clickable-icon" onclick="openCMC()"></i>
+            <i class="fas fa-fire-alt clickable-icon" onclick="openCMC()"></i>
         </div>
         <div class="world-clock">
             <div>Tokyo</div>
@@ -829,6 +881,7 @@
         </div>
     </div>
 
+    <!-- ASCII Art -->
     <div class="ascii-art">
         <pre>
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
@@ -837,7 +890,7 @@
   ██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
   ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
   ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
-                         F O X
+                P O W E R E D  B Y  A I
         </pre>
     </div>
 
@@ -849,8 +902,9 @@
 --  ██║  ██║ ██║  ██║ ██╔══██╗
 --  ██╝  ██╝ ╚██████╝ ███████╝
         </pre>
-    </div> 
+    </div>
 
+    <!-- TradingView Container -->
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
@@ -866,7 +920,7 @@
                 "backgroundColor": "#121212",
                 "show_popup_button": true,
                 "allow_symbol_change": true,
-                "save_image": false,
+                "save informants": false,
                 "watchlist": [
                      "🌍",
                     "EURUSD",
@@ -921,6 +975,7 @@
                     "CAPITALCOM:UK100",
                     "FXOPEN:VIX",
                     "TRADU:VOLX",
+                    "CMCMARKETS:VOLINDEXK2025",
                     "CAPITALCOM:DXY",
                     "BTCUSD",
                     "⛏️ | 💰",
@@ -935,6 +990,7 @@
         </div>
     </div>
 
+    <!-- Calendar Containers -->
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
             <i class="fas fa-calendar" style="color: #2E8B57;"></i>
@@ -944,9 +1000,9 @@
 
     <div class="calendar-container" id="cmc-trader">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
-            <i class="fas fa-c" style="color: #4682B4;"></i>
+            <i class="fas fa-chart-line" style="color: #E4080A;"></i>
         </div>
-        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl" ></iframe>
+        <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -958,9 +1014,9 @@
 
     <div class="calendar-container" id="news-feed">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show News Feed">
-            <i class="fas fa-chart-line" style="color: #E4080A;"></i>
+            <i class="fas fa-c" style="color: #4682B4;"></i>
         </div>
-        <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
+        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -970,7 +1026,7 @@
         <iframe loading="lazy" src="myfxbook.html"></iframe>
     </div>
 
-    <!-- Clickable icons with images -->
+    <!-- Clickable Icons -->
     <div class="icon-tab" id="bbc-icon" title="Open BBC News" onclick="openBBC()"></div>
     <div class="icon-tab" id="cnbc-icon" title="Open CNBC" onclick="openCNBC()"></div>
 
@@ -1007,59 +1063,90 @@
         </div>
     </div>
 
+    <!-- JavaScript Libraries and Custom Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
     <script>
+        // Update Time and Day
         function updateTime() {
             const now = new Date();
-            document.getElementById('time-display').textContent = 
-                now.toLocaleTimeString('en-GB', {hour12: false});
-            const options = {hour12: false};
-            document.getElementById('sydney-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Australia/Sydney'});
-            document.getElementById('tokyo-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Asia/Tokyo'});
-            document.getElementById('london-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'Europe/London'});
-            document.getElementById('newyork-time').textContent = 
-                now.toLocaleTimeString('en-GB', {...options, timeZone: 'America/New_York'});
+            const dayName = now.toLocaleString('en-US', { weekday: 'short' });
+            document.getElementById('day-name').textContent = dayName;
+            document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+            const options = { hour12: false };
+            document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });
+            document.getElementById('tokyo-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
+            document.getElementById('london-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
+            document.getElementById('newyork-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
         }
 
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Initialize the slide sounds
+        // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
-        const slideOutSound = new Audio('slide_old.mp3');
+        const slideOutSound = new Audio('slide_out.mp3');
 
-        // Handle click to lock/unlock tabs
-        const calendarContainers = document.querySelectorAll('.calendar-container');
-        calendarContainers.forEach(container => {
-            const tab = container.querySelector('.calendar-tab');
+        // Handle Calendar Tab Interactions
+        const tabs = document.querySelectorAll('.calendar-tab');
+        tabs.forEach(tab => {
+            let isHovered = false;
+            const container = tab.parentElement;
 
-            tab.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent any default behavior
-                const wasAdded = container.classList.toggle('locked');
-                if (wasAdded) {
-                    slideSound.play(); // Play slide-in sound when locking
-                } else {
-                    slideOutSound.play(); // Play slide-out sound when unlocking
+            tab.addEventListener('mouseover', () => {
+                if (!isHovered && !container.classList.contains('locked')) {
+                    slideSound.play();
+                    isHovered = true;
                 }
             });
 
-            // Keyboard support for accessibility
+            tab.addEventListener('mouseout', () => {
+                isHovered = false;
+            });
+
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const wasLocked = container.classList.contains('locked');
+                container.classList.toggle('locked');
+                if (!wasLocked) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
+            });
+
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    const wasAdded = container.classList.toggle('locked');
-                    if (wasAdded) {
-                        slideSound.play(); // Play slide-in sound when locking
+                    const wasLocked = container.classList.contains('locked');
+                    container.classList.toggle('locked');
+                    if (!wasLocked) {
+                        slideSound.play();
                     } else {
-                        slideOutSound.play(); // Play slide-out sound when unlocking
+                        slideOutSound.play();
                     }
                 }
             });
         });
 
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.calendar-container')) {
+                document.querySelectorAll('.calendar-container.locked').forEach(container => {
+                    container.classList.remove('locked');
+                    slideOutSound.play();
+                });
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.calendar-container.locked').forEach(container => {
+                    container.classList.remove('locked');
+                    slideOutSound.play();
+                });
+            }
+        });
+
+        // Market Countdowns
         const nasdaqOpen = { hour: 9, minute: 30, second: 0 };
         const nasdaqClose = { hour: 16, minute: 0, second: 0 };
         const nasdaqZone = 'America/New_York';
@@ -1119,12 +1206,13 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // External Link Functions
         function openCMC() {
             const width = 1500;
             const height = 900;
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = 100;
-            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            window.open('https://nemon82-web.github.io/Traders-hub/feed.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function openHtsFx() {
@@ -1144,21 +1232,19 @@
         }
 
         function openBBC() {
-            const width = screen.width;
+            const width = screen.width / 3;
             const height = screen.height;
             const left = 0;
             const top = 0;
-            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width/3},height=${height},left=${left},top=${top}`);
+            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
         }
 
         function openCNBC() {
-            const bbcWidth = screen.width / 3;
             const width = screen.width / 3;
             const height = screen.height;
-            const left = bbcWidth;
+            const left = screen.width / 3;
             const top = 0;
-            window.open('https://www.cnbc.com/', '_blank', 
-                `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+            window.open('https://www.cnbc.com/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
         }
     </script>
 </body>
