@@ -1076,6 +1076,43 @@
         // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide_out.mp3');
+		
+		
+		
+// Mouse button controls for panels
+document.addEventListener('mousedown', function(e) {
+    // Prevent browser back/forward navigation
+    e.preventDefault();
+    
+    // Get target panel based on button
+    let targetPanel;
+    switch(e.button) {
+        case 3: // fwd btn
+            targetPanel = document.getElementById('notes');
+            break;
+   
+        case 4: // back btn
+            targetPanel = document.getElementById('news-feed');
+            break;
+     
+    }
+
+    if (targetPanel) {
+        const wasLocked = targetPanel.classList.contains('locked');
+        targetPanel.classList.toggle('locked');
+        
+        if (targetPanel.classList.contains('locked')) {
+            slideSound.play();
+        } else {
+            slideOutSound.play();
+        }
+    }
+});
+		
+		
+		
+		
+		
 
         // Handle Calendar Tab Interactions
         const tabs = document.querySelectorAll('.calendar-tab');
