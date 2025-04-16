@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iframe Diagnostic Tool v4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        #iframe-container {
+            border: 2px solid #e1e4e8;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        #diagnostics {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .green { background: #e6f4ea; color: #137333; }
+        .red { background: #fce8e6; color: #c5221f; }
+        .yellow { background: #fef7e0; color: #c28a05; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        #cors-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffeeba;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="cors-warning">
+            ⚠️ Cross-Origin Restrictions Active - Some diagnostics limited by security policies
+        </div>
+        
+        <div id="iframe-container">
+            <iframe src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl" 
+                    id="main-iframe"></iframe>
+        </div>
+        
+        <div id="diagnostics">
+            <h2>Iframe Diagnostics</h2>
+            
+            <div id="status" class="status-box yellow">
+                <strong>Status:</strong> Initializing...
+            </div>
+            
+            <div id="security-headers">
+                <h3>Security Headers Analysis</h3>
+                <pre id="headers-output">Analyzing response headers...</pre>
+            </div>
+            
+            <div id="network-info">
+                <h3>Network Performance</h3>
+                <pre id="timing-output"></pre>
+            </div>
+            
+            <div id="console-log">
+                <h3>Security Events & Errors</h3>
+                <pre id="console-output"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const iframe = document.getElementById('main-iframe');
+        const statusBox = document.getElementById('status');
+        const headersOutput = document.getElementById('headers-output');
+        const timingOutput = document.getElementById('timing-output');
+        const consoleOutput = document.getElementById('console-output');
+
+        // Enhanced event listeners
+        iframe.addEventListener('load', () => {
+            statusBox.className = 'status-box green';
+            statusBox.innerHTML = `<strong>Status:</strong> Frame loaded (content may be restricted)`;
+            updateNetworkTiming();
+            checkIframeVisibility();
+        });
+
+        iframe.addEventListener('error', () => {
+            statusBox.className = 'status-box red';
+            statusBox.innerHTML = `<strong>Status:</strong> Failed to load frame`;
+        });
+
+        // Secure header checking with CORS proxy
+        async function checkHeaders() {
+            try {
+                const proxyUrl = 'https://corsproxy.io/?';
+                const targetUrl = encodeURIComponent(iframe.src);
+                const response = await fetch(proxyUrl + targetUrl, {
+                    method: 'HEAD',
+                    redirect: 'manual',
+                    headers: { 'X-Requested-With': 'iframe-diagnostic-tool' }
+                });
+
+                const headers = {};
+                for (const [key, value] of response.headers) {
+                    headers[key.toLowerCase()] = value;
+                }
+
+                headersOutput.textContent = JSON.stringify(headers, null, 2);
+                analyzeSecurityHeaders(headers);
+
+            } catch (error) {
+                headersOutput.textContent = `Header Analysis Failed:\n${error.message}`;
+                statusBox.innerHTML += `<br><span class="red">❌ Header check failed (CORS restrictions)</span>`;
+            }
+        }
+
+        function analyzeSecurityHeaders(headers) {
+            const securityIssues = [];
+            
+            if (headers['x-frame-options']) {
+                securityIssues.push(`X-Frame-Options: ${headers['x-frame-options']}`);
+            }
+            
+            if (headers['content-security-policy']?.includes('frame-ancestors')) {
+                securityIssues.push(`CSP frame-ancestors present`);
+            }
+            
+            if (securityIssues.length > 0) {
+                statusBox.innerHTML += `<br><span class="red">🔒 Blocking Headers: ${securityIssues.join(', ')}</span>`;
+            }
+        }
+
+        // Safe visibility check
+        function checkIframeVisibility() {
+            try {
+                const rect = iframe.getBoundingClientRect();
+                const style = window.getComputedStyle(iframe);
+                
+                let issues = [];
+                if (rect.width < 10) issues.push(`${rect.width}px width`);
+                if (rect.height < 10) issues.push(`${rect.height}px height`);
+                if (style.opacity < 0.1) issues.push(`opacity ${style.opacity}`);
+                if (style.visibility === 'hidden') issues.push('visibility:hidden');
+                
+                if (issues.length > 0) {
+                    statusBox.innerHTML += `<br><span class="red">👀 Visibility issues: ${issues.join(', ')}</span>`;
+                }
+                
+            } catch (error) {
+                consoleOutput.textContent += `\n[Security] ${error.message}`;
+            }
+        }
+
+        // Network timing analysis
+        function updateNetworkTiming() {
+            const resources = performance.getEntriesByType('resource');
+            const iframeLoad = resources.find(r => r.name === iframe.src);
+            
+            if (iframeLoad) {
+                timingOutput.textContent = `
+DNS: ${iframeLoad.domainLookupEnd - iframeLoad.domainLookupStart}ms
+TCP: ${iframeLoad.connectEnd - iframeLoad.connectStart}ms
+SSL: ${iframeLoad.secureConnectionStart > 0 ? 
+                    iframeLoad.connectEnd - iframeLoad.secureConnectionStart : 0}ms
+TTFB: ${iframeLoad.responseStart - iframeLoad.requestStart}ms
+Download: ${iframeLoad.responseEnd - iframeLoad.responseStart}ms
+Total: ${iframeLoad.duration}ms`;
+            }
+        }
+
+        // Error handling system
+        let errorCount = 0;
+        const errorHandler = {
+            logError: (message) => {
+                errorCount++;
+                consoleOutput.textContent += `\n[${new Date().toLocaleTimeString()}] ${message}`;
+                statusBox.innerHTML += `<br><span class="red">❗ Errors: ${errorCount}</span>`;
+            }
+        };
+
+        // Monitor security events
+        window.addEventListener('securitypolicyviolation', (e) => {
+            errorHandler.logError(`Security violation: ${e.blockedURI}`);
+        });
+
+        // Capture console errors
+        const originalError = console.error;
+        console.error = (...args) => {
+            originalError(...args);
+            errorHandler.logError(args.join(' '));
+        };
+
+        // Initialize diagnostics
+        checkHeaders();
+        const diagInterval = setInterval(() => {
+            checkIframeVisibility();
+            updateNetworkTiming();
+        }, 3000);
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            clearInterval(diagInterval);
+        });
+    </script>
+</body>
+</html>
