@@ -349,14 +349,48 @@
             color: #FFD700;
         }
 
-        /* Existing ASCII Art CSS */
-        .ascii-art {
+        /* Existing rabbit Art CSS */
+        .rabbit-art {
             position: fixed;
             top: 15px;
             right: 15px;
             z-index: 500;
             pointer-events: none;
         }
+		
+		 /* CSS for the rabbit image */
+        .rabbit-image {
+            width: 120px;
+            height: auto;
+            animation: Pulse 4s infinite ease-in-out;
+        }
+		
+		
+		
+		
+		
+	
+        .ascii-trend {
+            position: fixed;
+            top: 5px;
+            right: 180px;
+            z-index: 500;
+            pointer-events: none;
+        }
+		
+		 /* CSS for the trend image */
+        .trend-image {
+            width: 120px;
+            height: auto;
+            
+        }
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		        
@@ -369,12 +403,7 @@
             pointer-events: none;
         }
 
-        /* CSS for the rabbit image */
-        .rabbit-image {
-            width: 120px;
-            height: auto;
-            animation: Pulse 4s infinite ease-in-out;
-        }
+ 
 
         /* CSS for the alice image */
         .alice-image {
@@ -918,9 +947,16 @@
     </div>
 
     <!-- Rabbit Image -->
-    <div class="ascii-art">
+    <div class="rabbit-art">
         <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
+	
+	
+	    <!-- Trend Image -->
+    <div class="ascii-trend">
+        <img src="trend.png" alt="Follow me!" class="trend-image">
+    </div>
+	
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
