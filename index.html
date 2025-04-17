@@ -277,6 +277,12 @@
             to { opacity: 1; }
         }
 
+        @keyframes AlicePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         /* World Clocks */
         #world-clocks {
             position: fixed;
@@ -352,20 +358,32 @@
             pointer-events: none;
         }
 
-        /* CSS for the pulsing image */
-        .pulse-image {
-            width: 120px; /* Size for rabbit image */
+        /* CSS for the rabbit image */
+        .rabbit-image {
+            width: 120px;
             height: auto;
             animation: Pulse 4s infinite ease-in-out;
         }
 
-        /* CSS for alice image positioning and size */
-        .bottom-left-image {
+        /* CSS for the alice image */
+        .alice-image {
+            animation: AlicePulse 2s infinite ease-in-out;
+        }
+
+        /* CSS for the kurvix image */
+        .kurvix-container {
             position: absolute;
-            top: 90px;
-            right: 120px;
+            bottom: 5px;
+            left: 31%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .kurvix-image {
+            width: 150px;
+            height: auto;
+            animation: shake 2s infinite;
             pointer-events: none;
-            width: 70px; /* Size for alice image */
         }
 
         /* TradingView Container */
@@ -644,6 +662,15 @@
             background: var(--accent-1);
             border-radius: 5px;
         }
+
+        /* CSS for the bottom-left image (Alice positioning and size) */
+        .bottom-left-image {
+            position: absolute;
+            top: 90px;
+            right: 120px;
+            pointer-events: none;
+            width: 70px; /* Size for alice image */
+        }
     </style>
 </head>
 <body>
@@ -867,7 +894,7 @@
         </div>
     </div>
 
-    <!-- ASCII Art -->
+    <!-- ASCII Art Old -->
     <div class="ascii-art_old">
         <pre>
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
@@ -879,9 +906,9 @@
         </pre>
     </div>
 
-    <!-- Replace the ASCII Art with your image -->
+    <!-- Rabbit Image -->
     <div class="ascii-art">
-        <img src="rabbit.png" alt="Animated Rabbit" class="pulse-image">
+        <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
 
     <!-- TradingView Container -->
@@ -1005,7 +1032,7 @@
             <i class="fas fa-chart-line" style="color: #E4080A;"></i> 
         </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="alice.png" alt="Alice" class="pulse-image bottom-left-image">
+        <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1046,6 +1073,11 @@
             }
             </script>
         </div>
+    </div>
+
+    <!-- Kurvix Image -->
+    <div class="kurvix-container">
+        <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
     </div>
 
     <!-- JavaScript Libraries and Custom Scripts -->
