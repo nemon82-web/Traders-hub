@@ -213,3 +213,7 @@ letters = {
 for char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
     print('\n'.join(letters[char]))
     print()
+	
+	
+	
+	
