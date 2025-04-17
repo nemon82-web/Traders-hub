@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
+    <meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
     <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -234,14 +234,13 @@
             box-shadow: 0 0 0 2px var(--accent-1);
         }
 
-        /* Animations */
         @keyframes Pulse {
-            0% { transform: scale(1); filter: brightness(1); }
-            15% { transform: scale(1.2); filter: brightness(1.5); }
-            30% { transform: scale(0.95); filter: brightness(0.9); }
-            45% { transform: scale(1.1); filter: brightness(1.3); }
-            60% { transform: scale(0.98); filter: brightness(1.1); }
-            100% { transform: scale(1); filter: brightness(1); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
+            15% { transform: scale(1.2); filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
+            30% { transform: scale(0.95); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+            45% { transform: scale(1.1); filter: drop-shadow(0 0 10px rgba(255,255,255,0.6)); }
+            60% { transform: scale(0.98); filter: drop-shadow(0 0 7px rgba(255,255,255,0.4)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
         }
 
         @keyframes bounce {
@@ -344,34 +343,29 @@
             color: #FFD700;
         }
 
-   /* Existing ASCII Art CSS - Modify it */
-.ascii-art {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 500;
-    pointer-events: none;
-    /* Remove font-related properties */
-}
-
-/* New CSS for the pulsing image */
-.pulse-image {
-    width: 120px; /* Adjust based on your image size */
-    height: auto;
-    animation: Pulse 4s infinite ease-in-out;
-}
-
-        .ascii-artHTS {
-            display: none !important;
+        /* Existing ASCII Art CSS */
+        .ascii-art {
             position: fixed;
-            top: 40px;
-            right: 70px;
-            color: #A9A9A9;
-            font-family: 'Courier New', monospace;
-            font-size: 0.5rem;
-            line-height: 1.4;
+            top: 15px;
+            right: 15px;
             z-index: 500;
             pointer-events: none;
+        }
+
+        /* CSS for the pulsing image */
+        .pulse-image {
+            width: 120px; /* Size for rabbit image */
+            height: auto;
+            animation: Pulse 4s infinite ease-in-out;
+        }
+
+        /* CSS for alice image positioning and size */
+        .bottom-left-image {
+            position: absolute;
+            top: 50px;
+            left: 250px;
+            pointer-events: none;
+            width: 70px; /* Size for alice image */
         }
 
         /* TradingView Container */
@@ -873,19 +867,21 @@
         </div>
     </div>
 
- <!-- Replace the ASCII Art with your image -->
-<div class="ascii-art">
-    <img src="rabbit.png" alt="Animated Rabbit" class="pulse-image">
-</div>
-
-    <div class="ascii-artHTS">
+    <!-- ASCII Art -->
+    <div class="ascii-art_old">
         <pre>
---  ██╗  ██╗ ██╗  ██╗ ███████╗
---  ██║  ██║ ██║  ██║ ██╔══██╗
---  ███████║ ██║  ██║ ██████╔╝
---  ██║  ██║ ██║  ██║ ██╔══██╗
---  ██╝  ██╝ ╚██████╝ ███████╝
+  ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
+  ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
+  ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
+  ██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
+  ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
+  ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
         </pre>
+    </div>
+
+    <!-- Replace the ASCII Art with your image -->
+    <div class="ascii-art">
+        <img src="rabbit.png" alt="Animated Rabbit" class="pulse-image">
     </div>
 
     <!-- TradingView Container -->
@@ -960,7 +956,7 @@
                     "FXOPEN:VIX",
                     "TRADU:VOLX",
                     "CMCMARKETS:VOLINDEXK2025",
-					"CMCMARKETS:VOLINDEXM2025",
+                    "CMCMARKETS:VOLINDEXM2025",
                     "CAPITALCOM:DXY",
                     "BTCUSD",
                     "⛏️ | 💰",
@@ -1009,6 +1005,7 @@
             <i class="fas fa-chart-line" style="color: #E4080A;"></i> 
         </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
+        <img src="alice.png" alt="Alice" class="pulse-image bottom-left-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1073,47 +1070,37 @@
         // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide_out.mp3');
-		
-		
-		
-// Mouse button controls for panels
-document.addEventListener('mousedown', function(e) {
-    // Prevent browser back/forward navigation
-    e.preventDefault();
-    
-    // Get target panel based on button
-    let targetPanel;
-    switch(e.button) {
-        case 3: // fwd btn
-            targetPanel = document.getElementById('week-calendar');
-            break;
-   
-        case 4: // back btn
-            targetPanel = document.getElementById('economic-calendar');
-            break;
-			
-			case 1: // mid btn
-            targetPanel = document.getElementById('ctrader');
-            break;
-     
-    }
 
-    if (targetPanel) {
-        const wasLocked = targetPanel.classList.contains('locked');
-        targetPanel.classList.toggle('locked');
-        
-        if (targetPanel.classList.contains('locked')) {
-            slideSound.play();
-        } else {
-            slideOutSound.play();
-        }
-    }
-});
-		
-		
-		
-		
-		
+        // Mouse button controls for panels
+        document.addEventListener('mousedown', function(e) {
+            // Prevent browser back/forward navigation
+            e.preventDefault();
+            
+            // Get target panel based on button
+            let targetPanel;
+            switch(e.button) {
+                case 3: // fwd btn
+                    targetPanel = document.getElementById('week-calendar');
+                    break;
+                case 4: // back btn
+                    targetPanel = document.getElementById('economic-calendar');
+                    break;
+                case 1: // mid btn
+                    targetPanel = document.getElementById('ctrader');
+                    break;
+            }
+
+            if (targetPanel) {
+                const wasLocked = targetPanel.classList.contains('locked');
+                targetPanel.classList.toggle('locked');
+                
+                if (targetPanel.classList.contains('locked')) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
+            }
+        });
 
         // Handle Calendar Tab Interactions
         const tabs = document.querySelectorAll('.calendar-tab');
