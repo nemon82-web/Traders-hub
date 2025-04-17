@@ -1,46 +1,117 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator wartości pipsa</title>
+    <title>Mouse Button Debug Tool</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f0f2f5;
-        }
-        .calculator-container {
-            margin: 20px;
             padding: 20px;
+        }
+
+        #display {
+            font-size: 8rem;
+            text-shadow: 0 0 15px #00ff00;
+            margin: 2rem 0;
+            user-select: none;
+        }
+
+        #info {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #00ff00;
+        }
+
+        #event-log {
+            margin-top: 20px;
+            height: 200px;
+            overflow-y: auto;
+            background: #000;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .log-entry {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            color: #00ff00;
+            font-family: monospace;
         }
     </style>
 </head>
 <body>
-    <div class="calculator-container">
-        <div id="pip-value-calculator-58493"></div>
+    <div id="display">← Click Any Mouse Button →</div>
+    
+    <div id="info">
+        <h2>MX Master 3 Debug Tool</h2>
+        <p>Press any mouse button to see its number and corresponding action:</p>
+        
+        <div id="event-log"></div>
+        
+        <h3>Typical MX Master 3 Mapping:</h3>
+        <ul>
+            <li>0: Left Click</li>
+            <li>1: Middle Click/Wheel Press</li>
+            <li>2: Right Click</li>
+            <li>3: Back Button (Thumb Top)</li>
+            <li>4: Forward Button (Thumb Bottom)</li>
+            <li>5: Gesture Button (Thumb Rest)</li>
+        </ul>
     </div>
 
-    <script src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
     <script>
-        RemoteCalc({
-            "Url": "https://www.cashbackforex.com",
-            "ContainerWidth": "665",
-            "DefaultInstrument": "EUR.USD",
-            "HighlightColor": "#ffff00",
-            "IsDisplayTitle": false,
-            "IsShowChartLinks": false,
-            "IsShowEmbedButton": false,
-            "Lang": "pl",
-            "AccountCurrency": "eur",
-            "CompactType": "large",
-            "Calculator": "pip-value-calculator",
-            "ContainerId": "pip-value-calculator-58493"
-        });
+        const display = document.getElementById('display');
+        const eventLog = document.getElementById('event-log');
+        const buttonNames = {
+            0: 'Left Click',
+            1: 'Middle Click',
+            2: 'Right Click',
+            3: 'Back Button',
+            4: 'Forward Button',
+            5: 'Gesture Button',
+            6: 'Extra Button 6',
+            7: 'Extra Button 7'
+        };
+
+        function handleMouseEvent(e) {
+            e.preventDefault();
+            const btn = e.button;
+            
+            // Update main display
+            display.textContent = `Button: ${btn}`;
+            
+            // Create log entry
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = `${new Date().toLocaleTimeString()} - ${e.type} - Button: ${btn} (${buttonNames[btn] || 'Unknown'}) [X:${e.clientX}, Y:${e.clientY}]`;
+            
+            // Add to log (keep only last 10 entries)
+            eventLog.prepend(logEntry);
+            if (eventLog.children.length > 10) {
+                eventLog.removeChild(eventLog.lastChild);
+            }
+
+            // Flash effect
+            display.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                display.style.transform = 'scale(1)';
+            }, 100);
+        }
+
+        // Listen to all mouse events
+        document.addEventListener('mousedown', handleMouseEvent);
+        document.addEventListener('mouseup', handleMouseEvent);
+        document.addEventListener('mousemove', handleMouseEvent);
     </script>
 </body>
 </html>
