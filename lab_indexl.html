@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
     <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -343,19 +344,22 @@
             color: #FFD700;
         }
 
-        /* ASCII Art */
-        .ascii-art {
-            position: fixed;
-            top: 25px;
-            right: 30px;
-            color: #A9A9A9;
-            font-family: 'Courier New', monospace;
-            font-size: 0.5rem;
-            line-height: 1.4;
-            z-index: 500;
-            pointer-events: none;
-            animation: Pulse 4s infinite ease-in-out;
-        }
+   /* Existing ASCII Art CSS - Modify it */
+.ascii-art {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 500;
+    pointer-events: none;
+    /* Remove font-related properties */
+}
+
+/* New CSS for the pulsing image */
+.pulse-image {
+    width: 120px; /* Adjust based on your image size */
+    height: auto;
+    animation: Pulse 4s infinite ease-in-out;
+}
 
         .ascii-artHTS {
             display: none !important;
@@ -484,11 +488,11 @@
             z-index: 1100;
         }
 
-        #cmc-trader {
+        #surprise {
             top: 50%;
-            right: -70.5vw;
+            right: -50.5vw;
             transform: translateY(-50%);
-            width: 70.5vw;
+            width: 50.5vw;
             height: 100vh;
             z-index: 1290;
         }
@@ -502,7 +506,7 @@
             z-index: 1080;
         }
 
-        #news-feed {
+        #cmc-markets {
             top: 50%;
             right: -70.5vw;
             transform: translateY(-50%);
@@ -520,12 +524,12 @@
             z-index: 1050;
         }
 
-        #notes {
-            top: -90vh;
+        #ctrader {
+            top: -75vh;
             left: 0;
             width: 100vw;
-            height: 90vh;
-            z-index: 1150;
+            height: 75vh;
+            z-index: 1350;
         }
 
         .calendar-tab {
@@ -546,8 +550,8 @@
             top: 100%;
             transform: translateX(-50%);
             width: 50px;
-            height: 35px;
-            border-radius: 0 0 25px 25px;
+            height: 45px;
+            border-radius: 0 0 15px 15px;
         }
 
         #economic-calendar .calendar-tab {
@@ -568,7 +572,7 @@
             border-radius: 15px 0 0 15px;
         }
 
-        #cmc-trader .calendar-tab {
+        #surprise .calendar-tab {
             left: -45px;
             top: 40%;
             transform: translateY(-50%);
@@ -577,7 +581,7 @@
             border-radius: 15px 0 0 15px;
         }
 
-        #news-feed .calendar-tab {
+        #cmc-markets .calendar-tab {
             left: -45px;
             top: 50%;
             transform: translateY(-50%);
@@ -595,7 +599,7 @@
             border-radius: 15px 0 0 15px;
         }
 
-        /* Note: #notes .calendar-tab is overridden by .slide-top .calendar-tab */
+        /* Note: #ctrader .calendar-tab is overridden by .slide-top .calendar-tab */
 
         .calendar-tab i {
             font-size: 1.6rem;
@@ -613,7 +617,7 @@
             transform: scale(1.2);
         }
 
-        #news-feed .calendar-tab:hover {
+        #cmc-markets .calendar-tab:hover {
             background: var(--accent-4);
         }
 
@@ -869,17 +873,10 @@
         </div>
     </div>
 
-    <!-- ASCII Art -->
-    <div class="ascii-art">
-        <pre>
-  ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
-  ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
-  ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
-  ██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
-  ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
-  ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
-        </pre>
-    </div>
+ <!-- Replace the ASCII Art with your image -->
+<div class="ascii-art">
+    <img src="rabbit.png" alt="Animated Rabbit" class="pulse-image">
+</div>
 
     <div class="ascii-artHTS">
         <pre>
@@ -898,7 +895,7 @@
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
             {
                 "autosize": true,
-                "symbol": "FX:NZDUSD",
+                "symbol": "FX:EURUSD",
                 "interval": "60",
                 "timezone": "Europe/Warsaw",
                 "theme": "dark",
@@ -986,11 +983,11 @@
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%232E8B57&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div class="calendar-container" id="cmc-trader">
+    <div class="calendar-container" id="surprise">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
-            <i class="fas fa-chart-line" style="color: #E4080A;"></i>
+            <i class="fas fa-surprise" style="color: white"></i>
         </div>
-        <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
+        <iframe loading="lazy" src="pip.html"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -1000,16 +997,16 @@
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div class="calendar-container" id="news-feed">
+    <div class="calendar-container" id="cmc-markets">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show News Feed">
             <i class="fas fa-c" style="color: #4682B4;"></i>
         </div>
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
     </div>
 
-    <div class="calendar-container slide-top" id="notes">
+    <div class="calendar-container slide-top" id="ctrader">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show PIP Calculator">
-            <i class="fa-solid fa-chart-simple" style="color: green;"></i> 
+            <i class="fas fa-chart-line" style="color: #E4080A;"></i> 
         </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
     </div>
@@ -1088,11 +1085,15 @@ document.addEventListener('mousedown', function(e) {
     let targetPanel;
     switch(e.button) {
         case 3: // fwd btn
-            targetPanel = document.getElementById('notes');
+            targetPanel = document.getElementById('week-calendar');
             break;
    
         case 4: // back btn
-            targetPanel = document.getElementById('news-feed');
+            targetPanel = document.getElementById('economic-calendar');
+            break;
+			
+			case 1: // mid btn
+            targetPanel = document.getElementById('ctrader');
             break;
      
     }
