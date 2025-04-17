@@ -1,117 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Mouse Button Debug Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przełączanie na Śledzenie Trendu</title>
     <style>
         body {
-            background: #1a1a1a;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
             padding: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #333;
         }
-
-        #display {
-            font-size: 8rem;
-            text-shadow: 0 0 15px #00ff00;
-            margin: 2rem 0;
-            user-select: none;
+        h1, h2, h3 {
+            color: #2c3e50;
         }
-
-        #info {
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #00ff00;
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
         }
-
-        #event-log {
-            margin-top: 20px;
-            height: 200px;
-            overflow-y: auto;
-            background: #000;
-            padding: 10px;
+        ul, ol {
+            margin-left: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 15px;
+            display: block;
+            overflow-x: auto;
             border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
         }
-
-        .log-entry {
-            font-size: 0.9rem;
-            margin: 5px 0;
-            color: #00ff00;
-            font-family: monospace;
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .section {
+            margin-bottom: 40px;
         }
     </style>
 </head>
 <body>
-    <div id="display">← Click Any Mouse Button →</div>
-    
-    <div id="info">
-        <h2>MX Master 3 Debug Tool</h2>
-        <p>Press any mouse button to see its number and corresponding action:</p>
-        
-        <div id="event-log"></div>
-        
-        <h3>Typical MX Master 3 Mapping:</h3>
+    <h1>Przełączanie na Śledzenie Trendu</h1>
+
+    <div class="section">
+        <h2>Czym Jest Śledzenie Trendu?</h2>
+        <p>
+            Śledzenie trendu to strategia handlowa polegająca na identyfikacji kierunku ruchu rynkowego i podążaniu za nim. W przeciwieństwie do prób łapania szczytów i dołków, które wymagają precyzyjnego przewidywania punktów zwrotnych, śledzenie trendu wykorzystuje momentum rynku, co może prowadzić do dłuższych i bardziej stabilnych zysków.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Dlaczego Warto Wybrać Śledzenie Trendu?</h2>
         <ul>
-            <li>0: Left Click</li>
-            <li>1: Middle Click/Wheel Press</li>
-            <li>2: Right Click</li>
-            <li>3: Back Button (Thumb Top)</li>
-            <li>4: Forward Button (Thumb Bottom)</li>
-            <li>5: Gesture Button (Thumb Rest)</li>
+            <li><strong>Mniejsze ryzyko:</strong> Unikasz prób przewidywania reversal'i, co jest trudne i często prowadzi do strat.</li>
+            <li><strong>Prostota:</strong> Strategia jest intuicyjna i łatwa do wdrożenia.</li>
+            <li><strong>Potencjał zysków:</strong> Możesz wykorzystać duże ruchy rynkowe zamiast skupiać się na małych oscylacjach.</li>
         </ul>
     </div>
 
-    <script>
-        const display = document.getElementById('display');
-        const eventLog = document.getElementById('event-log');
-        const buttonNames = {
-            0: 'Left Click',
-            1: 'Middle Click',
-            2: 'Right Click',
-            3: 'Back Button',
-            4: 'Forward Button',
-            5: 'Gesture Button',
-            6: 'Extra Button 6',
-            7: 'Extra Button 7'
-        };
+    <div class="section">
+        <h2>Wskaźnik HTS_NemoN_simple</h2>
+        <p>
+            Wskaźnik <code>HTS_NemoN_simple</code> to narzędzie oparte na średnich kroczących, które pomaga identyfikować trendy. Wykorzystuje dwie wstęgi: szybką i wolną, obliczane na podstawie cen wysokich i niskich.
+        </p>
+        <h3>Jak Działa Wskaźnik?</h3>
+        <p>
+            - <strong>Szybka średnia krocząca (Fast MA):</strong> Obliczona na podstawie cen wysokich i niskich w krótszym okresie (domyślnie 33).<br>
+            - <strong>Wolna średnia krocząca (Slow MA):</strong> Obliczona na podstawie cen wysokich i niskich w dłuższym okresie (domyślnie 144).
+        </p>
+        <p>
+            Wskaźnik rysuje dwie wstęgi:
+        </p>
+        <ul>
+            <li><strong>Szybka wstęga:</strong> Pomiędzy szybką MA wysoką a niską.</li>
+            <li><strong>Wolna wstęga:</strong> Pomiędzy wolną MA wysoką a niską.</li>
+        </ul>
+        <p>
+            Kluczowe sygnały generowane są przez przecięcia tych wstęg:
+        </p>
+        <ul>
+            <li><strong>Sygnał byczy (Bullish Crossover):</strong> Gdy dolna linia szybkiej wstęgi przecina górną linię wolnej wstęgi w górę – znak możliwego trendu wzrostowego.</li>
+            <li><strong>Sygnał niedźwiedzi (Bearish Crossunder):</strong> Gdy górna linia szybkiej wstęgi przecina dolną linię wolnej wstęgi w dół – znak możliwego trendu spadkowego.</li>
+        </ul>
+        <p>
+            Przecięcia są dodatkowo oznaczone na wykresie: zieloną kropką dla sygnału byczego i czerwoną dla sygnału niedźwiedziego.
+        </p>
+    </div>
 
-        function handleMouseEvent(e) {
-            e.preventDefault();
-            const btn = e.button;
-            
-            // Update main display
-            display.textContent = `Button: ${btn}`;
-            
-            // Create log entry
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            logEntry.textContent = `${new Date().toLocaleTimeString()} - ${e.type} - Button: ${btn} (${buttonNames[btn] || 'Unknown'}) [X:${e.clientX}, Y:${e.clientY}]`;
-            
-            // Add to log (keep only last 10 entries)
-            eventLog.prepend(logEntry);
-            if (eventLog.children.length > 10) {
-                eventLog.removeChild(eventLog.lastChild);
-            }
+    <div class="section">
+        <h2>Jak Używać Wskaźnika do Śledzenia Trendu?</h2>
+        <ol>
+            <li>Dodaj wskaźnik <code>HTS_NemoN_simple</code> do swojego wykresu na TradingView.</li>
+            <li>Obserwuj sygnały:
+                <ul>
+                    <li><strong>Zielona kropka (sygnał byczy):</strong> Rozważ otwarcie pozycji długiej (kupno).</li>
+                    <li><strong>Czerwona kropka (sygnał niedźwiedzi):</strong> Rozważ otwarcie pozycji krótkiej (sprzedaż) lub zamknięcie pozycji długiej.</li>
+                </ul>
+            </li>
+            <li>Dostosuj długości średnich kroczących (Fast MA i Slow MA) w ustawieniach, jeśli chcesz dopasować wskaźnik do swojego stylu handlu lub instrumentu.</li>
+        </ol>
+    </div>
 
-            // Flash effect
-            display.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                display.style.transform = 'scale(1)';
-            }, 100);
-        }
+    <div class="section">
+        <h2>Przykłady Wizualne</h2>
+        <p>
+            Poniżej znajdziesz przykłady, jak wskaźnik wygląda na wykresie. (Uwaga: W rzeczywistej implementacji dodaj zrzuty ekranu z TradingView pokazujące sygnały bycze i niedźwiedzie).
+        </p>
+        <img src="przyklad_byczy.png" alt="Przykład sygnału byczego">
+        <img src="przyklad_niedzwiedzi.png" alt="Przykład sygnału niedźwiedziego">
+    </div>
 
-        // Listen to all mouse events
-        document.addEventListener('mousedown', handleMouseEvent);
-        document.addEventListener('mouseup', handleMouseEvent);
-        document.addEventListener('mousemove', handleMouseEvent);
-    </script>
+    <div class="section">
+        <h2>Kod Wskaźnika Pine Script</h2>
+        <p>
+            Skopiuj poniższy kod i wklej go do edytora Pine Script na TradingView, aby dodać wskaźnik do swojego wykresu:
+        </p>
+        <code>
+            //@version=6
+            indicator("HTS_NemoN_simple", overlay=true)
+
+            // Wejścia
+            lenFast = input.int(33, "Długość szybkiej MA", minval=1)
+            lenSlow = input.int(144, "Długość wolnej MA", minval=1)
+
+            // Dostosowanie wizualne
+            HTSFastColor = input.color(#00bbd480, "Kolor szybkiej wstęgi")
+            HTSSlowColor = input.color(#ff525280, "Kolor wolnej wstęgi")
+            lineWidth = input.int(1, "Grubość linii", minval=1, maxval=5)
+
+            // Walidacja
+            if lenFast >= lenSlow
+                runtime.error("Długość szybkiej MA musi być mniejsza niż wolnej MA")
+
+            // Obliczenia
+            HTSFastHigh = ta.rma(high, lenFast)
+            HTSFastLow = ta.rma(low, lenFast)
+            HTSSlowHigh = ta.rma(high, lenSlow)
+            HTSSlowLow = ta.rma(low, lenSlow)
+
+            // Rysowanie
+            // Szybka wstęga
+            plotFastHigh = plot(HTSFastHigh, "Szybka MA wysoka", color=HTSFastColor, linewidth=lineWidth)
+            plotFastLow = plot(HTSFastLow, "Szybka MA niska", color=HTSFastColor, linewidth=lineWidth)
+            fill(plotFastHigh, plotFastLow, color.new(HTSFastColor, 90))
+
+            // Wolna wstęga
+            plotSlowHigh = plot(HTSSlowHigh, "Wolna MA wysoka", color=HTSSlowColor, linewidth=lineWidth)
+            plotSlowLow = plot(HTSSlowLow, "Wolna MA niska", color=HTSSlowColor, linewidth=lineWidth)
+            fill(plotSlowHigh, plotSlowLow, color.new(HTSSlowColor, 90))
+
+            // Alerty
+            alertcondition(ta.crossover(HTSFastLow, HTSSlowHigh), 
+                "Sygnał byczy", "Szybka MA niska przecięła w górę wolną MA wysoką")
+            alertcondition(ta.crossunder(HTSFastHigh, HTSSlowLow), 
+                "Sygnał niedźwiedzi", "Szybka MA wysoka przecięła w dół wolną MA niską")
+
+            // Logika przecięć
+            bullishCross = ta.crossover(HTSFastLow, HTSSlowHigh) // Szybka niska przecina w górę wolną wysoką
+            bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) // Szybka wysoka przecina w dół wolną niską
+
+            // Rysowanie kropek na przecięciach
+            plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233), linewidth=4, title="Sygnał byczy")
+            plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth=4, title="Sygnał niedźwiedzi")
+        </code>
+    </div>
+
+    <div class="section">
+        <h2>Podsumowanie</h2>
+        <p>
+            Wskaźnik <code>HTS_NemoN_simple</code> to skuteczne narzędzie do śledzenia trendów, które pomoże Ci odejść od ryzykownej strategii łapania szczytów i dołków. Skupiając się na kierunku trendu, zwiększasz swoje szanse na sukces. Wypróbuj go na TradingView i przekonaj się, jak może poprawić Twój handel!
+        </p>
+    </div>
 </body>
 </html>
