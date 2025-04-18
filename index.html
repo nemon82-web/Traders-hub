@@ -425,6 +425,33 @@
             animation: shake 2s infinite;
             pointer-events: none;
         }
+		
+		
+		
+		
+		
+		        /* CSS for the bomba image */
+        .bomba-container {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .bomba-image {
+            width: 150px;
+            height: auto;
+            animation: shake 4s infinite;
+            pointer-events: none;
+        }
+		
+		
+		
+		
+		
+		
+		
 
         /* TradingView Container */
         .tradingview-container {
@@ -1072,7 +1099,10 @@
             <i class="fas fa-c" style="color: #4682B4;"></i>
         </div>
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
-		
+		   <!-- Kurvix Image -->
+    <div class="bomba-container">
+        <img src="bomba.png" alt="Bomba" class="bomba-image">
+    </div>
     </div>
 
     <div class="calendar-container slide-top" id="ctrader">
