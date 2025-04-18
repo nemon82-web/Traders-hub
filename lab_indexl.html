@@ -349,6 +349,21 @@
             color: #FFD700;
         }
 
+        .radio-icon {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .radio-icon:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+        }
+
         /* Existing rabbit Art CSS */
         .rabbit-art {
             position: fixed;
@@ -909,26 +924,32 @@
         </div>
     </div>
 
-    <!-- World Clocks -->
+    <!-- World Clocks with Radio Icons -->
     <div id="world-clocks">
         <div class="world-clock">
             <div>Sydney</div>
             <div id="sydney-time">00:00:00</div>
+			<!-- https://ice1.somafm.com/groovesalad-128-mp3 , poprzednio był groove salad -->
+            <i class="fas fa-play radio-icon" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3"></i>
             <i class="fas fa-fire-alt clickable-icon" onclick="openCMC()"></i>
         </div>
         <div class="world-clock">
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
+			<!-- https://stream.radioparadise.com/mp3-192  - poprzednio był paradise-->
+            <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
             <i class="fas fa-heading clickable-icon" onclick="openHtsFx()"></i>
         </div>
         <div class="world-clock">
             <div>London</div>
             <div id="london-time">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"></i>
             <i class="fas fa-globe clickable-icon" onclick="openLinki()"></i>
         </div>
         <div class="world-clock">
             <div>New York</div>
             <div id="newyork-time">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://npr-ice.streamguys1.com/live.mp3"></i>
             <i class="fas fa-worm clickable-icon" onclick="openSnake()"></i>
         </div>
     </div>
@@ -1127,6 +1148,9 @@
     <div class="kurvix-container">
         <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
     </div>
+
+    <!-- Audio Element for Radio Playback -->
+    <audio id="radio-player" preload="none"></audio>
 
     <!-- JavaScript Libraries and Custom Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
@@ -1342,6 +1366,38 @@
             const top = 0;
             window.open('https://www.cnbc.com/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
         }
+
+        // Radio Playback Functionality
+        const audio = document.getElementById('radio-player');
+        let currentStation = null;
+
+        document.querySelectorAll('.radio-icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const url = icon.dataset.url;
+                if (currentStation === icon) {
+                    if (!audio.paused) {
+                        audio.pause();
+                        icon.classList.replace('fa-pause', 'fa-play');
+                        currentStation = null;
+                    }
+                } else {
+                    if (currentStation) {
+                        currentStation.classList.replace('fa-pause', 'fa-play');
+                    }
+                    audio.src = url;
+                    audio.play();
+                    icon.classList.replace('fa-play', 'fa-pause');
+                    currentStation = icon;
+                }
+            });
+        });
+
+        audio.addEventListener('error', () => {
+            if (currentStation) {
+                currentStation.classList.replace('fa-pause', 'fa-play');
+                currentStation = null;
+            }
+        });
     </script>
 </body>
 </html>

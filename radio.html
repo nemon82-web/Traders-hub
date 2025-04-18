@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Japan Waves</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: rgba(255,255,255,0.9);
+      --glass: rgba(255,255,255,0.05);
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      font-family:'Inter',sans-serif;
+      background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a6073);
+      background-size:400% 400%; animation:gradient 15s ease infinite;
+      color:var(--primary);
+    }
+    @keyframes gradient {
+      0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+    }
+    .player-card {
+      background:rgba(255,255,255,0.1); border-radius:24px;
+      padding:2.5rem; backdrop-filter:blur(16px) saturate(180%);
+      box-shadow:0 8px 32px rgba(0,0,0,0.3); width:480px; text-align:center;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    .player-header h1 { font-size:2rem; font-weight:700; display:flex; justify-content:center; gap:.5rem; }
+    .station-info { margin:1.5rem 0; font-size:1.1rem; font-weight:500; min-height:24px; opacity:.9; }
+    .station-buttons {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:.8rem; margin-bottom:2rem;
+    }
+    .station-btn {
+      background:var(--glass); border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px; padding:1rem; cursor:pointer; transition:.3s;
+      font-size:.95rem; color:var(--primary);
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+    }
+    .station-btn.active, .station-btn:hover {
+      background:rgba(255,255,255,0.2); transform:translateY(-2px);
+    }
+    .controls { display:flex; flex-direction:column; gap:1.5rem; }
+    .play-controls { display:flex; justify-content:center; gap:1.5rem; }
+    .play-controls button {
+      background:none; border:none; cursor:pointer; transition:.2s; padding:1rem;
+      border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,0.1);
+    }
+    #play-btn { background:var(--primary); color:#2c5364; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+    .play-controls i { font-size:1.8rem; }
+    .play-controls button:hover { transform:scale(1.05); }
+    .volume-control { display:flex; align-items:center; gap:.8rem; }
+    .volume-control input[type=range] {
+      width:100%; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; -webkit-appearance:none;
+    }
+    .volume-control input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none; width:16px; height:16px; background:var(--primary);
+      border-radius:50%; cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="player-card">
+    <div class="player-header">
+      <h1><i class="fas fa-globe-asia"></i> Japan Waves</h1>
+    </div>
+    <div class="station-info" id="station-info">Select a station</div>
+    <div class="station-buttons">
+      <button class="station-btn" data-name="🎧 J‑WAVE (81.3 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/J-WAVE.mp3">
+        <i class="fas fa-wind"></i> J‑WAVE
+      </button>
+      <button class="station-btn" data-name="🎙 Tokyo FM (80.0 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/TOKYOFM.mp3">
+        <i class="fas fa-city"></i> Tokyo FM
+      </button>
+      <button class="station-btn" data-name="🎷 InterFM (89.7 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/INTERFM.mp3">
+        <i class="fas fa-music"></i> InterFM
+      </button>
+      <button class="station-btn" data-name="🌊 FM Yokohama (84.7 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/FMYOKOHAMA.mp3">
+        <i class="fas fa-anchor"></i> FM Yokohama
+      </button>
+      <button class="station-btn" data-name="🎶 FM802 (80.2 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/FM802.mp3">
+        <i class="fas fa-drum"></i> FM802
+      </button>
+      <button class="station-btn" data-name="🎹 CROSS FM (76.1 FM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/CROSSFM.mp3">
+        <i class="fas fa-globe"></i> CROSS FM
+      </button>
+      <button class="station-btn" data-name="📻 TBS Radio (954 AM)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/TBSRADIOAM.mp3">
+        <i class="fas fa-broadcast-tower"></i> TBS Radio
+      </button>
+      <button class="station-btn" data-name="🌐 NHK World Radio" data-url="https://www3.nhk.or.jp/netradio/hls/live/gh-rjrs.m3u8">
+        <i class="fas fa-globe"></i> NHK World
+      </button>
+    </div>
+    <audio id="audio-player" controls preload="none"></audio>
+    <div class="controls">
+      <div class="play-controls">
+        <button id="play-btn"><i class="fas fa-play"></i></button>
+      </div>
+      <div class="volume-control">
+        <i class="fas fa-volume-up"></i>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- HLS.js for NHK World HLS support -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const stations = document.querySelectorAll('.station-btn');
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('play-btn');
+    const volumeControl = document.getElementById('volume');
+    const stationInfo = document.getElementById('station-info');
+    const playIcon = playBtn.querySelector('i');
+    let hls;
+
+    stations.forEach(btn => btn.addEventListener('click', () => {
+      stations.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      stationInfo.textContent = btn.dataset.name;
+      const url = btn.dataset.url;
+
+      if (hls) { hls.destroy(); hls = null; audio.src = ''; }
+
+      if (url.endsWith('.m3u8') && Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(audio);
+      } else {
+        audio.src = url;
+      }
+      audio.play();
+      playIcon.classList.replace('fa-play','fa-pause');
+    }));
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) { audio.play(); playIcon.classList.replace('fa-play','fa-pause'); }
+      else { audio.pause(); playIcon.classList.replace('fa-pause','fa-play'); }
+    });
+
+    volumeControl.addEventListener('input', e => audio.volume = e.target.value);
+
+    audio.addEventListener('error', () => {
+      stationInfo.textContent = '❌ Error loading station';
+      playIcon.classList.replace('fa-pause','fa-play');
+      document.querySelector('.station-btn.active')?.classList.remove('active');
+    });
+    audio.addEventListener('play', () => playIcon.classList.replace('fa-play','fa-pause'));
+    audio.addEventListener('pause',() => playIcon.classList.replace('fa-pause','fa-play'));
+  </script>
+</body>
+</html>
