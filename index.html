@@ -176,7 +176,7 @@
         #time-display {
             position: fixed;
             top: -60px;
-            left: 27.5vw; /* Aligned with main chart's left edge */
+            left: 27.5vw;
             z-index: 1001;
             background: rgba(18, 18, 18, 0.85);
             padding: 10px 20px;
@@ -373,7 +373,6 @@
             pointer-events: none;
         }
         
-         /* CSS for the rabbit image */
         .rabbit-image {
             width: 120px;
             height: auto;
@@ -388,7 +387,6 @@
             pointer-events: none;
         }
         
-         /* CSS for the trend image */
         .trend-image {
             width: 120px;
             height: auto;
@@ -403,12 +401,10 @@
             pointer-events: none;
         }
 
-        /* CSS for the alice image */
         .alice-image {
             animation: AlicePulse 2s infinite ease-in-out;
         }
 
-        /* CSS for the kurvix image */
         .kurvix-container {
             position: absolute;
             bottom: 5px;
@@ -424,7 +420,6 @@
             pointer-events: none;
         }
         
-        /* CSS for the bomba image */
         .bomba-container {
             position: absolute;
             top: 120px;
@@ -534,7 +529,6 @@
             border-radius: var(--border-radius);
         }
 
-        /* Styles for top-sliding containers */
         .calendar-container.slide-top {
             transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
@@ -610,7 +604,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Tab styling for top-sliding containers */
         .slide-top .calendar-tab {
             left: 46%;
             top: 100%;
@@ -665,8 +658,6 @@
             border-radius: 15px 0 0 15px;
         }
 
-        /* Note: #ctrader .calendar-tab is overridden by .slide-top .calendar-tab */
-
         .calendar-tab i {
             font-size: 1.6rem;
             color: var(--text-primary);
@@ -690,6 +681,35 @@
         .calendar-tab:focus {
             outline: none;
             box-shadow: 0 0 0 3px var(--accent-1);
+        }
+
+        /* Specific styling for #ctrader tab */
+        #ctrader .calendar-tab {
+            background: none;
+            border: none;
+            box-shadow: none;
+            width: auto;
+            height: auto;
+            padding: 0;
+            left: 46%;
+            top: 100%;
+            transform: translateX(-50%);
+        }
+
+        #ctrader .calendar-tab img {
+            width: 100px; /* Increased size for visibility */
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Shadow for depth */
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        #ctrader .calendar-tab:hover img {
+            transform: scale(1.1); /* Slight scale on hover for interactivity */
+        }
+
+        #ctrader .calendar-tab:focus {
+            outline: none;
+            box-shadow: none; /* No outline, let the image stand alone */
         }
 
         .calendar-container iframe {
@@ -717,13 +737,12 @@
             border-radius: 5px;
         }
 
-        /* CSS for the bottom-left image (Alice positioning and size) */
         .bottom-left-image {
             position: absolute;
             top: 50px;
             right: 120px;
             pointer-events: none;
-            width: 150px; /* Size for alice image */
+            width: 150px;
         }
     </style>
 </head>
@@ -929,14 +948,12 @@
         <div class="world-clock">
             <div>Sydney</div>
             <div id="sydney-time">00:00:00</div>
-			<!-- https://ice1.somafm.com/groovesalad-128-mp3 , poprzednio był groove salad -->
             <i class="fas fa-play radio-icon" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3"></i>
             <i class="fas fa-fire-alt clickable-icon" onclick="openHeat()"></i>
         </div>
         <div class="world-clock">
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
-			<!-- https://stream.radioparadise.com/mp3-192  - poprzednio był paradise-->
             <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
             <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
         </div>
@@ -1090,7 +1107,6 @@
             <i class="fas fa-heading" style="color: #4682B4;"></i>
         </div>
         <iframe loading="lazy" src="htsfx.html"></iframe>
-        <!-- Kurvix Image -->
         <div class="bomba-container">
             <img src="bomba.png" alt="Bomba" class="bomba-image">
         </div>
@@ -1098,7 +1114,7 @@
 
     <div class="calendar-container slide-top" id="ctrader">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Ctrader Web">
-            <i class="fas fa-chart-line" style="color: #E4080A;"></i> 
+            <img src="rabtab.png" alt="Ctrader Web Tab">
         </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
         <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
@@ -1177,19 +1193,16 @@
 
         // Mouse button controls for panels
         document.addEventListener('mousedown', function(e) {
-            // Prevent browser back/forward navigation
             e.preventDefault();
-            
-            // Get target panel based on button
             let targetPanel;
             switch(e.button) {
-                case 3: // fwd btn
+                case 3:
                     targetPanel = document.getElementById('week-calendar');
                     break;
-                case 4: // back btn
+                case 4:
                     targetPanel = document.getElementById('economic-calendar');
                     break;
-                case 1: // mid btn
+                case 1:
                     targetPanel = document.getElementById('ctrader');
                     break;
             }
@@ -1197,7 +1210,6 @@
             if (targetPanel) {
                 const wasLocked = targetPanel.classList.contains('locked');
                 targetPanel.classList.toggle('locked');
-                
                 if (targetPanel.classList.contains('locked')) {
                     slideSound.play();
                 } else {
