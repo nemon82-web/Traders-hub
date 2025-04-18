@@ -357,19 +357,14 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		 /* CSS for the rabbit image */
+        
+         /* CSS for the rabbit image */
         .rabbit-image {
             width: 120px;
             height: auto;
             animation: Pulse 4s infinite ease-in-out;
         }
-		
-		
-		
-		
-		
-	
+        
         .ascii-trend {
             position: fixed;
             top: 15px;
@@ -377,33 +372,21 @@
             z-index: 500;
             pointer-events: none;
         }
-		
-		 /* CSS for the trend image */
+        
+         /* CSS for the trend image */
         .trend-image {
             width: 120px;
             height: auto;
-            
         }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		        
+                
         .ascii-art_old {
             position: fixed;
-			display: none;
+            display: none;
             top: 15px;
             right: 15px;
             z-index: 500;
             pointer-events: none;
         }
-
- 
 
         /* CSS for the alice image */
         .alice-image {
@@ -425,12 +408,8 @@
             animation: shake 2s infinite;
             pointer-events: none;
         }
-		
-		
-		
-		
-		
-		        /* CSS for the bomba image */
+        
+        /* CSS for the bomba image */
         .bomba-container {
             position: absolute;
             top: 120px;
@@ -445,13 +424,6 @@
             animation: bounce 4s infinite;
             pointer-events: none;
         }
-		
-		
-		
-		
-		
-		
-		
 
         /* TradingView Container */
         .tradingview-container {
@@ -749,53 +721,6 @@
 
     <!-- Left Charts -->
     <div class="left-charts">
-        <div class="chart-panel nasdaq-chart">
-            <div class="chart-header">
-                <div class="countdown" id="nasdaq-countdown">
-                    <span></span>
-                </div>
-                <div class="symbol-info">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-                    {
-                        "symbols": [
-                            {
-                                "proName": "CAPITALCOM:US100",
-                                "title": "US100"
-                            }
-                        ],
-                        "isTransparent": true,
-                        "showSymbolLogo": false,
-                        "colorTheme": "dark",
-                        "locale": "en"
-                    }
-                    </script>
-                </div>
-            </div>
-            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
-                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-                {
-                    "autosize": true,
-                    "symbol": "CAPITALCOM:US100",
-                    "interval": "60",
-                    "timezone": "Europe/Warsaw",
-                    "theme": "dark",
-                    "style": "1",
-                    "locale": "en",
-                    "backgroundColor": "rgba(70, 130, 180, 0.20)",
-                    "show_popup_button": true,
-                    "hide_legend": true,
-                    "allow_symbol_change": true,
-                    "save_image": false,
-                    "hide_top_toolbar": true,
-                    "calendar": true,
-                    "hide_volume": true,
-                    "support_host": "https://www.tradingview.com"
-                }
-                </script>
-            </div>
-        </div>
         <div class="chart-panel dax-chart">
             <div class="chart-header">
                 <div class="countdown" id="dax-countdown">
@@ -831,6 +756,53 @@
                     "style": "1",
                     "locale": "en",
                     "backgroundColor": "rgba(46, 139, 87, 0.15)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel nasdaq-chart">
+            <div class="chart-header">
+                <div class="countdown" id="nasdaq-countdown">
+                    <span></span>
+                </div>
+                <div class="symbol-info">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                        "symbols": [
+                            {
+                                "proName": "CAPITALCOM:US100",
+                                "title": "US100"
+                            }
+                        ],
+                        "isTransparent": true,
+                        "showSymbolLogo": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
+                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:US100",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(70, 130, 180, 0.20)",
                     "show_popup_button": true,
                     "hide_legend": true,
                     "allow_symbol_change": true,
@@ -977,13 +949,11 @@
     <div class="rabbit-art">
         <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
-	
-	
-	    <!-- Trend Image -->
+    
+    <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
-	
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
@@ -1099,10 +1069,10 @@
             <i class="fas fa-c" style="color: #4682B4;"></i>
         </div>
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
-		   <!-- Kurvix Image -->
-    <div class="bomba-container">
-        <img src="bomba.png" alt="Bomba" class="bomba-image">
-    </div>
+        <!-- Kurvix Image -->
+        <div class="bomba-container">
+            <img src="bomba.png" alt="Bomba" class="bomba-image">
+        </div>
     </div>
 
     <div class="calendar-container slide-top" id="ctrader">
