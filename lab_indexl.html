@@ -273,7 +273,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
+            from { opacity: 0.5; }
             to { opacity: 1; }
         }
 
@@ -433,16 +433,16 @@
 		        /* CSS for the bomba image */
         .bomba-container {
             position: absolute;
-            bottom: 5px;
-            left: 50%;
+            top: 120px;
+            left: 52%;
             transform: translateX(-50%);
             z-index: 1000;
         }
 
         .bomba-image {
-            width: 150px;
+            width: 100px;
             height: auto;
-            animation: shake 4s infinite;
+            animation: bounce 4s infinite;
             pointer-events: none;
         }
 		
@@ -736,7 +736,7 @@
             top: 90px;
             right: 120px;
             pointer-events: none;
-            width: 70px; /* Size for alice image */
+            width: 150px; /* Size for alice image */
         }
     </style>
 </head>
@@ -1084,7 +1084,7 @@
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-carrot" style="color: #ED9121;"></i>
         </div>
-        <iframe loading="lazy" src="pip.html"></iframe>
+        <iframe loading="lazy" src="https://www.tradingview.com/ideas/"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
