@@ -1328,24 +1328,32 @@
 
         // External Link Functions
         function openHeat() {
-            const width = 1500;
-            const height = 900;
+            const width = 1200;
+            const height = 800;
             const leftPos = (window.screen.width / 2) - (width / 2);
-            const topPos = 100;
+            const topPos = (window.screen.height / 2) - (height / 2);
             window.open('https://nemon82-web.github.io/Traders-hub/feed.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function opencmcmarkets() {
-            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', 'newwindow', `width=${screen.width/3},height=${screen.height},left=0,top=0`);
+            const width = 1200;
+            const height = 800;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function openstrefaklienta() {
-            window.open('https://myfx.mforex.pl', '_blank', 'noopener,noreferrer,width=600,height=1000');
+            const width = 1200;
+            const height = 800;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('https://myfx.mforex.pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function openMforex() {
-            const width = 800;
-            const height = 600;
+            const width = 1200;
+            const height = 800;
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = (window.screen.height / 2) - (height / 2);
             window.open('https://webtrader.mforex.pl/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
