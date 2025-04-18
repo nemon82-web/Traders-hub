@@ -944,13 +944,13 @@
             <div>London</div>
             <div id="london-time">00:00:00</div>
             <i class="fas fa-play radio-icon" data-url="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"></i>
-            <i class="fas fa-globe clickable-icon" onclick="openLinki()"></i>
+            <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
         </div>
         <div class="world-clock">
             <div>New York</div>
             <div id="newyork-time">00:00:00</div>
             <i class="fas fa-play radio-icon" data-url="https://npr-ice.streamguys1.com/live.mp3"></i>
-            <i class="fas fa-worm clickable-icon" onclick="openSnake()"></i>
+            <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
         </div>
     </div>
 
@@ -1339,16 +1339,16 @@
             window.open('./htsfx.html', 'newwindow', `width=${screen.width/3},height=${screen.height},left=0,top=0`);
         }
 
-        function openLinki() {
-            window.open('./linki.html', '_blank', 'noopener,noreferrer,width=600,height=1000');
+        function openstrefaklienta() {
+            window.open('https://myfx.mforex.pl', '_blank', 'noopener,noreferrer,width=600,height=1000');
         }
 
-        function openSnake() {
+        function openMforex() {
             const width = 800;
             const height = 600;
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = (window.screen.height / 2) - (height / 2);
-            window.open('./snake.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            window.open('https://webtrader.mforex.pl/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function openBBC() {
