@@ -572,7 +572,7 @@
             z-index: 1080;
         }
 
-        #cmc-markets {
+        #htsfx {
             top: 50%;
             right: -70.5vw;
             transform: translateY(-50%);
@@ -647,7 +647,7 @@
             border-radius: 15px 0 0 15px;
         }
 
-        #cmc-markets .calendar-tab {
+        #htsfx .calendar-tab {
             left: -45px;
             top: 50%;
             transform: translateY(-50%);
@@ -683,7 +683,7 @@
             transform: scale(1.2);
         }
 
-        #cmc-markets .calendar-tab:hover {
+        #htsfx .calendar-tab:hover {
             background: var(--accent-4);
         }
 
@@ -931,14 +931,14 @@
             <div id="sydney-time">00:00:00</div>
 			<!-- https://ice1.somafm.com/groovesalad-128-mp3 , poprzednio był groove salad -->
             <i class="fas fa-play radio-icon" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3"></i>
-            <i class="fas fa-fire-alt clickable-icon" onclick="openCMC()"></i>
+            <i class="fas fa-fire-alt clickable-icon" onclick="openHeat()"></i>
         </div>
         <div class="world-clock">
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
 			<!-- https://stream.radioparadise.com/mp3-192  - poprzednio był paradise-->
             <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
-            <i class="fas fa-heading clickable-icon" onclick="openHtsFx()"></i>
+            <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
         </div>
         <div class="world-clock">
             <div>London</div>
@@ -1085,11 +1085,11 @@
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
-    <div class="calendar-container" id="cmc-markets">
+    <div class="calendar-container" id="htsfx">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="CMC Markets">
-            <i class="fas fa-c" style="color: #4682B4;"></i>
+            <i class="fas fa-heading" style="color: #4682B4;"></i>
         </div>
-        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl"></iframe>
+        <iframe loading="lazy" src="htsfx.html"></iframe>
         <!-- Kurvix Image -->
         <div class="bomba-container">
             <img src="bomba.png" alt="Bomba" class="bomba-image">
@@ -1327,7 +1327,7 @@
         updateCountdown();
 
         // External Link Functions
-        function openCMC() {
+        function openHeat() {
             const width = 1500;
             const height = 900;
             const leftPos = (window.screen.width / 2) - (width / 2);
@@ -1335,8 +1335,8 @@
             window.open('https://nemon82-web.github.io/Traders-hub/feed.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
-        function openHtsFx() {
-            window.open('./htsfx.html', 'newwindow', `width=${screen.width/3},height=${screen.height},left=0,top=0`);
+        function opencmcmarkets() {
+            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', 'newwindow', `width=${screen.width/3},height=${screen.height},left=0,top=0`);
         }
 
         function openstrefaklienta() {
