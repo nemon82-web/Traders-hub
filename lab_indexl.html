@@ -417,9 +417,12 @@
             width: 150px;
             height: auto;
             animation: shake 2s infinite;
-            pointer-events: none;
+            pointer-events: auto;
+			cursor: wait;
+  
         }
-        
+		
+
         .bomba-container {
             position: absolute;
             top: 120px;
@@ -1151,9 +1154,11 @@
     </div>
 
     <!-- Kurvix Image -->
-    <div class="kurvix-container">
+<div class="kurvix-container">
+    <a href="https://nonsa.pl/wiki/Galaktyka_Kurvix" target="_blank">
         <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
-    </div>
+    </a>
+</div>
 
     <!-- Audio Element for Radio Playback -->
     <audio id="radio-player" preload="none"></audio>
