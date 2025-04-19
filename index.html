@@ -21,7 +21,6 @@
             --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 45px;
         }
-
         /* Reset and Base Styles */
         * {
             box-sizing: border-box;
@@ -357,6 +356,11 @@
             color: var(--accent-gold);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .main-time-radio {
+            top: -10px; /* Adjust this value to move it up or down */
+            left: 70px; /* Adjust this value to move it left or right */
         }
 
         .radio-icon:hover {
@@ -728,7 +732,7 @@
         }
 
         .top-right-image {
-		display: none;
+            display: none;
             position: absolute;
             top: 70px;
             right: 120px;
@@ -738,8 +742,9 @@
     </style>
 </head>
 <body>
-    <!-- Main Time Display -->
+    <!-- Main Time Display with Radio Button -->
     <div id="time-display">
+        <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
         <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
         <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
     </div>
@@ -965,6 +970,7 @@
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
         <pre>
+
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
   ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
   ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
@@ -978,7 +984,7 @@
     <div class="rabbit-art">
         <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
-    
+
     <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">

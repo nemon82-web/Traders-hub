@@ -21,7 +21,6 @@
             --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 45px;
         }
-
         /* Reset and Base Styles */
         * {
             box-sizing: border-box;
@@ -359,6 +358,11 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
+        .main-time-radio {
+            top: -10px; /* Adjust this value to move it up or down */
+            left: 70px; /* Adjust this value to move it left or right */
+        }
+
         .radio-icon:hover {
             transform: scale(1.2);
             color: #FFD700;
@@ -417,12 +421,9 @@
             width: 150px;
             height: auto;
             animation: shake 2s infinite;
-            pointer-events: auto;
-			cursor: wait;
-  
+            pointer-events: none;
         }
-		
-
+        
         .bomba-container {
             position: absolute;
             top: 120px;
@@ -730,7 +731,8 @@
             border-radius: 5px;
         }
 
-        .bottom-left-image {
+        .top-right-image {
+            display: none;
             position: absolute;
             top: 70px;
             right: 120px;
@@ -740,8 +742,9 @@
     </style>
 </head>
 <body>
-    <!-- Main Time Display -->
+    <!-- Main Time Display with Radio Button -->
     <div id="time-display">
+        <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
         <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
         <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
     </div>
@@ -953,13 +956,13 @@
         <div class="world-clock">
             <div>London</div>
             <div id="london-time">00:00:00</div>
-            <i class="fas fa-play radio-icon" data-url="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"></i>
+            <i class="fas fa-play radio-icon" data-url="https://media-ice.musicradio.com/CapitalMP3"></i>
             <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
         </div>
         <div class="world-clock">
             <div>New York</div>
             <div id="newyork-time">00:00:00</div>
-            <i class="fas fa-play radio-icon" data-url="https://npr-ice.streamguys1.com/live.mp3"></i>
+            <i class="fas fa-play radio-icon" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3"></i>
             <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
         </div>
     </div>
@@ -967,6 +970,7 @@
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
         <pre>
+
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
   ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
   ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
@@ -980,7 +984,7 @@
     <div class="rabbit-art">
         <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
-    
+
     <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
@@ -1110,7 +1114,7 @@
 
     <div class="calendar-container slide-top" id="ctrader">
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
+        <img src="alice.png" alt="Alice" class="alice-image top-right-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1154,11 +1158,9 @@
     </div>
 
     <!-- Kurvix Image -->
-<div class="kurvix-container">
-    <a href="https://nonsa.pl/wiki/Galaktyka_Kurvix" target="_blank">
+    <div class="kurvix-container">
         <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
-    </a>
-</div>
+    </div>
 
     <!-- Audio Element for Radio Playback -->
     <audio id="radio-player" preload="none"></audio>
