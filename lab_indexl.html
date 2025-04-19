@@ -194,19 +194,6 @@
             color: #A9A9A9;
             text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        #time-text:hover {
-            transform: scale(1.1);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #time-text:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         #day-name {
@@ -217,20 +204,7 @@
             font-size: 1.4rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            cursor: pointer;
             text-transform: uppercase;
-        }
-
-        #day-name:hover {
-            transform: scale(1.2);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #day-name:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         @keyframes Pulse {
@@ -359,14 +333,34 @@
         }
 
         .main-time-radio {
-            top: -10px; /* Adjust this value to move it up or down */
-            left: 70px; /* Adjust this value to move it left or right */
+            top: -10px;
+            left: 70px;
         }
 
         .radio-icon:hover {
             transform: scale(1.2);
             color: #FFD700;
         }
+
+        /* Styles for clickable elements */
+        .clickable-bbc {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .clickable-cnbc {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        /* New styles for simultaneous hover effect */
+        .london-clock-info,
+        .newyork-clock-info {
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+
+ 
 
         /* Existing rabbit Art CSS */
         .rabbit-art {
@@ -745,8 +739,8 @@
     <!-- Main Time Display with Radio Button -->
     <div id="time-display">
         <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
-        <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
-        <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
+        <div id="time-text"></div>
+        <div id="day-name"></div>
     </div>
 
     <!-- Left Charts -->
@@ -954,14 +948,18 @@
             <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
         </div>
         <div class="world-clock">
-            <div>London</div>
-            <div id="london-time">00:00:00</div>
+            <div class="london-clock-info">
+                <div class="clickable-bbc" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC">London</div>
+                <div id="london-time" class="clickable-bbc" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC">00:00:00</div>
+            </div>
             <i class="fas fa-play radio-icon" data-url="https://media-ice.musicradio.com/CapitalMP3"></i>
             <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
         </div>
         <div class="world-clock">
-            <div>New York</div>
-            <div id="newyork-time">00:00:00</div>
+            <div class="newyork-clock-info">
+                <div class="clickable-cnbc" onclick="openCNBC()" role="button" tabindex="0" aria-label="Open CNBC">New York</div>
+                <div id="newyork-time" class="clickable-cnbc" onclick="openCNBC()" role="button" tabindex="0" aria-label="Open CNBC">00:00:00</div>
+            </div>
             <i class="fas fa-play radio-icon" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3"></i>
             <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
         </div>
