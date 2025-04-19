@@ -52,6 +52,11 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .left-charts.hidden {
+            transform: translateX(-100%) translateY(-50%);
         }
 
         .chart-panel {
@@ -169,6 +174,39 @@
         #sp500-countdown span {
             font-weight: bold;
             color: #DAA520;
+        }
+
+        .toggle-tab {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 5px 0 0 5px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toggle-tab:hover {
+            background: #1d2120;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .toggle-tab i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toggle-tab:hover i {
+            transform: scale(1.2);
         }
 
         /* Main Time Display */
@@ -406,10 +444,10 @@
 
         .kurvix-container {
             position: absolute;
-            bottom: 5px;
-            left: 31%;
+            bottom: 40px;
+            left: 15%;
             transform: translateX(-50%);
-            z-index: 1000;
+            z-index: 10;
         }
 
         .kurvix-image {
@@ -932,6 +970,9 @@
                 </script>
             </div>
         </div>
+        <div class="toggle-tab" role="button" tabindex="0" aria-label="Toggle left charts">
+            <i class="fas fa-chevron-left"></i>
+        </div>
     </div>
 
     <!-- World Clocks with Radio Icons -->
@@ -1435,6 +1476,36 @@
             if (currentStation) {
                 currentStation.classList.replace('fa-pause', 'fa-play');
                 currentStation = null;
+            }
+        });
+
+        // Toggle Left Charts
+        const leftCharts = document.querySelector('.left-charts');
+        const toggleTab = leftCharts.querySelector('.toggle-tab');
+        const icon = toggleTab.querySelector('i');
+
+        toggleTab.addEventListener('click', () => {
+            leftCharts.classList.toggle('hidden');
+            if (leftCharts.classList.contains('hidden')) {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                slideOutSound.play();
+            } else {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                slideSound.play();
+            }
+        });
+
+        toggleTab.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                leftCharts.classList.toggle('hidden');
+                if (leftCharts.classList.contains('hidden')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                    slideOutSound.play();
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                    slideSound.play();
+                }
             }
         });
     </script>

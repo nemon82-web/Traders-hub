@@ -21,7 +21,6 @@
             --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 45px;
         }
-
         /* Reset and Base Styles */
         * {
             box-sizing: border-box;
@@ -195,19 +194,6 @@
             color: #A9A9A9;
             text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        #time-text:hover {
-            transform: scale(1.1);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #time-text:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         #day-name {
@@ -218,20 +204,7 @@
             font-size: 1.4rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            cursor: pointer;
             text-transform: uppercase;
-        }
-
-        #day-name:hover {
-            transform: scale(1.2);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #day-name:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         @keyframes Pulse {
@@ -309,12 +282,7 @@
             align-items: center;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             transform: perspective(600px) rotateX(5deg);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .world-clock:hover {
-            transform: perspective(600px) scale(1.08) rotateX(0deg);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .world-clock div:first-child {
@@ -333,6 +301,26 @@
         .world-clock:nth-child(2) div:last-child:not(.clickable-icon) { color: #6A5ACD; }
         .world-clock:nth-child(3) div:last-child:not(.clickable-icon) { color: #008080; }
         .world-clock:nth-child(4) div:last-child:not(.clickable-icon) { color: #DAA520; }
+
+        .world-clock:nth-child(1):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(2):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(3):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(4):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
 
         .clickable-icon {
             position: absolute;
@@ -359,9 +347,20 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
+        .main-time-radio {
+            top: -10px;
+            left: 70px;
+        }
+
         .radio-icon:hover {
             transform: scale(1.2);
             color: #FFD700;
+        }
+
+        /* Cursor pointer for clickable world clock elements */
+        .london-clock > div:first-child, .london-clock > div:nth-child(2),
+        .newyork-clock > div:first-child, .newyork-clock > div:nth-child(2) {
+            cursor: pointer;
         }
 
         /* Existing rabbit Art CSS */
@@ -472,6 +471,25 @@
             height: 100% !important;
         }
 
+        /* rabtab Handle Styles */
+        .rabtab-handle {
+            position: absolute;
+            bottom: 20px;
+            left: 46%;
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        .rabtab-handle img {
+            width: 80px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .rabtab-handle:hover img {
+            transform: scale(1.1);
+        }
+
         /* Bottom Right Widget */
         .bottom-right-widget {
             position: fixed;
@@ -568,9 +586,9 @@
 
         #htsfx {
             top: 50%;
-            right: -70.5vw;
+            right: -650px;
             transform: translateY(-50%);
-            width: 70.5vw;
+            width: 650px;
             height: 100vh;
             z-index: 1170;
         }
@@ -683,35 +701,6 @@
             box-shadow: 0 0 0 3px var(--accent-1);
         }
 
-        /* Specific styling for #ctrader tab */
-        #ctrader .calendar-tab {
-            background: none;
-            border: none;
-            box-shadow: none;
-            width: auto;
-            height: auto;
-            padding: 0;
-            left: 46%;
-            top: 100%;
-            transform: translateX(-50%);
-        }
-
-        #ctrader .calendar-tab img {
-            width: 100px; /* Increased size for visibility */
-            height: auto;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Shadow for depth */
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        #ctrader .calendar-tab:hover img {
-            transform: scale(1.1); /* Slight scale on hover for interactivity */
-        }
-
-        #ctrader .calendar-tab:focus {
-            outline: none;
-            box-shadow: none; /* No outline, let the image stand alone */
-        }
-
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
@@ -737,20 +726,22 @@
             border-radius: 5px;
         }
 
-        .bottom-left-image {
+        .top-right-image {
+            display: none;
             position: absolute;
-            top: 50px;
+            top: 70px;
             right: 120px;
             pointer-events: none;
-            width: 150px;
+            width: 130px;
         }
     </style>
 </head>
 <body>
-    <!-- Main Time Display -->
+    <!-- Main Time Display with Radio Button -->
     <div id="time-display">
-        <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
-        <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
+        <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
+        <div id="time-text"></div>
+        <div id="day-name"></div>
     </div>
 
     <!-- Left Charts -->
@@ -957,16 +948,16 @@
             <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
             <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
         </div>
-        <div class="world-clock">
-            <div>London</div>
-            <div id="london-time">00:00:00</div>
-            <i class="fas fa-play radio-icon" data-url="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"></i>
+        <div class="world-clock london-clock">
+            <div onclick="openBBC()">London</div>
+            <div id="london-time" onclick="openBBC()">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://media-ice.musicradio.com/CapitalMP3"></i>
             <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
         </div>
-        <div class="world-clock">
-            <div>New York</div>
-            <div id="newyork-time">00:00:00</div>
-            <i class="fas fa-play radio-icon" data-url="https://npr-ice.streamguys1.com/live.mp3"></i>
+        <div class="world-clock newyork-clock">
+            <div onclick="openCNBC()">New York</div>
+            <div id="newyork-time" onclick="openCNBC()">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3"></i>
             <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
         </div>
     </div>
@@ -974,6 +965,7 @@
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
         <pre>
+
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
   ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
   ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
@@ -987,7 +979,7 @@
     <div class="rabbit-art">
         <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
     </div>
-    
+
     <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
@@ -1006,7 +998,7 @@
                 "theme": "dark",
                 "style": "1",
                 "locale": "en",
-                "backgroundColor": "#121212",
+                "backgroundColor": "rgba(0, 0, 0, 0.3)",
                 "show_popup_button": true,
                 "allow_symbol_change": true,
                 "save_image": false,
@@ -1078,6 +1070,9 @@
             }
             </script>
         </div>
+        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle Ctrader">
+            <img src="rabtab.png" alt="Ctrader Handle">
+        </div>
     </div>
 
     <!-- Calendar Containers -->
@@ -1103,7 +1098,7 @@
     </div>
 
     <div class="calendar-container" id="htsfx">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="CMC Markets">
+        <div class="calendar-tab" role="button" tabindex="0" aria-label="HTS">
             <i class="fas fa-heading" style="color: #4682B4;"></i>
         </div>
         <iframe loading="lazy" src="htsfx.html"></iframe>
@@ -1113,11 +1108,8 @@
     </div>
 
     <div class="calendar-container slide-top" id="ctrader">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Ctrader Web">
-            <img src="rabtab.png" alt="Ctrader Web Tab">
-        </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
+        <img src="alice.png" alt="Alice" class="alice-image top-right-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1260,8 +1252,35 @@
             });
         });
 
+        // Handle Rabtab Handle Interactions
+        const rabtabHandle = document.querySelector('.rabtab-handle');
+        const ctraderContainer = document.getElementById('ctrader');
+
+        rabtabHandle.addEventListener('click', () => {
+            const wasLocked = ctraderContainer.classList.contains('locked');
+            ctraderContainer.classList.toggle('locked');
+            if (!wasLocked) {
+                slideSound.play();
+            } else {
+                slideOutSound.play();
+            }
+        });
+
+        rabtabHandle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const wasLocked = ctraderContainer.classList.contains('locked');
+                ctraderContainer.classList.toggle('locked');
+                if (!wasLocked) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
+            }
+        });
+
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container')) {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.rabtab-handle')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
