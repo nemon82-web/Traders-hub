@@ -364,11 +364,24 @@
             color: #FFD700;
         }
 
-
+        /* Existing rabbit Art CSS */
+        .rabbit-art {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 500;
+            pointer-events: none;
+        }
+        
+        .rabbit-image {
+            width: 120px;
+            height: auto;
+            animation: Pulse 4s infinite ease-in-out;
+        }
         
         .ascii-trend {
             position: fixed;
-            top: 5px;
+            top: 15px;
             right: 150px;
             z-index: 500;
             pointer-events: none;
@@ -388,8 +401,8 @@
             pointer-events: none;
         }
 
-        .rabbit-image {
-            animation: Pulse 4s infinite ease-in-out;
+        .alice-image {
+            animation: AlicePulse 2s infinite ease-in-out;
         }
 
         .kurvix-container {
@@ -678,7 +691,7 @@
             width: auto;
             height: auto;
             padding: 0;
-            left: 97%;
+            left: 46%;
             top: 100%;
             transform: translateX(-50%);
         }
@@ -724,7 +737,7 @@
             border-radius: 5px;
         }
 
-        .rabbit-additional {
+        .bottom-left-image {
             position: absolute;
             top: 50px;
             right: 120px;
@@ -970,14 +983,18 @@
         </pre>
     </div>
 
-
+    <!-- Rabbit Image -->
+    <div class="rabbit-art">
+        <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
+    </div>
+    
     <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
-  <!-- TradingView Container -->
+
+    <!-- TradingView Container -->
     <div class="tradingview-container">
-   
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -1100,7 +1117,7 @@
             <img src="rabtab.png" alt="Ctrader Web Tab">
         </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="rabbit.png" alt="Rabbit" class="rabbit-image rabbit-additional">
+        <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
