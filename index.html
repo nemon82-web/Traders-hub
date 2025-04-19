@@ -194,19 +194,6 @@
             color: #A9A9A9;
             text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        #time-text:hover {
-            transform: scale(1.1);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #time-text:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         #day-name {
@@ -217,20 +204,7 @@
             font-size: 1.4rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            cursor: pointer;
             text-transform: uppercase;
-        }
-
-        #day-name:hover {
-            transform: scale(1.2);
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-
-        #day-name:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         @keyframes Pulse {
@@ -308,12 +282,7 @@
             align-items: center;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             transform: perspective(600px) rotateX(5deg);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .world-clock:hover {
-            transform: perspective(600px) scale(1.08) rotateX(0deg);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .world-clock div:first-child {
@@ -332,6 +301,26 @@
         .world-clock:nth-child(2) div:last-child:not(.clickable-icon) { color: #6A5ACD; }
         .world-clock:nth-child(3) div:last-child:not(.clickable-icon) { color: #008080; }
         .world-clock:nth-child(4) div:last-child:not(.clickable-icon) { color: #DAA520; }
+
+        .world-clock:nth-child(1):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(2):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(3):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(4):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
 
         .clickable-icon {
             position: absolute;
@@ -359,13 +348,19 @@
         }
 
         .main-time-radio {
-            top: -10px; /* Adjust this value to move it up or down */
-            left: 70px; /* Adjust this value to move it left or right */
+            top: -10px;
+            left: 70px;
         }
 
         .radio-icon:hover {
             transform: scale(1.2);
             color: #FFD700;
+        }
+
+        /* Cursor pointer for clickable world clock elements */
+        .london-clock > div:first-child, .london-clock > div:nth-child(2),
+        .newyork-clock > div:first-child, .newyork-clock > div:nth-child(2) {
+            cursor: pointer;
         }
 
         /* Existing rabbit Art CSS */
@@ -745,8 +740,8 @@
     <!-- Main Time Display with Radio Button -->
     <div id="time-display">
         <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
-        <div id="time-text" onclick="openBBC()" role="button" tabindex="0" aria-label="Open BBC"></div>
-        <div id="day-name" onclick="openCNBC()" role="button" tabindex="0"></div>
+        <div id="time-text"></div>
+        <div id="day-name"></div>
     </div>
 
     <!-- Left Charts -->
@@ -953,15 +948,15 @@
             <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
             <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
         </div>
-        <div class="world-clock">
-            <div>London</div>
-            <div id="london-time">00:00:00</div>
+        <div class="world-clock london-clock">
+            <div onclick="openBBC()">London</div>
+            <div id="london-time" onclick="openBBC()">00:00:00</div>
             <i class="fas fa-play radio-icon" data-url="https://media-ice.musicradio.com/CapitalMP3"></i>
             <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
         </div>
-        <div class="world-clock">
-            <div>New York</div>
-            <div id="newyork-time">00:00:00</div>
+        <div class="world-clock newyork-clock">
+            <div onclick="openCNBC()">New York</div>
+            <div id="newyork-time" onclick="openCNBC()">00:00:00</div>
             <i class="fas fa-play radio-icon" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3"></i>
             <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
         </div>
