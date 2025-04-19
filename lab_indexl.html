@@ -364,11 +364,24 @@
             color: #FFD700;
         }
 
-
+        /* Existing rabbit Art CSS */
+        .rabbit-art {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 500;
+            pointer-events: none;
+        }
+        
+        .rabbit-image {
+            width: 120px;
+            height: auto;
+            animation: Pulse 4s infinite ease-in-out;
+        }
         
         .ascii-trend {
             position: fixed;
-            top: 5px;
+            top: 15px;
             right: 150px;
             z-index: 500;
             pointer-events: none;
@@ -388,8 +401,8 @@
             pointer-events: none;
         }
 
-        .rabbit-image {
-            animation: Pulse 4s infinite ease-in-out;
+        .alice-image {
+            animation: AlicePulse 2s infinite ease-in-out;
         }
 
         .kurvix-container {
@@ -457,6 +470,25 @@
 
         .tradingview-widget-container {
             height: 100% !important;
+        }
+
+        /* rabtab Handle Styles */
+        .rabtab-handle {
+            position: absolute;
+            bottom: 10px;
+            left: 55%;
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        .rabtab-handle img {
+            width: 80px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .rabtab-handle:hover img {
+            transform: scale(1.1);
         }
 
         /* Bottom Right Widget */
@@ -670,35 +702,6 @@
             box-shadow: 0 0 0 3px var(--accent-1);
         }
 
-        /* Specific styling for #ctrader tab */
-        #ctrader .calendar-tab {
-            background: none;
-            border: none;
-            box-shadow: none;
-            width: auto;
-            height: auto;
-            padding: 0;
-            left: 97%;
-            top: 100%;
-            transform: translateX(-50%);
-        }
-
-        #ctrader .calendar-tab img {
-            width: 100px; /* Increased size for visibility */
-            height: auto;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Shadow for depth */
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        #ctrader .calendar-tab:hover img {
-            transform: scale(1.1); /* Slight scale on hover for interactivity */
-        }
-
-        #ctrader .calendar-tab:focus {
-            outline: none;
-            box-shadow: none; /* No outline, let the image stand alone */
-        }
-
         .calendar-container iframe {
             width: 100% !important;
             height: 100% !important;
@@ -724,7 +727,7 @@
             border-radius: 5px;
         }
 
-        .rabbit-additional {
+        .bottom-left-image {
             position: absolute;
             top: 50px;
             right: 120px;
@@ -970,14 +973,18 @@
         </pre>
     </div>
 
-
+    <!-- Rabbit Image -->
+    <div class="rabbit-art">
+        <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
+    </div>
+    
     <!-- Trend Image -->
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
-  <!-- TradingView Container -->
+
+    <!-- TradingView Container -->
     <div class="tradingview-container">
-   
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -1061,6 +1068,9 @@
             }
             </script>
         </div>
+        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle Ctrader">
+            <img src="rabtab.png" alt="Ctrader Handle">
+        </div>
     </div>
 
     <!-- Calendar Containers -->
@@ -1096,11 +1106,8 @@
     </div>
 
     <div class="calendar-container slide-top" id="ctrader">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Ctrader Web">
-            <img src="rabtab.png" alt="Ctrader Web Tab">
-        </div>
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="rabbit.png" alt="Rabbit" class="rabbit-image rabbit-additional">
+        <img src="alice.png" alt="Alice" class="alice-image bottom-left-image">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1243,8 +1250,35 @@
             });
         });
 
+        // Handle Rabtab Handle Interactions
+        const rabtabHandle = document.querySelector('.rabtab-handle');
+        const ctraderContainer = document.getElementById('ctrader');
+
+        rabtabHandle.addEventListener('click', () => {
+            const wasLocked = ctraderContainer.classList.contains('locked');
+            ctraderContainer.classList.toggle('locked');
+            if (!wasLocked) {
+                slideSound.play();
+            } else {
+                slideOutSound.play();
+            }
+        });
+
+        rabtabHandle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const wasLocked = ctraderContainer.classList.contains('locked');
+                ctraderContainer.classList.toggle('locked');
+                if (!wasLocked) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
+            }
+        });
+
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container')) {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.rabtab-handle')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
