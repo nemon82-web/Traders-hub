@@ -190,7 +190,7 @@
             cursor: pointer;
             border-radius: 15px 15px 15px 15px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);			
+            border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
@@ -773,13 +773,9 @@
             width: 130px;
         }
 		
-		
-		.fa-pause {
-    animation: Pulse 1s ease-in-out infinite;
-}
-
-	
-		
+	    .fa-pause {
+            animation: Pulse 1s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -1233,20 +1229,32 @@
         const slideOutSound = new Audio('slide_out.mp3');
 
         // Mouse button controls for panels
-        document.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            let targetPanel;
-            switch(e.button) {
-                case 3:
-                    targetPanel = document.getElementById('week-calendar');
-                    break;
-                case 4:
-                    targetPanel = document.getElementById('economic-calendar');
-                    break;
-                case 1:
-                    targetPanel = document.getElementById('ctrader');
-                    break;
+ document.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    let targetPanel;
+    switch(e.button) {
+        case 4: // Reassigned from week-calendar to left-charts
+            const leftCharts = document.querySelector('.left-charts');
+            const toggleTab = leftCharts.querySelector('.toggle-tab');
+            const icon = toggleTab.querySelector('i');
+            const wasHidden = leftCharts.classList.contains('hidden');
+            
+            leftCharts.classList.toggle('hidden');
+            if (wasHidden) {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                slideSound.play();
+            } else {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                slideOutSound.play();
             }
+            break;
+        case 3:
+            targetPanel = document.getElementById('economic-calendar');
+            break;
+        case 1:
+            targetPanel = document.getElementById('ctrader');
+            break;
+    }
 
             if (targetPanel) {
                 const wasLocked = targetPanel.classList.contains('locked');

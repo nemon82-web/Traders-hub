@@ -1229,20 +1229,32 @@
         const slideOutSound = new Audio('slide_out.mp3');
 
         // Mouse button controls for panels
-        document.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            let targetPanel;
-            switch(e.button) {
-                case 3:
-                    targetPanel = document.getElementById('week-calendar');
-                    break;
-                case 4:
-                    targetPanel = document.getElementById('economic-calendar');
-                    break;
-                case 1:
-                    targetPanel = document.getElementById('ctrader');
-                    break;
+ document.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    let targetPanel;
+    switch(e.button) {
+        case 4: // Reassigned from week-calendar to left-charts
+            const leftCharts = document.querySelector('.left-charts');
+            const toggleTab = leftCharts.querySelector('.toggle-tab');
+            const icon = toggleTab.querySelector('i');
+            const wasHidden = leftCharts.classList.contains('hidden');
+            
+            leftCharts.classList.toggle('hidden');
+            if (wasHidden) {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                slideSound.play();
+            } else {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                slideOutSound.play();
             }
+            break;
+        case 3:
+            targetPanel = document.getElementById('economic-calendar');
+            break;
+        case 1:
+            targetPanel = document.getElementById('ctrader');
+            break;
+    }
 
             if (targetPanel) {
                 const wasLocked = targetPanel.classList.contains('locked');
