@@ -1022,10 +1022,10 @@
     <!-- Control Buttons -->
     <div class="control-buttons">
         <button class="left-charts-toggle" role="button" aria-label="Toggle left charts">
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-caret-left"></i>
         </button>
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart">
-            <i class="fas fa-chevron-down"></i>
+            <i class="fas fa-caret-down"></i>
         </button>
     </div>
 
@@ -1256,10 +1256,10 @@
                     
                     leftCharts.classList.toggle('hidden');
                     if (wasHidden) {
-                        leftChartsIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                        leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
                         slideSound.play();
                     } else {
-                        leftChartsIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                        leftChartsIcon.classList.replace('fa-caret-left', 'fa-caret-right');
                         slideOutSound.play();
                     }
                     break;
@@ -1520,10 +1520,10 @@
             leftCharts.classList.toggle('hidden');
             const icon = leftChartsToggle.querySelector('i');
             if (leftCharts.classList.contains('hidden')) {
-                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                icon.classList.replace('fa-caret-left', 'fa-caret-right');
                 slideOutSound.play();
             } else {
-                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                icon.classList.replace('fa-caret-right', 'fa-caret-left');
                 slideSound.play();
             }
         });
@@ -1534,10 +1534,10 @@
                 leftCharts.classList.toggle('hidden');
                 const icon = leftChartsToggle.querySelector('i');
                 if (leftCharts.classList.contains('hidden')) {
-                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                    icon.classList.replace('fa-caret-left', 'fa-caret-right');
                     slideOutSound.play();
                 } else {
-                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                    icon.classList.replace('fa-caret-right', 'fa-caret-left');
                     slideSound.play();
                 }
             }
@@ -1547,10 +1547,10 @@
             mainChartContainer.classList.toggle('slid-down');
             const icon = mainChartToggle.querySelector('i');
             if (mainChartContainer.classList.contains('slid-down')) {
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                icon.classList.replace('fa-caret-down', 'fa-caret-up');
                 slideOutSound.play();
             } else {
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                icon.classList.replace('fa-caret-up', 'fa-caret-down');
                 slideSound.play();
             }
         });
@@ -1561,10 +1561,10 @@
                 mainChartContainer.classList.toggle('slid-down');
                 const icon = mainChartToggle.querySelector('i');
                 if (mainChartContainer.classList.contains('slid-down')) {
-                    icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
                     slideOutSound.play();
                 } else {
-                    icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    icon.classList.replace('fa-caret-up', 'fa-caret-down');
                     slideSound.play();
                 }
             }
