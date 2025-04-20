@@ -385,7 +385,12 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .main-time-radio {
+        .main-time-zet {
+            top: -10px;
+            left: 170px;
+        }
+		
+		.main-time-rmf {
             top: -10px;
             left: 25px;
         }
@@ -784,7 +789,8 @@
 	<!-- https://rs201-krk.rmfstream.pl/rmf_fm -->
 	<!-- https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01 -->
     <div id="time-display">
-        <i class="fas fa-play radio-icon main-time-radio" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01"></i>
+        <i class="fas fa-play radio-icon main-time-zet" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01"></i>
+		<i class="fas fa-play radio-icon main-time-rmf" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
         <div id="time-text"></div>
         <div id="day-name"></div>
     </div>
