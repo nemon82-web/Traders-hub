@@ -401,42 +401,12 @@
             cursor: pointer;
         }
 
-/* Rabbit Art CSS */
-.rabbit-art {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 500;
-    pointer-events: none; /* Container doesn't block mouse events */
-    cursor: pointer;  /* Add cursor pointer */
-}
 
-.rabbit-image {
-    width: 100px;
-    height: auto;
-    pointer-events: auto;
-    animation: float 3s ease-in-out infinite;
-    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-    cursor: pointer;  /* Add cursor pointer */
-    transform-origin: center;
-}
-
-.rabbit-image:hover {
-    transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-    animation-play-state: paused;
-}
-
-/* Add click animation */
-.rabbit-image:active {
-    transform: scale(0.95) rotate(-5deg);
-    transition: transform 0.1s ease-in-out;
-}
         
         .ascii-trend {
             position: fixed;
-            top: 15px;
-            right: 120px;
+            top: 5px;
+            right: 5px;
             z-index: 500;
             pointer-events: none;
 		/*	animation: Pulse 4s infinite ease-in-out; */
@@ -527,24 +497,37 @@
             height: 100% !important;
         }
 
-        /* rabtab Handle Styles */
-        .rabtab-handle {
-            position: absolute;
-            bottom: 20px;
-            left: 46%;
-            z-index: 1001;
-            cursor: pointer;
-        }
+/* Rabtab Handle Styles */
+.rabtab-handle {
+    position: fixed;
+    bottom: 20px;
+    left: 49%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    pointer-events: none; /* Container doesn't block mouse events */
+    cursor: pointer;
+}
 
-        .rabtab-handle img {
-            width: 80px;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
+.rabtab-handle img {
+    width: 110px;
+    height: auto;
+    pointer-events: auto;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+    animation: float 3s ease-in-out infinite;
+    transform-origin: center;
+    cursor: pointer;
+}
 
-        .rabtab-handle:hover img {
-            transform: scale(1.1);
-        }
+.rabtab-handle:hover img {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    animation-play-state: paused;
+}
+
+.rabtab-handle:active img {
+    transform: scale(0.95) rotate(-5deg);
+    transition: transform 0.1s ease-in-out;
+}
 
         /* Bottom Right Widget */
         .bottom-right-widget {
@@ -1038,10 +1021,7 @@
         </pre>
     </div>
 
-    <!-- Rabbit Image -->
-    <div class="rabbit-art">
-        <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
-    </div>
+ 
 
     <!-- Trend Image -->
     <div class="ascii-trend">
