@@ -425,9 +425,9 @@
         .ascii-art_old {
             position: fixed;
             display: none;
-            top: 15px;
-            right: 15px;
-            z-index: 500;
+            top: 60px;
+            left: 25px;
+            z-index: 10;
             pointer-events: none;
         }
 
@@ -770,7 +770,7 @@
             border-radius: 5px;
         }
 
-        .top-right-image {
+        .top-right-alice {
             display: none;
             position: absolute;
             top: 70px;
@@ -788,7 +788,8 @@
     <!-- Main Time Display with Radio Button RMF ; ZET -->
 	<!-- https://rs201-krk.rmfstream.pl/rmf_fm -->
 	<!-- https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01 -->
-    <div id="time-display">
+	<!-- https://fmstream.org/index.php?c=POL  spis wszystkich polskich stacji-->
+	 <div id="time-display">
         <i class="fas fa-play radio-icon main-time-zet" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01"></i>
 		<i class="fas fa-play radio-icon main-time-rmf" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
         <div id="time-text"></div>
@@ -1160,7 +1161,7 @@
 
     <div class="calendar-container slide-top" id="ctrader">
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
-        <img src="alice.png" alt="Alice" class="alice-image top-right-image">
+        <img src="alice.png" alt="Alice" class="alice-image top-right-alice">
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
