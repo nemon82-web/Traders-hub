@@ -52,6 +52,11 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .left-charts.hidden {
+            transform: translateX(-100%) translateY(-50%);
         }
 
         .chart-panel {
@@ -169,6 +174,39 @@
         #sp500-countdown span {
             font-weight: bold;
             color: #DAA520;
+        }
+
+        .toggle-tab {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 15px 15px 15px 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toggle-tab:hover {
+            background: #1d2120;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .toggle-tab i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toggle-tab:hover i {
+            transform: scale(1.2);
         }
 
         /* Main Time Display */
@@ -347,9 +385,14 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .main-time-radio {
+        .main-time-zet {
             top: -10px;
-            left: 70px;
+            left: 170px;
+        }
+		
+		.main-time-rmf {
+            top: -10px;
+            left: 25px;
         }
 
         .radio-icon:hover {
@@ -363,27 +406,15 @@
             cursor: pointer;
         }
 
-        /* Existing rabbit Art CSS */
-        .rabbit-art {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            z-index: 500;
-            pointer-events: none;
-        }
-        
-        .rabbit-image {
-            width: 120px;
-            height: auto;
-            animation: Pulse 4s infinite ease-in-out;
-        }
+
         
         .ascii-trend {
             position: fixed;
-            top: 15px;
-            right: 150px;
+            top: 10px;
+            right: 20px;
             z-index: 500;
             pointer-events: none;
+		/*	animation: Pulse 4s infinite ease-in-out; */
         }
         
         .trend-image {
@@ -406,10 +437,10 @@
 
         .kurvix-container {
             position: absolute;
-            bottom: 5px;
-            left: 31%;
+            bottom: 40px;
+            left: 15%;
             transform: translateX(-50%);
-            z-index: 1000;
+            z-index: 10;
         }
 
         .kurvix-image {
@@ -471,24 +502,37 @@
             height: 100% !important;
         }
 
-        /* rabtab Handle Styles */
-        .rabtab-handle {
-            position: absolute;
-            bottom: 20px;
-            left: 46%;
-            z-index: 1001;
-            cursor: pointer;
-        }
+/* Rabtab Handle Styles */
+.rabtab-handle {
+    position: fixed;
+    bottom: 0px;
+    left: 49%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    pointer-events: none; /* Container doesn't block mouse events */
+    cursor: pointer;
+}
 
-        .rabtab-handle img {
-            width: 80px;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
+.rabtab-handle img {
+    width: 110px;
+    height: auto;
+    pointer-events: auto;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+    animation: float 3s ease-in-out infinite;
+    transform-origin: center;
+    cursor: pointer;
+}
 
-        .rabtab-handle:hover img {
-            transform: scale(1.1);
-        }
+.rabtab-handle:hover img {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    animation-play-state: paused;
+}
+
+.rabtab-handle:active img {
+    transform: scale(0.95) rotate(-5deg);
+    transition: transform 0.1s ease-in-out;
+}
 
         /* Bottom Right Widget */
         .bottom-right-widget {
@@ -734,12 +778,19 @@
             pointer-events: none;
             width: 130px;
         }
+		
+	    .fa-pause {
+            animation: Pulse 1s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
-    <!-- Main Time Display with Radio Button -->
+    <!-- Main Time Display with Radio Button RMF ; ZET -->
+	<!-- https://rs201-krk.rmfstream.pl/rmf_fm -->
+	<!-- https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01 -->
     <div id="time-display">
-        <i class="fas fa-play radio-icon main-time-radio" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
+        <i class="fas fa-play radio-icon main-time-zet" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01"></i>
+		<i class="fas fa-play radio-icon main-time-rmf" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
         <div id="time-text"></div>
         <div id="day-name"></div>
     </div>
@@ -932,6 +983,9 @@
                 </script>
             </div>
         </div>
+        <div class="toggle-tab" role="button" tabindex="0" aria-label="Toggle left charts">
+            <i class="fas fa-chevron-left"></i>
+        </div>
     </div>
 
     <!-- World Clocks with Radio Icons -->
@@ -975,10 +1029,7 @@
         </pre>
     </div>
 
-    <!-- Rabbit Image -->
-    <div class="rabbit-art">
-        <img src="rabbit.png" alt="Animated Rabbit" class="rabbit-image">
-    </div>
+ 
 
     <!-- Trend Image -->
     <div class="ascii-trend">
@@ -1184,20 +1235,32 @@
         const slideOutSound = new Audio('slide_out.mp3');
 
         // Mouse button controls for panels
-        document.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            let targetPanel;
-            switch(e.button) {
-                case 3:
-                    targetPanel = document.getElementById('week-calendar');
-                    break;
-                case 4:
-                    targetPanel = document.getElementById('economic-calendar');
-                    break;
-                case 1:
-                    targetPanel = document.getElementById('ctrader');
-                    break;
+ document.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    let targetPanel;
+    switch(e.button) {
+        case 4: // Reassigned from week-calendar to left-charts
+            const leftCharts = document.querySelector('.left-charts');
+            const toggleTab = leftCharts.querySelector('.toggle-tab');
+            const icon = toggleTab.querySelector('i');
+            const wasHidden = leftCharts.classList.contains('hidden');
+            
+            leftCharts.classList.toggle('hidden');
+            if (wasHidden) {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                slideSound.play();
+            } else {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                slideOutSound.play();
             }
+            break;
+        case 3:
+            targetPanel = document.getElementById('economic-calendar');
+            break;
+        case 1:
+            targetPanel = document.getElementById('ctrader');
+            break;
+    }
 
             if (targetPanel) {
                 const wasLocked = targetPanel.classList.contains('locked');
@@ -1435,6 +1498,36 @@
             if (currentStation) {
                 currentStation.classList.replace('fa-pause', 'fa-play');
                 currentStation = null;
+            }
+        });
+
+        // Toggle Left Charts
+        const leftCharts = document.querySelector('.left-charts');
+        const toggleTab = leftCharts.querySelector('.toggle-tab');
+        const icon = toggleTab.querySelector('i');
+
+        toggleTab.addEventListener('click', () => {
+            leftCharts.classList.toggle('hidden');
+            if (leftCharts.classList.contains('hidden')) {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                slideOutSound.play();
+            } else {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                slideSound.play();
+            }
+        });
+
+        toggleTab.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                leftCharts.classList.toggle('hidden');
+                if (leftCharts.classList.contains('hidden')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                    slideOutSound.play();
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                    slideSound.play();
+                }
             }
         });
     </script>
