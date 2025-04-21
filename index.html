@@ -480,8 +480,8 @@
         /* Rabtab Handle Styles */
         .rabtab-handle {
             position: fixed;
-            bottom: 0px;
-            left: 49%;
+            bottom: 90px;
+            right: -42px;
             transform: translateX(-50%);
             z-index: 1001;
             pointer-events: none;
@@ -489,7 +489,7 @@
         }
 
         .rabtab-handle img {
-            width: 110px;
+            width: 70px;
             height: auto;
             pointer-events: auto;
             transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
@@ -1051,6 +1051,11 @@
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
+	
+	        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle toptab">
+            <img src="rabtab.png" alt="toptab Handle">
+        </div>
+	
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
@@ -1137,9 +1142,7 @@
             }
             </script>
         </div>
-        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle toptab">
-            <img src="rabtab.png" alt="toptab Handle">
-        </div>
+
     </div>
 
     <!-- center_hidden Iframe Container -->
