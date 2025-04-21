@@ -471,8 +471,8 @@
             height: 100% !important;
         }
 
-        /* Spotware Iframe Container */
-        .spotware-iframe-container {
+        /*  center_hidden Container */
+        .center_hidden-iframe-container {
             position: absolute;
             top: 52%;
             left: 62%;
@@ -671,11 +671,11 @@
             z-index: 1050;
         }
 
-        #cmctop {
-            top: -75vh;
+        #toptab {
+            top: -89.5vh;
             left: 0;
             width: 100vw;
-            height: 75vh;
+            height: 89.5vh;
             z-index: 1350;
         }
 
@@ -1148,14 +1148,14 @@
             }
             </script>
         </div>
-        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle cmctop">
-            <img src="rabtab.png" alt="cmctop Handle">
+        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle toptab">
+            <img src="rabtab.png" alt="toptab Handle">
         </div>
     </div>
 
-    <!-- Spotware Iframe Container -->
-    <div class="spotware-iframe-container">
-        <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
+    <!-- center_hidden Iframe Container -->
+    <div class="center_hidden-iframe-container">
+        <iframe src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
     <!-- Calendar Containers -->
@@ -1190,8 +1190,8 @@
         </div>
     </div>
 
-    <div class="calendar-container slide-top" id="cmctop">
-        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
+    <div class="calendar-container slide-top" id="toptab">
+        <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
         <img src="alice.png" alt="Alice" class="alice-image top-right-alice">
     </div>
 
@@ -1289,7 +1289,7 @@
                     mainChartToggle.click();
                     break;
                 case 1:
-                    targetPanel = document.getElementById('cmctop');
+                    targetPanel = document.getElementById('toptab');
                     break;
             }
 
@@ -1348,11 +1348,11 @@
 
         // Handle Rabtab Handle Interactions
         const rabtabHandle = document.querySelector('.rabtab-handle');
-        const cmctopContainer = document.getElementById('cmctop');
+        const toptabContainer = document.getElementById('toptab');
 
         rabtabHandle.addEventListener('click', () => {
-            const wasLocked = cmctopContainer.classList.contains('locked');
-            cmctopContainer.classList.toggle('locked');
+            const wasLocked = toptabContainer.classList.contains('locked');
+            toptabContainer.classList.toggle('locked');
             if (!wasLocked) {
                 slideSound.play();
             } else {
@@ -1363,8 +1363,8 @@
         rabtabHandle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                const wasLocked = cmctopContainer.classList.contains('locked');
-                cmctopContainer.classList.toggle('locked');
+                const wasLocked = toptabContainer.classList.contains('locked');
+                toptabContainer.classList.toggle('locked');
                 if (!wasLocked) {
                     slideSound.play();
                 } else {
