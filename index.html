@@ -203,10 +203,10 @@
 
         #day-name {
             position: absolute;
-            bottom: -10px;
-            right: -15px;
+            top: -23px;
+            right: 70px;
             font-family: 'Exo 2', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
             text-transform: uppercase;
@@ -1250,7 +1250,8 @@
         function updateTime() {
             const now = new Date();
             const dayName = now.toLocaleString('en-US', { weekday: 'short' });
-            document.getElementById('day-name').textContent = dayName;
+            const dayOfMonth = now.getDate();
+            document.getElementById('day-name').textContent = `${dayName} ${dayOfMonth}`;
             document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
             const options = { hour12: false };
             document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });

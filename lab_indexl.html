@@ -203,10 +203,10 @@
 
         #day-name {
             position: absolute;
-            bottom: -10px;
-            right: -15px;
+            top: -23px;
+            right: 70px;
             font-family: 'Exo 2', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
             text-transform: uppercase;
@@ -471,7 +471,7 @@
             height: 100% !important;
         }
 
-        /* center_hidden Container */
+        /*  center_hidden Container */
         .center_hidden-iframe-container {
             position: absolute;
             top: 52%;
@@ -845,16 +845,24 @@
             </div>
             <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
                 <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-chart.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
+                    "autosize": true,
                     "symbol": "CAPITALCOM:DE40",
-                    "width": "100%",
-                    "height": "100%",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
                     "locale": "en",
-                    "dateRange": "1D",
-                    "colorTheme": "dark",
-                    "isTransparent": true,
-                    "autosize": true
+                    "backgroundColor": "rgba(46, 139, 87, 0.15)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
                 }
                 </script>
             </div>
@@ -884,16 +892,24 @@
             </div>
             <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
                 <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-chart.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
+                    "autosize": true,
                     "symbol": "CAPITALCOM:US100",
-                    "width": "100%",
-                    "height": "100%",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
                     "locale": "en",
-                    "dateRange": "1D",
-                    "colorTheme": "dark",
-                    "isTransparent": true,
-                    "autosize": true
+                    "backgroundColor": "rgba(70, 130, 180, 0.20)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
                 }
                 </script>
             </div>
@@ -923,16 +939,24 @@
             </div>
             <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
                 <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-chart.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
+                    "autosize": true,
                     "symbol": "CAPITALCOM:US500",
-                    "width": "100%",
-                    "height": "100%",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
                     "locale": "en",
-                    "dateRange": "1D",
-                    "colorTheme": "dark",
-                    "isTransparent": true,
-                    "autosize": true
+                    "backgroundColor": "rgba(218, 165, 32, 0.08)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
                 }
                 </script>
             </div>
@@ -960,16 +984,24 @@
             </div>
             <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
                 <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-chart.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
+                    "autosize": true,
                     "symbol": "CMCMARKETS:VOLINDEXK2025",
-                    "width": "100%",
-                    "height": "100%",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
                     "locale": "en",
-                    "dateRange": "1D",
-                    "colorTheme": "dark",
-                    "isTransparent": true,
-                    "autosize": true
+                    "backgroundColor": "#121212",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
                 }
                 </script>
             </div>
@@ -1112,7 +1144,6 @@
                 ],
                 "calendar": true,
                 "hide_volume": true,
-                "hide_top_toolbar": true,
                 "support_host": "https://www.tradingview.com"
             }
             </script>
@@ -1139,7 +1170,7 @@
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-carrot" style="color: #ED9121;"></i>
         </div>
-        <iframe loading="lazy" src="pip.html"></iframe>
+        <iframe loading="lazy" src="empty"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -1219,7 +1250,8 @@
         function updateTime() {
             const now = new Date();
             const dayName = now.toLocaleString('en-US', { weekday: 'short' });
-            document.getElementById('day-name').textContent = dayName;
+            const dayOfMonth = now.getDate();
+            document.getElementById('day-name').textContent = `${dayName} ${dayOfMonth}`;
             document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
             const options = { hour12: false };
             document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });
