@@ -471,6 +471,23 @@
             height: 100% !important;
         }
 
+        /* Ctrader Iframe Container */
+        .ctrader-iframe-container {
+            position: absolute;
+            top: 52%;
+            left: 62%;
+            transform: translate(-50%, -50%);
+            width: 65%;
+            height: 75%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            z-index: 800;
+            overflow: hidden;
+        }
+
         /* Rabtab Handle Styles */
         .rabtab-handle {
             position: fixed;
@@ -1136,6 +1153,11 @@
         </div>
     </div>
 
+    <!-- Ctrader Iframe Container -->
+    <div class="ctrader-iframe-container">
+        <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
+
     <!-- Calendar Containers -->
     <div class="calendar-container" id="economic-calendar">
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
@@ -1264,8 +1286,8 @@
                     }
                     break;
                 case 3: // Toggle main TradingView chart
-    mainChartToggle.click();
-    break;
+                    mainChartToggle.click();
+                    break;
                 case 1:
                     targetPanel = document.getElementById('ctrader');
                     break;
