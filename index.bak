@@ -203,10 +203,10 @@
 
         #day-name {
             position: absolute;
-            bottom: -10px;
-            right: -15px;
+            top: -23px;
+            right: 70px;
             font-family: 'Exo 2', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #DAA520;
             text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
             text-transform: uppercase;
@@ -471,6 +471,23 @@
             height: 100% !important;
         }
 
+        /*  center_hidden Container */
+        .center_hidden-iframe-container {
+            position: absolute;
+            top: 52%;
+            left: 62%;
+            transform: translate(-50%, -50%);
+            width: 65%;
+            height: 75%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            z-index: 800;
+            overflow: hidden;
+        }
+
         /* Rabtab Handle Styles */
         .rabtab-handle {
             position: fixed;
@@ -516,7 +533,7 @@
         .control-buttons {
             position: fixed;
             top: 40px;
-            right: 250px;
+            right: 150px;
             display: flex;
             gap: 10px;
             z-index: 1001;
@@ -654,11 +671,11 @@
             z-index: 1050;
         }
 
-        #ctrader {
-            top: -75vh;
+        #toptab {
+            top: -50.0vh;
             left: 0;
             width: 100vw;
-            height: 75vh;
+            height: 50.0vh;
             z-index: 1350;
         }
 
@@ -1131,9 +1148,14 @@
             }
             </script>
         </div>
-        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle Ctrader">
-            <img src="rabtab.png" alt="Ctrader Handle">
+        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle toptab">
+            <img src="rabtab.png" alt="toptab Handle">
         </div>
+    </div>
+
+    <!-- center_hidden Iframe Container -->
+    <div class="center_hidden-iframe-container">
+        <iframe src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
     <!-- Calendar Containers -->
@@ -1148,7 +1170,7 @@
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-carrot" style="color: #ED9121;"></i>
         </div>
-        <iframe loading="lazy" src="pip.html"></iframe>
+        <iframe loading="lazy" src="empty"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -1168,7 +1190,7 @@
         </div>
     </div>
 
-    <div class="calendar-container slide-top" id="ctrader">
+    <div class="calendar-container slide-top" id="toptab">
         <iframe loading="lazy" src="https://ct.spotware.com/"></iframe>
         <img src="alice.png" alt="Alice" class="alice-image top-right-alice">
     </div>
@@ -1228,7 +1250,8 @@
         function updateTime() {
             const now = new Date();
             const dayName = now.toLocaleString('en-US', { weekday: 'short' });
-            document.getElementById('day-name').textContent = dayName;
+            const dayOfMonth = now.getDate();
+            document.getElementById('day-name').textContent = `${dayName} ${dayOfMonth}`;
             document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
             const options = { hour12: false };
             document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });
@@ -1267,7 +1290,7 @@
                     mainChartToggle.click();
                     break;
                 case 1:
-                    targetPanel = document.getElementById('ctrader');
+                    targetPanel = document.getElementById('toptab');
                     break;
             }
 
@@ -1326,11 +1349,11 @@
 
         // Handle Rabtab Handle Interactions
         const rabtabHandle = document.querySelector('.rabtab-handle');
-        const ctraderContainer = document.getElementById('ctrader');
+        const toptabContainer = document.getElementById('toptab');
 
         rabtabHandle.addEventListener('click', () => {
-            const wasLocked = ctraderContainer.classList.contains('locked');
-            ctraderContainer.classList.toggle('locked');
+            const wasLocked = toptabContainer.classList.contains('locked');
+            toptabContainer.classList.toggle('locked');
             if (!wasLocked) {
                 slideSound.play();
             } else {
@@ -1341,8 +1364,8 @@
         rabtabHandle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                const wasLocked = ctraderContainer.classList.contains('locked');
-                ctraderContainer.classList.toggle('locked');
+                const wasLocked = toptabContainer.classList.contains('locked');
+                toptabContainer.classList.toggle('locked');
                 if (!wasLocked) {
                     slideSound.play();
                 } else {
