@@ -414,20 +414,6 @@
             pointer-events: none;
         }
         
-        .bomba-container {
-            position: absolute;
-            top: 120px;
-            left: 52%;
-            transform: translateX(-50%);
-            z-index: 1000;
-        }
-
-        .bomba-image {
-            width: 100px;
-            height: auto;
-            animation: bounce 4s infinite;
-            pointer-events: none;
-        }
 
         /* TradingView Container */
         .tradingview-container {
@@ -643,15 +629,6 @@
             z-index: 1080;
         }
 
-        #htsfx {
-            top: 50%;
-            right: -650px;
-            transform: translateY(-50%);
-            width: 650px;
-            height: 100vh;
-            z-index: 1170;
-        }
-
         #myfxbook-tab {
             top: 88%;
             right: -750px;
@@ -724,15 +701,6 @@
             border-radius: 15px 0 0 15px;
         }
 
-        #htsfx .calendar-tab {
-            left: -45px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 45px;
-            height: 50px;
-            border-radius: 15px 0 0 15px;
-        }
-
         #myfxbook-tab .calendar-tab {
             left: -45px;
             top: 15%;
@@ -756,10 +724,6 @@
 
         .calendar-tab:hover i {
             transform: scale(1.2);
-        }
-
-        #htsfx .calendar-tab:hover {
-            background: var(--accent-4);
         }
 
         .calendar-tab:focus {
@@ -1017,7 +981,7 @@
             <div>Tokyo</div>
             <div id="tokyo-time">00:00:00</div>
             <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
-            <i class="fas fa-c clickable-icon" onclick="opencmcmarkets()"></i>
+            <i class="fas fa-heading clickable-icon"  onclick="openhtsfx()"></i>
         </div>
         <div class="world-clock london-clock">
             <div onclick="openBBC()">London</div>
@@ -1177,16 +1141,6 @@
             <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
         </div>
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
-    </div>
-
-    <div class="calendar-container" id="htsfx">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="HTS">
-            <i class="fas fa-heading" style="color: #4682B4;"></i>
-        </div>
-        <iframe loading="lazy" src="htsfx.html"></iframe>
-        <div class="bomba-container">
-            <img src="bomba.png" alt="Bomba" class="bomba-image">
-        </div>
     </div>
 
     <div class="calendar-container slide-top" id="toptab">
@@ -1487,12 +1441,12 @@
             window.open('https://nemon82-web.github.io/Traders-hub/feed.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
-        function opencmcmarkets() {
+        function openhtsfx() {
             const width = 1200;
             const height = 800;
             const leftPos = (window.screen.width / 2) - (width / 2);
             const topPos = (window.screen.height / 2) - (height / 2);
-            window.open('https://platform.cmcmarkets.com/#/preloader?b=CMC-CFD&r=PL&l=pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+            window.open('htsfx.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
         function openstrefaklienta() {
