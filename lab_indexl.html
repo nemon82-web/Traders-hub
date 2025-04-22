@@ -451,7 +451,6 @@
             transform: translate(-50%, -50%) translateY(120%);
         }
 
-
         .tradingview-widget-copyright .blue-text {
             color: var(--accent-3) !important;
         }
@@ -460,7 +459,7 @@
             height: 100% !important;
         }
 
-        /*  center_hidden Container */
+        /* Center Hidden Container */
         .center_hidden-iframe-container {
             position: absolute;
             top: 52%;
@@ -475,38 +474,6 @@
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
             z-index: 800;
             overflow: hidden;
-        }
-
-        /* Rabtab Handle Styles */
-        .rabtab-handle {
-            position: fixed;
-            bottom: 120px;
-            right: -10px;
-            transform: translateX(-50%);
-            z-index: 1001;
-            pointer-events: none;
-            cursor: pointer;
-        }
-
-        .rabtab-handle img {
-            width: 40px;
-            height: auto;
-            pointer-events: auto;
-            transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-            animation: float 3s ease-in-out infinite;
-            transform-origin: center;
-            cursor: pointer;
-        }
-
-        .rabtab-handle:hover img {
-            transform: scale(1.1) rotate(5deg);
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-            animation-play-state: paused;
-        }
-
-        .rabtab-handle:active img {
-            transform: scale(0.95) rotate(-5deg);
-            transition: transform 0.1s ease-in-out;
         }
 
         /* Bottom Right Widget */
@@ -554,6 +521,40 @@
         }
 
         .control-buttons button:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Toptab Toggle Button */
+        .toptab-toggle {
+            position: fixed;
+            bottom: 95px; /* Matches original rabtab vertical position */
+            right: 15px;  /* Fully visible, adjusted from original -15px */
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 1001;
+        }
+
+        .toptab-toggle:hover {
+            background: #1d2120;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .toptab-toggle i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toptab-toggle:hover i {
             transform: scale(1.2);
         }
 
@@ -661,10 +662,10 @@
         }
 
         #toptab {
-            top: -80.0vh;
+            top: -85.0vh;
             left: 0;
             width: 100vw;
-            height: 80.0vh;
+            height: 85.0vh;
             z-index: 1350;
         }
 
@@ -1035,6 +1036,11 @@
         </button>
     </div>
 
+    <!-- Toptab Toggle Button -->
+    <button class="toptab-toggle" role="button" aria-label="Toggle toptab">
+        <i class="fas fa-caret-down"></i>
+    </button>
+
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
         <pre>
@@ -1051,11 +1057,6 @@
     <div class="ascii-trend">
         <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
-	
-	        <div class="rabtab-handle" role="button" tabindex="0" aria-label="Toggle toptab">
-            <img src="rabtab.png" alt="toptab Handle">
-        </div>
-	
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
@@ -1142,10 +1143,9 @@
             }
             </script>
         </div>
-
     </div>
 
-    <!-- center_hidden Iframe Container -->
+    <!-- Center Hidden Iframe Container -->
     <div class="center_hidden-iframe-container">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
@@ -1259,39 +1259,32 @@
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
-        // Mouse button controls for panels
-        document.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            let targetPanel;
-            switch(e.button) {
-                case 4: // Reassigned from week-calendar to left-charts
-                    const leftCharts = document.querySelector('.left-charts');
-                    const leftChartsIcon = document.querySelector('.left-charts-toggle i');
-                    const wasHidden = leftCharts.classList.contains('hidden');
-                    
-                    leftCharts.classList.toggle('hidden');
-                    if (wasHidden) {
-                        leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
-                        slideSound.play();
-                    } else {
-                        leftChartsIcon.classList.replace('fa-caret-left', 'fa-caret-right');
-                        slideOutSound.play();
-                    }
-                    break;
-                case 3: // Toggle main TradingView chart
-                    mainChartToggle.click();
-                    break;
-                case 1:
-                    targetPanel = document.getElementById('toptab');
-                    break;
-            }
+        // Handle Toptab Toggle
+        const toptabToggle = document.querySelector('.toptab-toggle');
+        const toptabContainer = document.getElementById('toptab');
 
-            if (targetPanel) {
-                const wasLocked = targetPanel.classList.contains('locked');
-                targetPanel.classList.toggle('locked');
-                if (targetPanel.classList.contains('locked')) {
+        toptabToggle.addEventListener('click', () => {
+            toptabContainer.classList.toggle('locked');
+            const icon = toptabToggle.querySelector('i');
+            if (toptabContainer.classList.contains('locked')) {
+                icon.classList.replace('fa-caret-down', 'fa-caret-up');
+                slideSound.play();
+            } else {
+                icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                slideOutSound.play();
+            }
+        });
+
+        toptabToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toptabContainer.classList.toggle('locked');
+                const icon = toptabToggle.querySelector('i');
+                if (toptabContainer.classList.contains('locked')) {
+                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
                     slideSound.play();
                 } else {
+                    icon.classList.replace('fa-caret-up', 'fa-caret-down');
                     slideOutSound.play();
                 }
             }
@@ -1339,38 +1332,66 @@
             });
         });
 
-        // Handle Rabtab Handle Interactions
-        const rabtabHandle = document.querySelector('.rabtab-handle');
-        const toptabContainer = document.getElementById('toptab');
-
-        rabtabHandle.addEventListener('click', () => {
-            const wasLocked = toptabContainer.classList.contains('locked');
-            toptabContainer.classList.toggle('locked');
-            if (!wasLocked) {
-                slideSound.play();
-            } else {
-                slideOutSound.play();
+        // Mouse button controls for panels
+        document.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            let targetPanel;
+            switch(e.button) {
+                case 4: // Reassigned from week-calendar to left-charts
+                    const leftCharts = document.querySelector('.left-charts');
+                    const leftChartsIcon = document.querySelector('.left-charts-toggle i');
+                    const wasHidden = leftCharts.classList.contains('hidden');
+                    
+                    leftCharts.classList.toggle('hidden');
+                    if (wasHidden) {
+                        leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
+                        slideSound.play();
+                    } else {
+                        leftChartsIcon.classList.replace('fa-caret-left', 'fa-caret-right');
+                        slideOutSound.play();
+                    }
+                    break;
+                case 3: // Toggle main TradingView chart
+                    mainChartToggle.click();
+                    break;
+                case 1:
+                    targetPanel = document.getElementById('toptab');
+                    break;
             }
-        });
 
-        rabtabHandle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                const wasLocked = toptabContainer.classList.contains('locked');
-                toptabContainer.classList.toggle('locked');
-                if (!wasLocked) {
+            if (targetPanel) {
+                targetPanel.classList.toggle('locked');
+                const isLockedNow = targetPanel.classList.contains('locked');
+                if (isLockedNow) {
                     slideSound.play();
                 } else {
                     slideOutSound.play();
                 }
+                if (targetPanel.id === 'toptab') {
+                    const icon = document.querySelector('.toptab-toggle i');
+                    if (icon) {
+                        if (isLockedNow) {
+                            icon.classList.replace('fa-caret-down', 'fa-caret-up');
+                        } else {
+                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                    }
+                }
             }
         });
 
+        // Close panels when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container') && !e.target.closest('.rabtab-handle')) {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
+                    if (container.id === 'toptab') {
+                        const icon = document.querySelector('.toptab-toggle i');
+                        if (icon) {
+                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                    }
                 });
             }
         });
@@ -1380,6 +1401,12 @@
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
+                    if (container.id === 'toptab') {
+                        const icon = document.querySelector('.toptab-toggle i');
+                        if (icon) {
+                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                    }
                 });
             }
         });
