@@ -1438,9 +1438,9 @@
 
             if (isTradingDay) {
                 if (nowLocal < todayOpen) {
-                    return { target: todayOpen, label: 'Opens in' };
+                    return { target: todayOpen, label: '🔒' };
                 } else if (nowLocal < todayClose) {
-                    return { target: todayClose, label: 'Closes in' };
+                    return { target: todayClose, label: '🔓' };
                 }
             }
             let nextDay = isTradingDay ? nowLocal.plus({ days: 1 }) : nowLocal;
@@ -1448,7 +1448,7 @@
                 nextDay = nextDay.plus({ days: 1 });
             }
             const nextOpen = nextDay.set({ hour: open.hour, minute: open.minute, second: open.second });
-            return { target: nextOpen, label: 'Opens in' };
+            return { target: nextOpen, label: '🔒' };
         }
 
         function formatTime(diff) {
