@@ -125,7 +125,7 @@
             position: relative;
         }
 
-     //*  .nasdaq-chart::after {
+        .nasdaq-chart::after {
             content: "";
             position: absolute;
             top: 0;
@@ -135,7 +135,7 @@
             border-radius: var(--border-radius);
             box-shadow: inset 0 0 18px #4682B4;
             pointer-events: none;
-        } *//
+        }
 
         .dax-chart {
             border: 2px solid #2E8B57;
@@ -991,7 +991,7 @@
     </div>
 
     <!-- Pip Container -->
-    <div class="pip-container hidden">
+    <div class="pip-container">
         <h1>PipCalc</h1>
         <div id="pip-value-calculator-61143">
             <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
@@ -1617,6 +1617,42 @@
                 } else {
                     icon.classList.replace('fa-caret-up', 'fa-caret-down');
                     slideSound.play();
+                }
+            }
+        });
+
+        // Additional selections for keyboard shortcuts
+        const centerIframeContainer = document.querySelector('.center_hidden-iframe-container');
+        const leftChartsIcon = document.querySelector('.left-charts-toggle i');
+        const mainChartIcon = document.querySelector('.main-chart-toggle i');
+
+        // Keyboard shortcuts for toggling panels
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                // Toggle left charts and pip calculator
+                const isHidden = leftCharts.classList.contains('hidden');
+                if (isHidden) {
+                    leftCharts.classList.remove('hidden');
+                    pipContainer.classList.remove('hidden');
+                    leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
+                    slideSound.play();
+                } else {
+                    leftCharts.classList.add('hidden');
+                    pipContainer.classList.add('hidden');
+                    leftChartsIcon.classList.replace('fa-caret-left', 'fa-caret-right');
+                    slideOutSound.play();
+                }
+            } else if (e.key === 'ArrowUp') {
+                // Toggle main TradingView chart
+                const isSlidDown = mainChartContainer.classList.contains('slid-down');
+                if (isSlidDown) {
+                    mainChartContainer.classList.remove('slid-down');
+                    mainChartIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    slideSound.play();
+                } else {
+                    mainChartContainer.classList.add('slid-down');
+                    mainChartIcon.classList.replace('fa-caret-down', 'fa-caret-up');
+                    slideOutSound.play();
                 }
             }
         });
