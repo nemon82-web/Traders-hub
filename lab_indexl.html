@@ -495,7 +495,7 @@
         /* Control Buttons for Left Charts and Main Chart */
         .control-buttons {
             position: fixed;
-            top: 40px;
+            top: 20px;
             right: 10px;
             display: flex;
             gap: 10px;
@@ -503,11 +503,12 @@
         }
 
         .control-buttons button {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -517,53 +518,53 @@
         }
 
         .control-buttons button:hover {
-            background: #1d2120;
+            transform: scale(1.1);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
         }
 
         .control-buttons button i {
             font-size: 1.6rem;
             color: var(--text-primary);
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .control-buttons button:hover i {
-            transform: scale(1.2);
+        .left-charts-toggle {
+            border-color: var(--accent-4);
+        }
+
+        .main-chart-toggle {
+            border-color: var(--accent-1);
         }
 
         /* Toptab Toggle Button */
-        .toptab-toggle {
-            position: fixed;
-            bottom: 95px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            z-index: 1001;
-        }
+.toptab-toggle {
+    position: fixed;
+    bottom: 95px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent-1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1001;
+}
 
-        .toptab-toggle:hover {
-            background: #1d2120;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-        }
+.toptab-toggle:hover {
+    transform: scale(1.1	);
+    box-shadow: 0 0 15px rgba(70, 130, 180, 0.6);
+    border-color: var(--accent-1);
+}
 
-        .toptab-toggle i {
-            font-size: 1.6rem;
-            color: var(--text-primary);
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .toptab-toggle:hover i {
-            transform: scale(1.2);
-        }
+.toptab-toggle i {
+    color: red;
+    font-size: 1.6rem;
+}
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -991,8 +992,8 @@
     </div>
 
     <!-- Pip Container -->
-    <div class="pip-container">
-        <h1>PipCalc</h1>
+    <div class="pip-container hidden">
+        <h1>PipSulator</h1>
         <div id="pip-value-calculator-61143">
             <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
             <script type="text/javascript">
@@ -1047,16 +1048,16 @@
 
     <!-- Control Buttons -->
     <div class="control-buttons">
-        <button class="left-charts-toggle" role="button" aria-label="Toggle left charts">
+        <button class="left-charts-toggle" role="button" aria-label="Toggle left charts" title="Toggle left charts">
             <i class="fas fa-caret-left"></i>
         </button>
-        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart">
+        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
             <i class="fas fa-caret-down"></i>
         </button>
     </div>
 
     <!-- Toptab Toggle Button -->
-    <button class="toptab-toggle" role="button" aria-label="Toggle toptab">
+    <button class="toptab-toggle" role="button" aria-label="Toggle toptab" title="Toggle toptab">
         <i class="fas fa-caret-down"></i>
     </button>
 
@@ -1490,8 +1491,8 @@
         function openhtsfx() {
             const width = 1200;
             const height = 800;
-            const leftPos = (window.screen.width / 2) - (width / 2);
-            const topPos = (window.screen.height / 2) - (height / 2);
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
             window.open('htsfx.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
@@ -1612,47 +1613,11 @@
                 mainChartContainer.classList.toggle('slid-down');
                 const icon = mainChartToggle.querySelector('i');
                 if (mainChartContainer.classList.contains('slid-down')) {
-                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
+                    icon.classList.replace('fa-caret downed', 'fa-caret-up');
                     slideOutSound.play();
                 } else {
                     icon.classList.replace('fa-caret-up', 'fa-caret-down');
                     slideSound.play();
-                }
-            }
-        });
-
-        // Additional selections for keyboard shortcuts
-        const centerIframeContainer = document.querySelector('.center_hidden-iframe-container');
-        const leftChartsIcon = document.querySelector('.left-charts-toggle i');
-        const mainChartIcon = document.querySelector('.main-chart-toggle i');
-
-        // Keyboard shortcuts for toggling panels
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') {
-                // Toggle left charts and pip calculator
-                const isHidden = leftCharts.classList.contains('hidden');
-                if (isHidden) {
-                    leftCharts.classList.remove('hidden');
-                    pipContainer.classList.remove('hidden');
-                    leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
-                    slideSound.play();
-                } else {
-                    leftCharts.classList.add('hidden');
-                    pipContainer.classList.add('hidden');
-                    leftChartsIcon.classList.replace('fa-caret-left', 'fa-caret-right');
-                    slideOutSound.play();
-                }
-            } else if (e.key === 'ArrowUp') {
-                // Toggle main TradingView chart
-                const isSlidDown = mainChartContainer.classList.contains('slid-down');
-                if (isSlidDown) {
-                    mainChartContainer.classList.remove('slid-down');
-                    mainChartIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    slideSound.play();
-                } else {
-                    mainChartContainer.classList.add('slid-down');
-                    mainChartIcon.classList.replace('fa-caret-down', 'fa-caret-up');
-                    slideOutSound.play();
                 }
             }
         });
