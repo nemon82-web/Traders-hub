@@ -59,6 +59,22 @@
             transform: translateX(-110%) translateY(-50%);
         }
 
+        /* Pip Container */
+        .pip-container {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%;
+            height: 100vh;
+            z-index: 997;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .pip-container.hidden {
+            transform: translateX(-110%) translateY(-50%);
+        }
+
         .chart-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
@@ -373,18 +389,7 @@
             cursor: pointer;
         }
 
-        .ascii-trend {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 500;
-            pointer-events: none;
-        }
-        
-        .trend-image {
-            width: 120px;
-            height: auto;
-        }
+    
                 
         .ascii-art_old {
             position: fixed;
@@ -401,10 +406,10 @@
 
         .kurvix-container {
             position: absolute;
-            bottom: 40px;
-            left: 15%;
+            top: 10px;
+            right: -20px;
             transform: translateX(-50%);
-            z-index: 10;
+            z-index: 500;
         }
 
         .kurvix-image {
@@ -414,7 +419,6 @@
             pointer-events: none;
         }
         
-
         /* TradingView Container */
         .tradingview-container {
             position: absolute;
@@ -475,7 +479,7 @@
         .control-buttons {
             position: fixed;
             top: 40px;
-            right: 150px;
+            right: 10px;
             display: flex;
             gap: 10px;
             z-index: 1001;
@@ -969,6 +973,11 @@
         </div>
     </div>
 
+    <!-- Pip Container -->
+    <div class="pip-container hidden">
+        <iframe src="pip.html" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
+
     <!-- World Clocks with Radio Icons -->
     <div id="world-clocks">
         <div class="world-clock">
@@ -1024,10 +1033,7 @@
         </pre>
     </div>
 
-    <!-- Trend Image -->
-    <div class="ascii-trend">
-        <img src="trend.png" alt="Follow me!" class="trend-image">
-    </div>
+
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
@@ -1220,6 +1226,9 @@
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
+        // Select Pip Container
+        const pipContainer = document.querySelector('.pip-container');
+
         // Handle Toptab Toggle
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
@@ -1302,8 +1311,8 @@
                     const leftCharts = document.querySelector('.left-charts');
                     const leftChartsIcon = document.querySelector('.left-charts-toggle i');
                     const wasHidden = leftCharts.classList.contains('hidden');
-                    
                     leftCharts.classList.toggle('hidden');
+                    pipContainer.classList.toggle('hidden');
                     if (wasHidden) {
                         leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
                         slideSound.play();
@@ -1521,6 +1530,7 @@
 
         leftChartsToggle.addEventListener('click', () => {
             leftCharts.classList.toggle('hidden');
+            pipContainer.classList.toggle('hidden');
             const icon = leftChartsToggle.querySelector('i');
             if (leftCharts.classList.contains('hidden')) {
                 icon.classList.replace('fa-caret-left', 'fa-caret-right');
@@ -1535,6 +1545,7 @@
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 leftCharts.classList.toggle('hidden');
+                pipContainer.classList.toggle('hidden');
                 const icon = leftChartsToggle.querySelector('i');
                 if (leftCharts.classList.contains('hidden')) {
                     icon.classList.replace('fa-caret-left', 'fa-caret-right');
@@ -1573,5 +1584,5 @@
             }
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'934bbdff78b1bffe',t:'MTc0NTM5NDMzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
