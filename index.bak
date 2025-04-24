@@ -59,6 +59,41 @@
             transform: translateX(-110%) translateY(-50%);
         }
 
+        /* Pip Container */
+        .pip-container {
+            position: fixed;
+            left: 5px;
+            top: 48%;
+            transform: translateY(-50%);
+            width: 365px;
+            height: auto;
+            z-index: 997;
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            background: transparent;
+        }
+
+        .pip-container.hidden {
+            transform: translateX(-110%) translateY(-50%);
+        }
+
+        .pip-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+        }
+
+        #pip-value-calculator-61143 {
+            border: 4px solid var(--accent-gold);
+            border-radius: 80px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+        }
+
         .chart-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
@@ -373,19 +408,6 @@
             cursor: pointer;
         }
 
-        .ascii-trend {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 500;
-            pointer-events: none;
-        }
-        
-        .trend-image {
-            width: 120px;
-            height: auto;
-        }
-                
         .ascii-art_old {
             position: fixed;
             display: none;
@@ -401,10 +423,10 @@
 
         .kurvix-container {
             position: absolute;
-            bottom: 40px;
-            left: 15%;
+            top: 10px;
+            right: -20px;
             transform: translateX(-50%);
-            z-index: 10;
+            z-index: 500;
         }
 
         .kurvix-image {
@@ -414,7 +436,6 @@
             pointer-events: none;
         }
         
-
         /* TradingView Container */
         .tradingview-container {
             position: absolute;
@@ -474,19 +495,20 @@
         /* Control Buttons for Left Charts and Main Chart */
         .control-buttons {
             position: fixed;
-            top: 40px;
-            right: 150px;
+            top: 20px;
+            right: 10px;
             display: flex;
             gap: 10px;
             z-index: 1001;
         }
 
         .control-buttons button {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -496,53 +518,53 @@
         }
 
         .control-buttons button:hover {
-            background: #1d2120;
+            transform: scale(1.1);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
         }
 
         .control-buttons button i {
             font-size: 1.6rem;
             color: var(--text-primary);
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .control-buttons button:hover i {
-            transform: scale(1.2);
+        .left-charts-toggle {
+            border-color: var(--accent-4);
+        }
+
+        .main-chart-toggle {
+            border-color: var(--accent-1);
         }
 
         /* Toptab Toggle Button */
-        .toptab-toggle {
-            position: fixed;
-            bottom: 95px; /* Matches original rabtab vertical position */
-            right: 10px;  /* Fully visible, adjusted from original -15px */
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(145deg, var(--secondary-bg) 0%, #303050 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            z-index: 1001;
-        }
+.toptab-toggle {
+    position: fixed;
+    bottom: 95px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent-1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1001;
+}
 
-        .toptab-toggle:hover {
-            background: #1d2120;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-        }
+.toptab-toggle:hover {
+    transform: scale(1.1	);
+    box-shadow: 0 0 15px rgba(70, 130, 180, 0.6);
+    border-color: var(--accent-1);
+}
 
-        .toptab-toggle i {
-            font-size: 1.6rem;
-            color: var(--text-primary);
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .toptab-toggle:hover i {
-            transform: scale(1.2);
-        }
+.toptab-toggle i {
+    color: red;
+    font-size: 1.6rem;
+}
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -649,8 +671,8 @@
         /* Specific style for toptab to have bottom radiuses and overflow hidden */
         #toptab:hover,
         #toptab.locked {
-            border-radius: 0 0 26px 26px; /* Rounds only bottom-left and bottom-right corners */
-            overflow: hidden; /* Clips content to the rounded corners */
+            border-radius: 0 0 26px 26px;
+            overflow: hidden;
         }
 
         .calendar-tab {
@@ -969,6 +991,33 @@
         </div>
     </div>
 
+    <!-- Pip Container -->
+    <div class="pip-container hidden">
+        <h1>PipSulator</h1>
+        <div id="pip-value-calculator-61143">
+            <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+            <script type="text/javascript">
+                RemoteCalc({
+                "Url":"https://www.cashbackforex.com",
+                "TopPaneStyle":"YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCMxZDIxMjAgMCUsICMyZDM0MzQgMTAwJSk7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyLWJvdHRvbTogbm9uZTs=",
+                "BottomPaneStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgYm9yZGVyOiBzb2xpZCAwcHggIzJhMmUzOTsgY29sb3I6ICM5MTk0YTE7",
+                "ButtonStyle":"YmFja2dyb3VuZDogIzJkMzQzNDsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAyMHB4Ow==",
+                "TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiA0MHB4OyBmb250LXdlaWdodDogNTAwOw==",
+                "TextboxStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgY29sb3I6ICM5MTk0YTE7IGJvcmRlcjogc29saWQgMHB4ICM9MTk0YTE7",
+                "ContainerWidth":"465",
+                "HighlightColor":"rgba(0,0,0,1.0)",
+                "IsDisplayTitle":false,
+                "IsShowChartLinks":false,
+                "IsShowEmbedButton":false,
+                "Lang":"pl",
+                "CompactType":"large",
+                "Calculator":"pip-value-calculator",
+                "ContainerId":"pip-value-calculator-61143"
+                });
+            </script>
+        </div>
+    </div>
+
     <!-- World Clocks with Radio Icons -->
     <div id="world-clocks">
         <div class="world-clock">
@@ -999,16 +1048,16 @@
 
     <!-- Control Buttons -->
     <div class="control-buttons">
-        <button class="left-charts-toggle" role="button" aria-label="Toggle left charts">
+        <button class="left-charts-toggle" role="button" aria-label="Toggle left charts" title="Toggle left charts">
             <i class="fas fa-caret-left"></i>
         </button>
-        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart">
+        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
             <i class="fas fa-caret-down"></i>
         </button>
     </div>
 
     <!-- Toptab Toggle Button -->
-    <button class="toptab-toggle" role="button" aria-label="Toggle toptab">
+    <button class="toptab-toggle" role="button" aria-label="Toggle toptab" title="Toggle toptab">
         <i class="fas fa-caret-down"></i>
     </button>
 
@@ -1022,11 +1071,6 @@
   ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
   ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
         </pre>
-    </div>
-
-    <!-- Trend Image -->
-    <div class="ascii-trend">
-        <img src="trend.png" alt="Follow me!" class="trend-image">
     </div>
 
     <!-- TradingView Container -->
@@ -1133,7 +1177,7 @@
         <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
             <i class="fas fa-carrot" style="color: #ED9121;"></i>
         </div>
-        <iframe loading="lazy" src="pip.html"></iframe>
+        <iframe loading="lazy" src="empty"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
@@ -1220,6 +1264,9 @@
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
+        // Select Pip Container
+        const pipContainer = document.querySelector('.pip-container');
+
         // Handle Toptab Toggle
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
@@ -1302,8 +1349,8 @@
                     const leftCharts = document.querySelector('.left-charts');
                     const leftChartsIcon = document.querySelector('.left-charts-toggle i');
                     const wasHidden = leftCharts.classList.contains('hidden');
-                    
                     leftCharts.classList.toggle('hidden');
+                    pipContainer.classList.toggle('hidden');
                     if (wasHidden) {
                         leftChartsIcon.classList.replace('fa-caret-right', 'fa-caret-left');
                         slideSound.play();
@@ -1391,9 +1438,9 @@
 
             if (isTradingDay) {
                 if (nowLocal < todayOpen) {
-                    return { target: todayOpen, label: 'Opens in' };
+                    return { target: todayOpen, label: '🔒' };
                 } else if (nowLocal < todayClose) {
-                    return { target: todayClose, label: 'Closes in' };
+                    return { target: todayClose, label: '🔓' };
                 }
             }
             let nextDay = isTradingDay ? nowLocal.plus({ days: 1 }) : nowLocal;
@@ -1401,7 +1448,7 @@
                 nextDay = nextDay.plus({ days: 1 });
             }
             const nextOpen = nextDay.set({ hour: open.hour, minute: open.minute, second: open.second });
-            return { target: nextOpen, label: 'Opens in' };
+            return { target: nextOpen, label: '🔒' };
         }
 
         function formatTime(diff) {
@@ -1444,8 +1491,8 @@
         function openhtsfx() {
             const width = 1200;
             const height = 800;
-            const leftPos = (window.screen.width / 2) - (width / 2);
-            const topPos = (window.screen.height / 2) - (height / 2);
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
             window.open('htsfx.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
         }
 
@@ -1521,6 +1568,7 @@
 
         leftChartsToggle.addEventListener('click', () => {
             leftCharts.classList.toggle('hidden');
+            pipContainer.classList.toggle('hidden');
             const icon = leftChartsToggle.querySelector('i');
             if (leftCharts.classList.contains('hidden')) {
                 icon.classList.replace('fa-caret-left', 'fa-caret-right');
@@ -1535,6 +1583,7 @@
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 leftCharts.classList.toggle('hidden');
+                pipContainer.classList.toggle('hidden');
                 const icon = leftChartsToggle.querySelector('i');
                 if (leftCharts.classList.contains('hidden')) {
                     icon.classList.replace('fa-caret-left', 'fa-caret-right');
@@ -1564,7 +1613,7 @@
                 mainChartContainer.classList.toggle('slid-down');
                 const icon = mainChartToggle.querySelector('i');
                 if (mainChartContainer.classList.contains('slid-down')) {
-                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
+                    icon.classList.replace('fa-caret downed', 'fa-caret-up');
                     slideOutSound.play();
                 } else {
                     icon.classList.replace('fa-caret-up', 'fa-caret-down');
@@ -1573,5 +1622,5 @@
             }
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'934bbdff78b1bffe',t:'MTc0NTM5NDMzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'934bfed1d8ed53fe',t:'MTc0NTM5Njk4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
