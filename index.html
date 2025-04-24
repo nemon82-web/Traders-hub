@@ -574,38 +574,44 @@
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
 }
 
-        /* Toptab Toggle Inside */
-        .toptab-toggle-inside {
-            position: absolute;
-            right: 5px;
-            top: 70%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            z-index: 1351;
-			
-        }
+/* Toptab Toggle Inside */
+.toptab-toggle-inside {
+    /* Positioning */
+    position: absolute;
+    top: 65%;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    z-index: 1351;
+    cursor: pointer;
+    border-radius: 50%;
 
-        .toptab-toggle-inside:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 15px rgba(70, 130, 180, 0.6);
-            border-color: var(--accent-1);
-        }
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
 
-        .toptab-toggle-inside i {
-            color: red;
-            font-size: 1.6rem;
-        }
+    /* Transitions */
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.toptab-toggle-inside:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(14px) saturate(200%);
+    box-shadow:
+        0 0 20px rgba(70, 130, 180, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+.toptab-toggle-inside i {
+    color: cyan !important;
+    font-size: 24px;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
 
         /* Media Queries */
         @media (max-width: 768px) {
