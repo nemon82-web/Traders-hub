@@ -566,6 +566,38 @@
             font-size: 1.6rem;
         }
 
+        /* Toptab Toggle Inside */
+        .toptab-toggle-inside {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 1351;
+        }
+
+        .toptab-toggle-inside:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 15px rgba(70, 130, 180, 0.6);
+            border-color: var(--accent-1);
+        }
+
+        .toptab-toggle-inside i {
+            color: red;
+            font-size: 1.6rem;
+        }
+
         /* Media Queries */
         @media (max-width: 768px) {
             .left-charts {
@@ -660,10 +692,10 @@
         }
 
         #toptab {
-            top: -99.0vh;
+            top: -120vh;
             left: 0;
             width: 100vw;
-            height: 85.0vh;
+            height: 100vh;
             z-index: 1350;
         }
 
@@ -1185,6 +1217,9 @@
     <div class="calendar-container slide-top" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
         <img src="alice.png" alt="Alice" class="alice-image top-right-alice">
+        <button class="toptab-toggle-inside" role="button" aria-label="Toggle toptab" title="Toggle toptab">
+            <i class="fas fa-caret-down"></i>
+        </button>
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
@@ -1266,32 +1301,42 @@
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
 
-        toptabToggle.addEventListener('click', () => {
+        function toggleToptab() {
             toptabContainer.classList.toggle('locked');
-            const icon = toptabToggle.querySelector('i');
-            if (toptabContainer.classList.contains('locked')) {
-                icon.classList.replace('fa-caret-down', 'fa-caret-up');
+            const isLocked = toptabContainer.classList.contains('locked');
+            const outsideIcon = toptabToggle.querySelector('i');
+            const insideToggle = document.querySelector('.toptab-toggle-inside');
+            const insideIcon = insideToggle ? insideToggle.querySelector('i') : null;
+            if (isLocked) {
+                outsideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
+                if (insideIcon) insideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
                 slideSound.play();
             } else {
-                icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                 slideOutSound.play();
             }
-        });
+        }
+
+        toptabToggle.addEventListener('click', toggleToptab);
 
         toptabToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                toptabContainer.classList.toggle('locked');
-                const icon = toptabToggle.querySelector('i');
-                if (toptabContainer.classList.contains('locked')) {
-                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
-                    slideSound.play();
-                } else {
-                    icon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    slideOutSound.play();
-                }
+                toggleToptab();
             }
         });
+
+        const toptabToggleInside = document.querySelector('.toptab-toggle-inside');
+        if (toptabToggleInside) {
+            toptabToggleInside.addEventListener('click', toggleToptab);
+            toptabToggleInside.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleToptab();
+                }
+            });
+        }
 
         // Handle Calendar Tab Interactions
         const tabs = document.querySelectorAll('.calendar-tab');
@@ -1326,7 +1371,6 @@
         // Mouse button controls for panels
         document.addEventListener('mousedown', function(e) {
             e.preventDefault();
-            let targetPanel;
             switch(e.button) {
                 case 4: // Reassigned from week-calendar to left-charts
                     const leftCharts = document.querySelector('.left-charts');
@@ -1346,41 +1390,25 @@
                     mainChartToggle.click();
                     break;
                 case 1:
-                    targetPanel = document.getElementById('toptab');
+                    toggleToptab();
                     break;
-            }
-
-            if (targetPanel) {
-                targetPanel.classList.toggle('locked');
-                const isLockedNow = targetPanel.classList.contains('locked');
-                if (isLockedNow) {
-                    slideSound.play();
-                } else {
-                    slideOutSound.play();
-                }
-                if (targetPanel.id === 'toptab') {
-                    const icon = document.querySelector('.toptab-toggle i');
-                    if (icon) {
-                        if (isLockedNow) {
-                            icon.classList.replace('fa-caret-down', 'fa-caret-up');
-                        } else {
-                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
-                        }
-                    }
-                }
             }
         });
 
         // Close panels when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle')) {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
                     if (container.id === 'toptab') {
-                        const icon = document.querySelector('.toptab-toggle i');
-                        if (icon) {
-                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        const outsideIcon = document.querySelector('.toptab-toggle i');
+                        const insideIcon = document.querySelector('.toptab-toggle-inside i');
+                        if (outsideIcon) {
+                            outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                        if (insideIcon) {
+                            insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                         }
                     }
                 });
@@ -1393,9 +1421,13 @@
                     container.classList.remove('locked');
                     slideOutSound.play();
                     if (container.id === 'toptab') {
-                        const icon = document.querySelector('.toptab-toggle i');
-                        if (icon) {
-                            icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        const outsideIcon = document.querySelector('.toptab-toggle i');
+                        const insideIcon = document.querySelector('.toptab-toggle-inside i');
+                        if (outsideIcon) {
+                            outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                        if (insideIcon) {
+                            insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                         }
                     }
                 });
