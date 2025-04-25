@@ -290,18 +290,53 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            10% { transform: translate(-5%, -2%) rotate(-5deg); }
-            20% { transform: translate(5%, 2%) rotate(5deg); }
-            30% { transform: translate(-4%, -1.5%) rotate(-4deg); }
-            40% { transform: translate(4%, 1.5%) rotate(4deg); }
-            50% { transform: translate(-3%, -1%) rotate(-3deg); }
-            60% { transform: translate(3%, 1%) rotate(3deg); }
-            70% { transform: translate(-2%, -0.5%) rotate(-2deg); }
-            80% { transform: translate(2%, 0.5%) rotate(2deg); }
-            90% { transform: translate(-1%, -0.25%) rotate(-1deg); }
-        }
+@keyframes shake {
+  /* Start: widoczna → niewidoczna → widoczna + ruch+drgania */
+  0% {
+    opacity: 0.3;
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  5% {
+    opacity: 0.6;
+    transform: translateX(-5%) translateY(-2%) rotate(-5deg);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-10%) translateY(2%) rotate(5deg);
+  }
+
+  /* Główne drgania i przesuwanie */
+  20% {
+    transform: translateX(-20%) translateY(-2%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(-30%) translateY(2%) rotate(5deg);
+  }
+  40% {
+    transform: translateX(-40%) translateY(-1.5%) rotate(-4deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(1.5%) rotate(4deg);
+  }
+  60% {
+    transform: translateX(-60%) translateY(-1%) rotate(-3deg);
+  }
+  70% {
+    transform: translateX(-70%) translateY(1%) rotate(3deg);
+  }
+  80% {
+    transform: translateX(-80%) translateY(-0.5%) rotate(-2deg);
+  }
+  90% {
+    transform: translateX(-90%) translateY(0.5%) rotate(2deg);
+  }
+
+  /* Koniec: zakryta za lewą krawędzią, spokój */
+  100% {
+    opacity: 1;
+    transform: translateX(-100%) translateY(0) rotate(0deg);
+  }
+}
 
         @keyframes fadeIn {
             from { opacity: 0.5; }
@@ -440,7 +475,7 @@
         .kurvix-container {
             position: absolute;
             top: 20px;
-            right: 50px;
+            right: 30px;
             transform: translateX(-50%);
             z-index: 500;
         }
@@ -448,7 +483,7 @@
         .kurvix-image {
             width: 150px;
             height: auto;
-            animation: shake 3s infinite;
+            animation: shake 5s infinite;
             pointer-events: none;
         }
         
