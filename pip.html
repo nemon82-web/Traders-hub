@@ -2,84 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pip Value Calculator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>NemoN's Trading Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables */
         :root {
             --primary-bg: #1d2120;
             --secondary-bg: #2d3434;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
             --accent-gold: #DAA520;
             --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
             --border-radius: 16px;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 90vh;
-            background: #1d2120;
-            background-size: 100% 100%, 25px 25px;
-            font-family: 'Exo 2', sans-serif;
-            color: var(--text-primary);
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        h1 {
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%), 
+                        radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px;
+            color: var(--text-primary);
+            font-family: 'Exo 2', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 350px;
+            height: 100vh;
+            padding: 20px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+        }
+
+        /* Header Styling */
+        header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2rem;
             color: var(--accent-gold);
             text-align: center;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+            animation: fadeIn 1s ease-in;
         }
 
-        #pip-value-calculator-61143 {
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-            border: 2px solid var(--accent-gold);
-            position: relative;
+        header p {
+            font-style: italic;
+            text-align: center;
+            margin-top: 10px;
+            color: var(--accent-3);
         }
 
-        #pip-value-calculator-61143::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            border-radius: var(--border-radius);
-            pointer-events: none;
+        /* Main Content Styling */
+        main {
+            text-align: center;
+        }
+
+        main h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent-1);
+            margin-top: 20px;
+        }
+
+        main p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .illustration {
+            margin: 20px 0;
+        }
+
+        .illustration i {
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .illustration i:hover {
+            transform: scale(1.1);
+        }
+
+        .illustration svg {
+            display: block;
+            margin: 20px auto;
+        }
+
+        #hidden-quote p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--accent-2);
+            margin-top: 20px;
+        }
+
+        /* Footer Styling */
+        footer p {
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--accent-4);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
     </style>
 </head>
 <body>
-    <h1>PipCalc</h1>
-    <div id="pip-value-calculator-61143">
-        <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
-        <script type="text/javascript">
-            RemoteCalc({
-                "Url":"https://www.cashbackforex.com",
-                "TopPaneStyle":"YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCMxZDIxMjAgMCUsICMyZDM0MzQgMTAwJSk7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyLWJvdHRvbTogbm9uZTs=",
-                "BottomPaneStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgYm9yZGVyOiBzb2xpZCAwcHggIzJhMmUzOTsgY29sb3I6ICM5MTk0YTE7",
-                "ButtonStyle":"YmFja2dyb3VuZDogIzJkMzQzNDsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAyMHB4Ow==",
-                "TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiA0MHB4OyBmb250LXdlaWdodDogNTAwOw==",
-                "TextboxStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgY29sb3I6ICM5MTk0YTE7IGJvcmRlcjogc29saWQgMHB4ICM9MTk0YTE7",
-                "ContainerWidth":"465",
-                "HighlightColor":"rgba(0,0,0,1.0)",
-                "IsDisplayTitle":false,
-                "IsShowChartLinks":false,
-                "IsShowEmbedButton":false,
-                "Lang":"pl",
-                "CompactType":"large",
-                "Calculator":"pip-value-calculator",
-                "ContainerId":"pip-value-calculator-61143"
-            });
-        </script>
+    <div class="container">
+        <header>
+            <h1>Welcome to NemoN's Trading Hub</h1>
+            <p>You are warned. Dare to see how deep the rabbit hole goes?</p>
+        </header>
+        <main>
+            <h2>Trend Following: Your Guide in the Market Wonderland</h2>
+            <p>Trend following is like following the white rabbit in Alice's Wonderland. It might lead you to unexpected places, but with the right strategy, you can navigate the market's twists and turns.</p>
+            <h2>Kurvinox and the Kurvix Galaxy</h2>
+            <p>In the Kurvix galaxy, trends are as unpredictable as Kurvinox's mood swings. But with trend following, you can navigate even the wildest market fluctuations. Just remember, in trading as in the Kurvix galaxy, things are not always as they seem.</p>
+            <h2>Take the Red Pill</h2>
+            <p>Take the red pill and see the true trends in the market matrix. With trend following, you can break free from the illusions and trade with clarity.</p>
+            <div class="illustration">
+                <i id="kurvinox-icon" class="fas fa-dragon fa-5x" style="color: var(--accent-gold);"></i>
+                <svg width="300" height="100" viewBox="0 0 300 100">
+                    <polyline points="10,90 50,70 100,50 150,30 200,50 250,70 290,90" style="fill:none;stroke:#4682B4;stroke-width:2" />
+                </svg>
+            </div>
+            <div id="hidden-quote" style="display: none;">
+                <p>"The trend is your friend until the end when it bends." - Trading Proverb</p>
+            </div>
+        </main>
+        <footer>
+            <p>Remember, in trading as in Wonderland, things are not always as they seem. Trade at your own risk!</p>
+        </footer>
     </div>
+    <script>
+        document.getElementById('kurvinox-icon').addEventListener('click', () => {
+            const quote = document.getElementById('hidden-quote');
+            quote.style.display = quote.style.display === 'none' ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>
