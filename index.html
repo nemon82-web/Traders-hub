@@ -470,8 +470,6 @@
             pointer-events: none;
         }
 
-     
-
         .kurvix-container {
             position: absolute;
             top: 20px;
@@ -556,21 +554,26 @@
         .control-buttons button {
             width: 50px;
             height: 50px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .control-buttons button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
         }
 
         .control-buttons button i {
@@ -589,8 +592,8 @@
         /* Toptab Toggle Button */
 .toptab-toggle {
     /* Existing positioning */
-	cursor: pointer;
-	border-radius: 50%;
+    cursor: pointer;
+    border-radius: 50%;
     position: fixed;
     top: 85px;
     right: 5px;
@@ -620,8 +623,7 @@
 
 .toptab-toggle i {
     color: #00c5e8 !important;
-	font-size: 24px;
-	
+    font-size: 24px;
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
 }
 
@@ -1089,12 +1091,12 @@
 
     <!-- Pip Container -->
     <div class="pip-container hidden">
-	
-					<!-- Kurvinox Image -->
-	<div class="kurvinox-container">
-	<img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
+    
+                    <!-- Kurvinox Image -->
+    <div class="kurvinox-container">
+    <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
     </div>
-	
+    
         <h1>PipSulator</h1>
         <div id="pip-value-calculator-61143">
             <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
@@ -1117,9 +1119,9 @@
                 "ContainerId":"pip-value-calculator-61143"
                 });
             </script>
-			
+            
 
-			
+            
         </div>
     </div>
 
@@ -1745,5 +1747,5 @@
         // Initial update
         updateFullscreenButton();
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
