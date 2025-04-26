@@ -256,29 +256,15 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
         }
 
-@keyframes dance {
-    0% {
-        transform: translateX(0) rotate(0deg);
-    }
-    20% {
-        transform: translateX(20px) rotate(10deg);
-    }
-    40% {
-        transform: translateX(-30px) rotate(-15deg) scale(1.2);
-    }
-    50% {
-        transform: translateX(0) rotate(180deg);
-    }
-    60% {
-        transform: translateX(25px) skewY(15deg);
-    }
-    80% {
-        transform: translateX(-10px) rotate(360deg);
-    }
-    100% {
-        transform: translateX(0) rotate(0deg);
-    }
-}
+        @keyframes dance {
+            0% { transform: translateX(0) rotate(0deg); }
+            20% { transform: translateX(20px) rotate(10deg); }
+            40% { transform: translateX(-30px) rotate(-15deg) scale(1.2); }
+            50% { transform: translateX(0) rotate(180deg); }
+            60% { transform: translateX(25px) skewY(15deg); }
+            80% { transform: translateX(-10px) rotate(360deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
 
         @keyframes slideIn {
             from { transform: translateX(-100%); }
@@ -290,53 +276,20 @@
             to { transform: rotate(360deg); }
         }
 
-@keyframes shake {
-  /* Start: widoczna → niewidoczna → widoczna + ruch+drgania */
-  0% {
-    opacity: 0.3;
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  5% {
-    opacity: 0.6;
-    transform: translateX(-5%) translateY(-2%) rotate(-5deg);
-  }
-  10% {
-    opacity: 1;
-    transform: translateX(-10%) translateY(2%) rotate(5deg);
-  }
-
-  /* Główne drgania i przesuwanie */
-  20% {
-    transform: translateX(-20%) translateY(-2%) rotate(-5deg);
-  }
-  30% {
-    transform: translateX(-30%) translateY(2%) rotate(5deg);
-  }
-  40% {
-    transform: translateX(-40%) translateY(-1.5%) rotate(-4deg);
-  }
-  50% {
-    transform: translateX(-50%) translateY(1.5%) rotate(4deg);
-  }
-  60% {
-    transform: translateX(-60%) translateY(-1%) rotate(-3deg);
-  }
-  70% {
-    transform: translateX(-70%) translateY(1%) rotate(3deg);
-  }
-  80% {
-    transform: translateX(-80%) translateY(-0.5%) rotate(-2deg);
-  }
-  90% {
-    transform: translateX(-90%) translateY(0.5%) rotate(2deg);
-  }
-
-  /* Koniec: zakryta za lewą krawędzią, spokój */
-  100% {
-    opacity: 1;
-    transform: translateX(-100%) translateY(0) rotate(0deg);
-  }
-}
+        @keyframes shake {
+            0% { opacity: 0.3; transform: translateX(0) translateY(0) rotate(0deg); }
+            5% { opacity: 0.6; transform: translateX(-5%) translateY(-2%) rotate(-5deg); }
+            10% { opacity: 1; transform: translateX(-10%) translateY(2%) rotate(5deg); }
+            20% { transform: translateX(-20%) translateY(-2%) rotate(-5deg); }
+            30% { transform: translateX(-30%) translateY(2%) rotate(5deg); }
+            40% { transform: translateX(-40%) translateY(-1.5%) rotate(-4deg); }
+            50% { transform: translateX(-50%) translateY(1.5%) rotate(4deg); }
+            60% { transform: translateX(-60%) translateY(-1%) rotate(-3deg); }
+            70% { transform: translateX(-70%) translateY(1%) rotate(3deg); }
+            80% { transform: translateX(-80%) translateY(-0.5%) rotate(-2deg); }
+            90% { transform: translateX(-90%) translateY(0.5%) rotate(2deg); }
+            100% { opacity: 1; transform: translateX(-100%) translateY(0) rotate(0deg); }
+        }
 
         @keyframes fadeIn {
             from { opacity: 0.5; }
@@ -488,11 +441,10 @@
         /* TradingView Container */
         .tradingview-container {
             position: absolute;
-            top: 52%;
-            left: 62%;
-            transform: translate(-50%, -50%);
-            width: 67.5%;
-            height: 75%;
+            top: 14.5%;
+            left: 28.25%;
+            width: calc(100% - 28.25%);
+            height: calc(100% - 14.5%);
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
             border-radius: 16px;
@@ -504,7 +456,7 @@
         }
 
         .tradingview-container.slid-down {
-            transform: translate(-50%, -50%) translateY(120%);
+            transform: translateY(100%);
         }
 
         .tradingview-widget-copyright .blue-text {
@@ -515,14 +467,13 @@
             height: 100% !important;
         }
 
-        /* Center Hidden Container */
+        /* Center Hidden Container (cTrader) */
         .center_hidden-iframe-container {
             position: absolute;
-            top: 52%;
-            left: 62%;
-            transform: translate(-50%, -50%);
-            width: 67.5%;
-            height: 75%;
+            top: 14.5%;
+            left: 28.25%;
+            width: calc(100% - 28.25%);
+            height: calc(100% - 14.5%);
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
             border-radius: 16px;
@@ -532,12 +483,12 @@
             overflow: hidden;
         }
 
-        /* Bottom Right Widget */
+        /* Bottom Right Widget (Now Inside TradingView Container) */
         .bottom-right-widget {
-            position: fixed;
-            bottom: -70px;
-            right: -10px;
-            width: 1000px;
+            position: absolute;
+            bottom: -52px;
+            left: 30px;
+            width: 65%;
             z-index: 1000;
         }
 
@@ -590,81 +541,70 @@
         }
 
         /* Toptab Toggle Button */
-.toptab-toggle {
-    /* Existing positioning */
-    cursor: pointer;
-    border-radius: 50%;
-    position: fixed;
-    top: 85px;
-    right: 5px;
-    width: 50px;
-    height: 50px;
-    z-index: 1351;
+        .toptab-toggle {
+            cursor: pointer;
+            border-radius: 50%;
+            position: fixed;
+            top: 70px;
+            right: 5px;
+            width: 50px;
+            height: 50px;
+            z-index: 1351;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
 
-    /* Glass effect styles */
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-    
-    /* Existing transitions */
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
+        .toptab-toggle:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
+        }
 
-.toptab-toggle:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(14px) saturate(200%);
-    box-shadow: 
-        0 0 20px rgba(70, 130, 180, 0.4),
-        inset 0 0 15px rgba(255, 255, 255, 0.15);
-}
+        .toptab-toggle i {
+            color: #00c5e8 !important;
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+        }
 
-.toptab-toggle i {
-    color: #00c5e8 !important;
-    font-size: 24px;
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
-}
+        /* Toptab Toggle Inside */
+        .toptab-toggle-inside {
+            position: absolute;
+            top: 65%;
+            left: 0px;
+            width: 32px;
+            height: 75px;
+            z-index: 1351;
+            cursor: pointer;
+            border-radius: 1%;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
 
-/* Toptab Toggle Inside */
-.toptab-toggle-inside {
-    /* Positioning */
-    position: absolute;
-    top: 65%;
-    left: 0px;
-    width: 32px;
-    height: 75px;
-    z-index: 1351;
-    cursor: pointer;
-    border-radius: 1%;
+        .toptab-toggle-inside:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow:
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
+        }
 
-    /* Glass effect */
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-
-    /* Transitions */
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.toptab-toggle-inside:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(14px) saturate(200%);
-    box-shadow:
-        0 0 20px rgba(70, 130, 180, 0.4),
-        inset 0 0 15px rgba(255, 255, 255, 0.15);
-}
-
-.toptab-toggle-inside i {
-    color: #00c5e8 !important;
-    font-size: 24px;
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
-}
-
+        .toptab-toggle-inside i {
+            color: #00c5e8 !important;
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+        }
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -673,8 +613,8 @@
             }
 
             .tradingview-container {
-                left: 50%;
-                width: 95%;
+                left: 28.25%;
+                width: calc(100% - 28.25%);
             }
 
             #world-clocks {
@@ -698,7 +638,6 @@
 
             .bottom-right-widget {
                 width: 100%;
-                right: 0;
             }
         }
 
@@ -870,7 +809,7 @@
             border-radius: 5px;
         }
 
-           .kurvinox-container {
+        .kurvinox-container {
             position: absolute;
             bottom: 110px;
             right: -5px;
@@ -887,6 +826,28 @@
         
         .fa-pause {
             animation: Pulse 1s ease-in-out infinite;
+        }
+
+        /* New Tab Handles Container */
+        .tab-handles-container {
+            position: absolute;
+            left: 62%;
+            top: calc(14.5vh - 50px);
+            transform: translateX(-50%);
+            width: 67.5%;
+            height: 50px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .tab-handles-container .calendar-tab {
+            position: relative;
+            margin-right: 10px;
+            width: 45px;
+            height: 40px;
+            border-radius: 15px;
         }
     </style>
 </head>
@@ -1091,12 +1052,10 @@
 
     <!-- Pip Container -->
     <div class="pip-container hidden">
-    
-                    <!-- Kurvinox Image -->
-    <div class="kurvinox-container">
-    <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
-    </div>
-    
+        <!-- Kurvinox Image -->
+        <div class="kurvinox-container">
+            <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
+        </div>
         <h1>PipSulator</h1>
         <div id="pip-value-calculator-61143">
             <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
@@ -1119,9 +1078,6 @@
                 "ContainerId":"pip-value-calculator-61143"
                 });
             </script>
-            
-
-            
         </div>
     </div>
 
@@ -1170,6 +1126,22 @@
     <button class="toptab-toggle" role="button" aria-label="Toggle toptab" title="Toggle toptab">
         <i class="fas fa-caret-down"></i>
     </button>
+
+    <!-- Tab Handles Container -->
+    <div class="tab-handles-container">
+        <div class="calendar-tab" data-target="economic-calendar" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
+            <i class="fas fa-calendar" style="color: #2E8B57;"></i>
+        </div>
+        <div class="calendar-tab" data-target="surprise" role="button" tabindex="0" aria-label="Show HTS Trader">
+            <i class="fas fa-carrot" style="color: #ED9121;"></i>
+        </div>
+        <div class="calendar-tab" data-target="week-calendar" role="button" tabindex="0" aria-label="Show This Week's Economic Calendar">
+            <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
+        </div>
+        <div class="calendar-tab" data-target="myfxbook-tab" role="button" tabindex="0" aria-label="Show Myfxbook Outlook">
+            <i class="fas fa-user-friends" style="color: white"></i>
+        </div>
+    </div>
 
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
@@ -1268,32 +1240,55 @@
             }
             </script>
         </div>
+        <!-- Bottom Right Ticker Widget Moved Inside -->
+        <div class="bottom-right-widget">
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                {
+                    "symbols": [
+                        {
+                            "description": "HK50",
+                            "proName": "CAPITALCOM:HK50"
+                        },
+                        {
+                            "description": "JPN225",
+                            "proName": "CAPITALCOM:J225"
+                        },
+                        {
+                            "description": "FTSE100",
+                            "proName": "CAPITALCOM:UK100"
+                        },
+                        {
+                            "description": "WIG20",
+                            "proName": "TICKMILL:WIG20"
+                        }
+                    ],
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "colorTheme": "dark",
+                    "locale": "en"
+                }
+                </script>
+            </div>
+        </div>
     </div>
 
-    <!-- Center Hidden Iframe Container -->
+    <!-- Center Hidden Iframe Container (cTrader) -->
     <div class="center_hidden-iframe-container">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
-    <!-- Calendar Containers -->
+    <!-- Calendar Containers (Tab Handles Removed) -->
     <div class="calendar-container" id="economic-calendar">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
-            <i class="fas fa-calendar" style="color: #2E8B57;"></i>
-        </div>
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%232E8B57&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
     </div>
 
     <div class="calendar-container" id="surprise">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
-            <i class="fas fa-carrot" style="color: #ED9121;"></i>
-        </div>
         <iframe loading="lazy" src="pip.html"></iframe>
     </div>
 
     <div class="calendar-container" id="week-calendar">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show This Week's Economic Calendar">
-            <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
-        </div>
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
@@ -1305,52 +1300,13 @@
     </div>
 
     <div class="calendar-container" id="myfxbook-tab">
-        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Myfxbook Outlook">
-            <i class="fas fa-user-friends" style="color: white"></i>
-        </div>
         <iframe loading="lazy" src="myfxbook.html"></iframe>
-    </div>
-
-    <!-- Bottom Right Ticker Widget -->
-    <div class="bottom-right-widget">
-        <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-            {
-                "symbols": [
-                    {
-                        "description": "HK50",
-                        "proName": "CAPITALCOM:HK50"
-                    },
-                    {
-                        "description": "JPN225",
-                        "proName": "CAPITALCOM:J225"
-                    },
-                    {
-                        "description": "FTSE100",
-                        "proName": "CAPITALCOM:UK100"
-                    },
-                    {
-                        "description": "WIG20",
-                        "proName": "TICKMILL:WIG20"
-                    }
-                ],
-                "isTransparent": true,
-                "showSymbolLogo": true,
-                "colorTheme": "dark",
-                "locale": "en"
-            }
-            </script>
-        </div>
     </div>
 
     <!-- Kurvix Image -->
     <div class="kurvix-container">
         <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
     </div>
-
-
-
 
     <!-- Audio Element for Radio Playback -->
     <audio id="radio-player" preload="none"></audio>
@@ -1426,10 +1382,10 @@
         // Handle Calendar Tab Interactions
         const tabs = document.querySelectorAll('.calendar-tab');
         tabs.forEach(tab => {
-            const container = tab.parentElement;
-
             tab.addEventListener('click', (e) => {
                 e.preventDefault();
+                const targetId = tab.dataset.target;
+                const container = document.getElementById(targetId);
                 const wasLocked = container.classList.contains('locked');
                 container.classList.toggle('locked');
                 if (!wasLocked) {
@@ -1442,6 +1398,8 @@
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
+                    const targetId = tab.dataset.target;
+                    const container = document.getElementById(targetId);
                     const wasLocked = container.classList.contains('locked');
                     container.classList.toggle('locked');
                     if (!wasLocked) {
@@ -1471,10 +1429,10 @@
                         slideOutSound.play();
                     }
                     break;
-                case 1: // Toggle main TradingView chart
+                case 3: // Toggle main TradingView chart
                     mainChartToggle.click();
                     break;
-                case 3:
+                case 1:
                     toggleToptab();
                     break;
             }
@@ -1482,7 +1440,7 @@
 
         // Close panels when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside') && !e.target.closest('.calendar-tab')) {
                 document.querySelectorAll('.calendar-container.locked').forEach(container => {
                     container.classList.remove('locked');
                     slideOutSound.play();
@@ -1747,5 +1705,6 @@
         // Initial update
         updateFullscreenButton();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
