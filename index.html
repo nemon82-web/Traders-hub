@@ -1135,7 +1135,7 @@
             <i class="fas fa-calculator"></i>
         </button>
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
-            <i class="fas fa-eye"></i>
+            <i class="fas fa-exchange-alt"></i>
         </button>
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
@@ -1684,9 +1684,9 @@
             isTradingViewVisible = !isTradingViewVisible;
             const icon = mainChartToggle.querySelector('i');
             if (isTradingViewVisible) {
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
+                icon.classList.replace('fa-shuffle', 'fa-exchange-alt');
             } else {
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
+                icon.classList.replace('fa-exchange-alt', 'fa-shuffle');
             }
         });
 
@@ -1705,9 +1705,9 @@
                 isTradingViewVisible = !isTradingViewVisible;
                 const icon = mainChartToggle.querySelector('i');
                 if (isTradingViewVisible) {
-                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                    icon.classList.replace('fa-shuffle', 'fa-exchange-alt');
                 } else {
-                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                    icon.classList.replace('fa-exchange-alt', 'fa-shuffle');
                 }
             }
         });
