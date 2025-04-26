@@ -444,7 +444,7 @@
             top: 14.5%;
             left: 28.25%;
             width: calc(100% - 28.25%);
-            height: calc(100% - 14.5%);
+            height: calc(75% + 20px);
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
             border-radius: 16px;
@@ -456,7 +456,7 @@
         }
 
         .tradingview-container.slid-down {
-            transform: translateY(100%);
+            transform: translateY(120%);
         }
 
         .tradingview-widget-copyright .blue-text {
@@ -473,7 +473,7 @@
             top: 14.5%;
             left: 28.25%;
             width: calc(100% - 28.25%);
-            height: calc(100% - 14.5%);
+            height: calc(75% + 20px);
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
             border-radius: 16px;
@@ -485,11 +485,14 @@
 
         /* Bottom Right Widget (Now Inside TradingView Container) */
         .bottom-right-widget {
-            position: absolute;
-            bottom: -52px;
-            left: 30px;
+            position: fixed;
+            bottom: -85px;
+            right: 0px;
             width: 65%;
+			
             z-index: 1000;
+
+			
         }
 
         /* Control Buttons for Left Charts and Main Chart */
@@ -831,23 +834,24 @@
         /* New Tab Handles Container */
         .tab-handles-container {
             position: absolute;
-            left: 62%;
-            top: calc(14.5vh - 50px);
-            transform: translateX(-50%);
-            width: 67.5%;
-            height: 50px;
+            left: 5px;
+            top: 30%;
+            
+            width: auto;
+            height: auto;
             display: flex;
-            justify-content: flex-start;
+            flex-direction: column;
+			gap: 10px;
             align-items: center;
             z-index: 1000;
         }
 
         .tab-handles-container .calendar-tab {
             position: relative;
-            margin-right: 10px;
+            margin-right: 0px;
             width: 45px;
-            height: 40px;
-            border-radius: 15px;
+            height: 45px;
+            border-radius: 12px;
         }
     </style>
 </head>
@@ -1127,21 +1131,7 @@
         <i class="fas fa-caret-down"></i>
     </button>
 
-    <!-- Tab Handles Container -->
-    <div class="tab-handles-container">
-        <div class="calendar-tab" data-target="economic-calendar" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
-            <i class="fas fa-calendar" style="color: #2E8B57;"></i>
-        </div>
-        <div class="calendar-tab" data-target="surprise" role="button" tabindex="0" aria-label="Show HTS Trader">
-            <i class="fas fa-carrot" style="color: #ED9121;"></i>
-        </div>
-        <div class="calendar-tab" data-target="week-calendar" role="button" tabindex="0" aria-label="Show This Week's Economic Calendar">
-            <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
-        </div>
-        <div class="calendar-tab" data-target="myfxbook-tab" role="button" tabindex="0" aria-label="Show Myfxbook Outlook">
-            <i class="fas fa-user-friends" style="color: white"></i>
-        </div>
-    </div>
+
 
     <!-- ASCII Art Old -->
     <div class="ascii-art_old">
@@ -1157,6 +1147,36 @@
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
+	
+	
+	
+	
+	    <!-- Tab Handles Container -->
+    <div class="tab-handles-container">
+        <div class="calendar-tab" data-target="economic-calendar" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
+            <i class="fas fa-calendar" style="color: #2E8B57;"></i>
+        </div>
+        <div class="calendar-tab" data-target="surprise" role="button" tabindex="0" aria-label="Show HTS Trader">
+            <i class="fas fa-carrot" style="color: #ED9121;"></i>
+        </div>
+        <div class="calendar-tab" data-target="week-calendar" role="button" tabindex="0" aria-label="Show This Week's Economic Calendar">
+            <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
+        </div>
+        <div class="calendar-tab" data-target="myfxbook-tab" role="button" tabindex="0" aria-label="Show Myfxbook Outlook">
+            <i class="fas fa-user-friends" style="color: white"></i>
+        </div>
+    </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
         <div class="tradingview-widget-container" style="height:100%;width:100%">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -1240,38 +1260,7 @@
             }
             </script>
         </div>
-        <!-- Bottom Right Ticker Widget Moved Inside -->
-        <div class="bottom-right-widget">
-            <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-                {
-                    "symbols": [
-                        {
-                            "description": "HK50",
-                            "proName": "CAPITALCOM:HK50"
-                        },
-                        {
-                            "description": "JPN225",
-                            "proName": "CAPITALCOM:J225"
-                        },
-                        {
-                            "description": "FTSE100",
-                            "proName": "CAPITALCOM:UK100"
-                        },
-                        {
-                            "description": "WIG20",
-                            "proName": "TICKMILL:WIG20"
-                        }
-                    ],
-                    "isTransparent": true,
-                    "showSymbolLogo": true,
-                    "colorTheme": "dark",
-                    "locale": "en"
-                }
-                </script>
-            </div>
-        </div>
+
     </div>
 
     <!-- Center Hidden Iframe Container (cTrader) -->
@@ -1310,6 +1299,52 @@
 
     <!-- Audio Element for Radio Playback -->
     <audio id="radio-player" preload="none"></audio>
+	
+	
+	
+        <!-- Bottom Right Ticker Widget  -->
+        <div class="bottom-right-widget">
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                {
+                    "symbols": [
+                        {
+                            "description": "HK50",
+                            "proName": "CAPITALCOM:HK50"
+                        },
+                        {
+                            "description": "JPN225",
+                            "proName": "CAPITALCOM:J225"
+                        },
+                        {
+                            "description": "FTSE100",
+                            "proName": "CAPITALCOM:UK100"
+                        },
+                        {
+                            "description": "WIG20",
+                            "proName": "TICKMILL:WIG20"
+                        }
+                    ],
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "colorTheme": "dark",
+                    "locale": "en"
+                }
+                </script>
+            </div>
+        </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     <!-- JavaScript Libraries and Custom Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
