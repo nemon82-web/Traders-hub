@@ -27,7 +27,6 @@
             margin: 0;
             padding: 0;
         }
-
         body {
             background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%), 
                         radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
@@ -256,29 +255,29 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
         }
 
-@keyframes dance {
-    0% {
-        transform: translateX(0) rotate(0deg);
-    }
-    20% {
-        transform: translateX(20px) rotate(10deg);
-    }
-    40% {
-        transform: translateX(-30px) rotate(-15deg) scale(1.2);
-    }
-    50% {
-        transform: translateX(0) rotate(180deg);
-    }
-    60% {
-        transform: translateX(25px) skewY(15deg);
-    }
-    80% {
-        transform: translateX(-10px) rotate(360deg);
-    }
-    100% {
-        transform: translateX(0) rotate(0deg);
-    }
-}
+        @keyframes dance {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            20% {
+                transform: translateX(20px) rotate(10deg);
+            }
+            40% {
+                transform: translateX(-30px) rotate(-15deg) scale(1.2);
+            }
+            50% {
+                transform: translateX(0) rotate(180deg);
+            }
+            60% {
+                transform: translateX(25px) skewY(15deg);
+            }
+            80% {
+                transform: translateX(-10px) rotate(360deg);
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+            }
+        }
 
         @keyframes slideIn {
             from { transform: translateX(-100%); }
@@ -290,53 +289,48 @@
             to { transform: rotate(360deg); }
         }
 
-@keyframes shake {
-  /* Start: widoczna → niewidoczna → widoczna + ruch+drgania */
-  0% {
-    opacity: 0.3;
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  5% {
-    opacity: 0.6;
-    transform: translateX(-5%) translateY(-2%) rotate(-5deg);
-  }
-  10% {
-    opacity: 1;
-    transform: translateX(-10%) translateY(2%) rotate(5deg);
-  }
-
-  /* Główne drgania i przesuwanie */
-  20% {
-    transform: translateX(-20%) translateY(-2%) rotate(-5deg);
-  }
-  30% {
-    transform: translateX(-30%) translateY(2%) rotate(5deg);
-  }
-  40% {
-    transform: translateX(-40%) translateY(-1.5%) rotate(-4deg);
-  }
-  50% {
-    transform: translateX(-50%) translateY(1.5%) rotate(4deg);
-  }
-  60% {
-    transform: translateX(-60%) translateY(-1%) rotate(-3deg);
-  }
-  70% {
-    transform: translateX(-70%) translateY(1%) rotate(3deg);
-  }
-  80% {
-    transform: translateX(-80%) translateY(-0.5%) rotate(-2deg);
-  }
-  90% {
-    transform: translateX(-90%) translateY(0.5%) rotate(2deg);
-  }
-
-  /* Koniec: zakryta za lewą krawędzią, spokój */
-  100% {
-    opacity: 1;
-    transform: translateX(-100%) translateY(0) rotate(0deg);
-  }
-}
+        @keyframes shake {
+            0% {
+                opacity: 0.3;
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+            5% {
+                opacity: 0.6;
+                transform: translateX(-5%) translateY(-2%) rotate(-5deg);
+            }
+            10% {
+                opacity: 1;
+                transform: translateX(-10%) translateY(2%) rotate(5deg);
+            }
+            20% {
+                transform: translateX(-20%) translateY(-2%) rotate(-5deg);
+            }
+            30% {
+                transform: translateX(-30%) translateY(2%) rotate(5deg);
+            }
+            40% {
+                transform: translateX(-40%) translateY(-1.5%) rotate(-4deg);
+            }
+            50% {
+                transform: translateX(-50%) translateY(1.5%) rotate(4deg);
+            }
+            60% {
+                transform: translateX(-60%) translateY(-1%) rotate(-3deg);
+            }
+            70% {
+                transform: translateX(-70%) translateY(1%) rotate(3deg);
+            }
+            80% {
+                transform: translateX(-80%) translateY(-0.5%) rotate(-2deg);
+            }
+            90% {
+                transform: translateX(-90%) translateY(0.5%) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-100%) translateY(0) rotate(0deg);
+            }
+        }
 
         @keyframes fadeIn {
             from { opacity: 0.5; }
@@ -503,10 +497,6 @@
             transition: transform 0.3s ease-in-out;
         }
 
-.tradingview-container.slid-down {
-    transform: translate(-50%, -50%) translateX(120%);
-}
-
         .tradingview-widget-copyright .blue-text {
             color: var(--accent-3) !important;
         }
@@ -515,7 +505,7 @@
             height: 100% !important;
         }
 
-        /* Center Hidden Container */
+        /* Center Hidden Iframe Container */
         .center_hidden-iframe-container {
             position: absolute;
             top: 52%;
@@ -530,6 +520,12 @@
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
             z-index: 800;
             overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Class for sliding elements off-screen to the right */
+        .hidden-right {
+            transform: translate(-50%, -50%) translateX(100vw);
         }
 
         /* Bottom Right Widget */
@@ -590,77 +586,66 @@
         }
 
         /* Toptab Toggle Button */
-.toptab-toggle {
-    /* Existing positioning */
-    cursor: pointer;
-    border-radius: 50%;
-    position: fixed;
-    top: 85px;
-    right: 5px;
-    width: 50px;
-    height: 50px;
-    z-index: 1351;
+        .toptab-toggle {
+            cursor: pointer;
+            border-radius: 50%;
+            position: fixed;
+            top: 85px;
+            right: 5px;
+            width: 50px;
+            height: 50px;
+            z-index: 1351;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
 
-    /* Glass effect styles */
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-    
-    /* Existing transitions */
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
+        .toptab-toggle:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
+        }
 
-.toptab-toggle:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(14px) saturate(200%);
-    box-shadow: 
-        0 0 20px rgba(70, 130, 180, 0.4),
-        inset 0 0 15px rgba(255, 255, 255, 0.15);
-}
+        .toptab-toggle i {
+            color: #00c5e8 !important;
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+        }
 
-.toptab-toggle i {
-    color: #00c5e8 !important;
-    font-size: 24px;
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
-}
+        /* Toptab Toggle Inside */
+        .toptab-toggle-inside {
+            position: absolute;
+            bottom: 0%;
+            left: 26%;
+            width: 450px;
+            height: 120px;
+            z-index: 1351;
+            cursor: pointer;
+            border-radius: 2px;
+            background: transparent !important;
+            backdrop-filter: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
 
-/* Toptab Toggle Inside */
-.toptab-toggle-inside {
-    /* Positioning */
-    position: absolute;
-    bottom: 0%;
-    left: 26%;
-    width: 450px;
-    height: 120px;
-    z-index: 1351;
-    cursor: pointer;
-    border-radius: 2px;
+        .toptab-toggle-inside:hover {
+            background: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
 
-    /* Transparency with subtle border */
-    background: transparent !important;
-    backdrop-filter: none;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle transparent border */
-    box-shadow: none;
-    
-    /* Transitions */
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.toptab-toggle-inside:hover {
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Slightly more visible on hover */
-    box-shadow: none;
-}
-
-.toptab-toggle-inside i {
-    color: transparent !important;
-    font-size: 0;
-    text-shadow: none;
-}
-
+        .toptab-toggle-inside i {
+            color: transparent !important;
+            font-size: 0;
+            text-shadow: none;
+        }
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -866,7 +851,7 @@
             border-radius: 5px;
         }
 
-           .kurvinox-container {
+        .kurvinox-container {
             position: absolute;
             bottom: 110px;
             right: -5px;
@@ -1087,12 +1072,10 @@
 
     <!-- Pip Container -->
     <div class="pip-container hidden">
-    
-                    <!-- Kurvinox Image -->
-    <div class="kurvinox-container">
-    <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
-    </div>
-    
+        <!-- Kurvinox Image -->
+        <div class="kurvinox-container">
+            <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
+        </div>
         <h1>PipSulator</h1>
         <div id="pip-value-calculator-61143">
             <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
@@ -1115,9 +1098,6 @@
                 "ContainerId":"pip-value-calculator-61143"
                 });
             </script>
-            
-
-            
         </div>
     </div>
 
@@ -1267,7 +1247,7 @@
     </div>
 
     <!-- Center Hidden Iframe Container -->
-    <div class="center_hidden-iframe-container">
+    <div class="center_hidden-iframe-container hidden-right">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
@@ -1344,9 +1324,6 @@
     <div class="kurvix-container">
         <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
     </div>
-
-
-
 
     <!-- Audio Element for Radio Playback -->
     <audio id="radio-player" preload="none"></audio>
@@ -1659,6 +1636,7 @@
         // Toggle Left Charts and Main Chart with Static Buttons
         const leftCharts = document.querySelector('.left-charts');
         const mainChartContainer = document.querySelector('.tradingview-container');
+        const cTraderContainer = document.querySelector('.center_hidden-iframe-container');
         const leftChartsToggle = document.querySelector('.left-charts-toggle');
         const mainChartToggle = document.querySelector('.main-chart-toggle');
 
@@ -1682,38 +1660,54 @@
                 pipContainer.classList.toggle('hidden');
                 const icon = leftChartsToggle.querySelector('i');
                 if (leftCharts.classList.contains('hidden')) {
-                    icon.classList.replace('fa-caret-left', 'fa-caret-right');
+                    icon.classList.replace('fa-calculator', 'fa-chart-gantt');
                     slideOutSound.play();
                 } else {
-                    icon.classList.replace('fa-caret-right', 'fa-caret-left');
+                    icon.classList.replace('fa-chart-gantt', 'fa-calculator');
                     slideSound.play();
                 }
             }
         });
 
-mainChartToggle.addEventListener('click', () => {
-    mainChartContainer.classList.toggle('slid-down');
-    const icon = mainChartToggle.querySelector('i');
-    if (mainChartContainer.classList.contains('slid-down')) {
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
-        slideOutSound.play();
-    } else {
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-        slideSound.play();
-    }
-});
+        let isTradingViewVisible = true;
+
+        mainChartToggle.addEventListener('click', () => {
+            if (isTradingViewVisible) {
+                mainChartContainer.classList.add('hidden-right');
+                cTraderContainer.classList.remove('hidden-right');
+                slideOutSound.play();
+            } else {
+                mainChartContainer.classList.remove('hidden-right');
+                cTraderContainer.classList.add('hidden-right');
+                slideSound.play();
+            }
+            isTradingViewVisible = !isTradingViewVisible;
+            const icon = mainChartToggle.querySelector('i');
+            if (isTradingViewVisible) {
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            } else {
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+        });
 
         mainChartToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                mainChartContainer.classList.toggle('slid-down');
-                const icon = mainChartToggle.querySelector('i');
-                if (mainChartContainer.classList.contains('slid-down')) {
-                    icon.classList.replace('fa-caret-down', 'fa-caret-up');
+                if (isTradingViewVisible) {
+                    mainChartContainer.classList.add('hidden-right');
+                    cTraderContainer.classList.remove('hidden-right');
                     slideOutSound.play();
                 } else {
-                    icon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    mainChartContainer.classList.remove('hidden-right');
+                    cTraderContainer.classList.add('hidden-right');
                     slideSound.play();
+                }
+                isTradingViewVisible = !isTradingViewVisible;
+                const icon = mainChartToggle.querySelector('i');
+                if (isTradingViewVisible) {
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                } else {
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
                 }
             }
         });
@@ -1743,5 +1737,7 @@ mainChartToggle.addEventListener('click', () => {
         // Initial update
         updateFullscreenButton();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
