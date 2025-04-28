@@ -364,11 +364,13 @@
             }
         });
 
-        // Keyboard Controls
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowUp') {
+        // Mouse Button Controls
+        document.addEventListener('mousedown', function(e) {
+            if (e.button === 1) { // Middle mouse button
+                e.preventDefault();
                 toggleToptab();
-            } else if (e.key === 'ArrowRight') {
+            } else if (e.button === 3) { // Side mouse button (back)
+                e.preventDefault();
                 toggleMainChart();
             }
         });
