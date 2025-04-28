@@ -175,6 +175,61 @@
             height: 100%;
             border: none;
         }
+
+        /* Week Calendar Container */
+        .week-calendar-container {
+            position: fixed;
+            left: -650px; /* Hidden by default */
+            top: 0;
+            width: 650px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            z-index: 1352;
+            transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .week-calendar-container.locked {
+            left: 0;
+        }
+
+        .week-calendar-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Week Calendar Toggle Button */
+        .week-calendar-toggle {
+            position: fixed;
+            bottom: 5px;
+            left: 40%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 1352;
+        }
+
+        .week-calendar-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+
+        .week-calendar-toggle i {
+            font-size: 1.0rem;
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
@@ -191,6 +246,11 @@
     <!-- Top Tab Toggle Button -->
     <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
         <i class="fas fa-caret-down"></i>
+    </button>
+
+    <!-- Week Calendar Toggle Button -->
+    <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
+        <i class="fas fa-calendar-week"></i>
     </button>
 
     <!-- TradingView Container -->
@@ -293,16 +353,27 @@
         </button>
     </div>
 
+    <!-- Week Calendar Container -->
+    <div class="week-calendar-container" id="week-calendar">
+        <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    </div>
+
     <!-- JavaScript for Functionality -->
     <script>
         // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
-        // Toggle Top Tab
+        // Select Elements
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
+        const weekCalendarContainer = document.getElementById('week-calendar');
+        const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
+        const mainChartContainer = document.querySelector('.tradingview-container');
+        const mainChartToggle = document.querySelector('.main-chart-toggle');
+        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
 
+        // Toggle Top Tab
         function toggleToptab() {
             toptabContainer.classList.toggle('locked');
             const isLocked = toptabContainer.classList.contains('locked');
@@ -339,10 +410,17 @@
             });
         }
 
-        // Toggle Main Chart
-        const mainChartContainer = document.querySelector('.tradingview-container');
-        const mainChartToggle = document.querySelector('.main-chart-toggle');
+        // Toggle Week Calendar
+        weekCalendarToggle.addEventListener('click', () => {
+            const isLocked = weekCalendarContainer.classList.toggle('locked');
+            if (isLocked) {
+                slideSound.play();
+            } else {
+                slideOutSound.play();
+            }
+        });
 
+        // Toggle Main Chart
         function toggleMainChart() {
             mainChartContainer.classList.toggle('slid-right');
             const icon = mainChartToggle.querySelector('i');
@@ -356,7 +434,6 @@
         }
 
         mainChartToggle.addEventListener('click', toggleMainChart);
-
         mainChartToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -372,12 +449,24 @@
             } else if (e.button === 3) { // Side mouse button (back)
                 e.preventDefault();
                 toggleMainChart();
+            } else if (e.button === 4) { // Forward mouse button
+                e.preventDefault();
+                const isLocked = weekCalendarContainer.classList.toggle('locked');
+                if (isLocked) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
             }
         });
 
-        // Close Top Tab on Outside Click or Escape
+        // Close Panels on Outside Click or Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.cmc-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
+            if (!e.target.closest('.cmc-container') && 
+                !e.target.closest('.toptab-toggle') && 
+                !e.target.closest('.toptab-toggle-inside') && 
+                !e.target.closest('.week-calendar-container') && 
+                !e.target.closest('.week-calendar-toggle')) {
                 if (toptabContainer.classList.contains('locked')) {
                     toptabContainer.classList.remove('locked');
                     slideOutSound.play();
@@ -386,23 +475,31 @@
                     if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                     if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                 }
+                if (weekCalendarContainer.classList.contains('locked')) {
+                    weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
             }
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && toptabContainer.classList.contains('locked')) {
-                toptabContainer.classList.remove('locked');
-                slideOutSound.play();
-                const outsideIcon = toptabToggle.querySelector('i');
-                const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+            if (e.key === 'Escape') {
+                if (toptabContainer.classList.contains('locked')) {
+                    toptabContainer.classList.remove('locked');
+                    slideOutSound.play();
+                    const outsideIcon = toptabToggle.querySelector('i');
+                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
+                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                }
+                if (weekCalendarContainer.classList.contains('locked')) {
+                    weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
             }
         });
 
         // Fullscreen Toggle
-        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
-
         function updateFullscreenButton() {
             const icon = fullscreenToggle.querySelector('i');
             if (document.fullscreenElement) {

@@ -153,12 +153,12 @@
         }
 
         /* Top Tab Container */
-        .calendar-container {
+        .cmc-container {
             position: fixed;
             transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .calendar-container.locked {
+        .cmc-container.locked {
             top: 0 !important;
         }
 
@@ -170,32 +170,40 @@
             z-index: 1350;
         }
 
-        .calendar-container iframe {
+        .cmc-container iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* Week Calendar */
-        #week-calendar {
-            bottom: 10%;
-            left: -650px;
-            transform: translateY(-50%);
+        /* Week Calendar Container */
+        .week-calendar-container {
+            position: fixed;
+            left: -650px; /* Hidden by default */
+            top: 0;
             width: 650px;
             height: 100vh;
-            z-index: 1080;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            z-index: 1352;
             transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        #week-calendar.locked {
+        .week-calendar-container.locked {
             left: 0;
+        }
+
+        .week-calendar-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         /* Week Calendar Toggle Button */
         .week-calendar-toggle {
             position: fixed;
-            bottom: 10px;
-            left: 50%;
+            bottom: 5px;
+            left: 40%;
             transform: translateX(-50%);
             width: 35px;
             height: 35px;
@@ -209,7 +217,7 @@
             cursor: pointer;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            z-index: 1001;
+            z-index: 1352;
         }
 
         .week-calendar-toggle:hover {
@@ -219,7 +227,7 @@
         }
 
         .week-calendar-toggle i {
-            font-size: 1.6rem;
+            font-size: 1.0rem;
             color: var(--text-primary);
         }
     </style>
@@ -337,8 +345,8 @@
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
-    <!-- Top Tab Container -->
-    <div class="calendar-container" id="toptab">
+    <!-- CMC Markets Top Tab -->
+    <div class="cmc-container" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
         <button class="toptab-toggle-inside" role="button" aria-label="Toggle top tab" title="Toggle top tab">
             <i class="fas fa-caret-down"></i>
@@ -346,7 +354,7 @@
     </div>
 
     <!-- Week Calendar Container -->
-    <div class="calendar-container" id="week-calendar">
+    <div class="week-calendar-container" id="week-calendar">
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
@@ -356,10 +364,16 @@
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
-        // Toggle Top Tab
+        // Select Elements
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
+        const weekCalendarContainer = document.getElementById('week-calendar');
+        const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
+        const mainChartContainer = document.querySelector('.tradingview-container');
+        const mainChartToggle = document.querySelector('.main-chart-toggle');
+        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
 
+        // Toggle Top Tab
         function toggleToptab() {
             toptabContainer.classList.toggle('locked');
             const isLocked = toptabContainer.classList.contains('locked');
@@ -377,11 +391,7 @@
             }
         }
 
-        toptabToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleToptab();
-        });
-
+        toptabToggle.addEventListener('click', toggleToptab);
         toptabToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -391,10 +401,7 @@
 
         const toptabToggleInside = document.querySelector('.toptab-toggle-inside');
         if (toptabToggleInside) {
-            toptabToggleInside.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleToptab();
-            });
+            toptabToggleInside.addEventListener('click', toggleToptab);
             toptabToggleInside.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -403,10 +410,17 @@
             });
         }
 
-        // Toggle Main Chart
-        const mainChartContainer = document.querySelector('.tradingview-container');
-        const mainChartToggle = document.querySelector('.main-chart-toggle');
+        // Toggle Week Calendar
+        weekCalendarToggle.addEventListener('click', () => {
+            const isLocked = weekCalendarContainer.classList.toggle('locked');
+            if (isLocked) {
+                slideSound.play();
+            } else {
+                slideOutSound.play();
+            }
+        });
 
+        // Toggle Main Chart
         function toggleMainChart() {
             mainChartContainer.classList.toggle('slid-right');
             const icon = mainChartToggle.querySelector('i');
@@ -420,35 +434,10 @@
         }
 
         mainChartToggle.addEventListener('click', toggleMainChart);
-
         mainChartToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 toggleMainChart();
-            }
-        });
-
-        // Toggle Week Calendar
-        function toggleWeekCalendar() {
-            const weekCalendar = document.getElementById('week-calendar');
-            weekCalendar.classList.toggle('locked');
-            if (weekCalendar.classList.contains('locked')) {
-                slideSound.play();
-            } else {
-                slideOutSound.play();
-            }
-        }
-
-        const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
-        weekCalendarToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleWeekCalendar();
-        });
-
-        weekCalendarToggle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleWeekCalendar();
             }
         });
 
@@ -462,44 +451,55 @@
                 toggleMainChart();
             } else if (e.button === 4) { // Forward mouse button
                 e.preventDefault();
-                toggleWeekCalendar();
+                const isLocked = weekCalendarContainer.classList.toggle('locked');
+                if (isLocked) {
+                    slideSound.play();
+                } else {
+                    slideOutSound.play();
+                }
             }
         });
 
         // Close Panels on Outside Click or Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside') && !e.target.closest('.week-calendar-toggle')) {
-                document.querySelectorAll('.calendar-container.locked').forEach(container => {
-                    container.classList.remove('locked');
+            if (!e.target.closest('.cmc-container') && 
+                !e.target.closest('.toptab-toggle') && 
+                !e.target.closest('.toptab-toggle-inside') && 
+                !e.target.closest('.week-calendar-container') && 
+                !e.target.closest('.week-calendar-toggle')) {
+                if (toptabContainer.classList.contains('locked')) {
+                    toptabContainer.classList.remove('locked');
                     slideOutSound.play();
-                    if (container.id === 'toptab') {
-                        const outsideIcon = toptabToggle.querySelector('i');
-                        const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                        if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                        if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    }
-                });
+                    const outsideIcon = toptabToggle.querySelector('i');
+                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
+                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                }
+                if (weekCalendarContainer.classList.contains('locked')) {
+                    weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
             }
         });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.calendar-container.locked').forEach(container => {
-                    container.classList.remove('locked');
+                if (toptabContainer.classList.contains('locked')) {
+                    toptabContainer.classList.remove('locked');
                     slideOutSound.play();
-                    if (container.id === 'toptab') {
-                        const outsideIcon = toptabToggle.querySelector('i');
-                        const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                        if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                        if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    }
-                });
+                    const outsideIcon = toptabToggle.querySelector('i');
+                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
+                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                }
+                if (weekCalendarContainer.classList.contains('locked')) {
+                    weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
             }
         });
 
         // Fullscreen Toggle
-        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
-
         function updateFullscreenButton() {
             const icon = fullscreenToggle.querySelector('i');
             if (document.fullscreenElement) {
