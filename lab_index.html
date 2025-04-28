@@ -65,7 +65,7 @@
         .control-buttons {
             position: fixed;
             top: 5px;
-            right: 30%;
+            right: 33%;
             display: flex;
             gap: 10px;
             z-index: 1351;
@@ -93,7 +93,7 @@
         }
 
         .control-buttons button i {
-            font-size: 1.6rem;
+            font-size: 1.0rem;
             color: var(--text-primary);
         }
 
@@ -101,7 +101,7 @@
         .toptab-toggle {
             position: fixed;
             top: 5px;
-            right: 38%;
+            right: 45%;
             width: 35px;
             height: 35px;
             z-index: 1351;
@@ -198,59 +198,28 @@
             height: 100%;
             border: none;
         }
-
-        /* Week Calendar Toggle Button */
-        .week-calendar-toggle {
-            position: fixed;
-            bottom: 5px;
-            left: 40%;
-            transform: translateX(-50%);
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            z-index: 1352;
-        }
-
-        .week-calendar-toggle:hover {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(14px) saturate(200%);
-            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
-        }
-
-        .week-calendar-toggle i {
-            font-size: 1.0rem;
-            color: var(--text-primary);
-        }
     </style>
 </head>
 <body>
     <!-- Control Buttons -->
     <div class="control-buttons">
+	
+	        <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
+            <i class="fas fa-calendar-week"></i>
+        </button>
+	
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
             <i class="fas fa-caret-right"></i>
         </button>
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
+ 
     </div>
 
     <!-- Top Tab Toggle Button -->
     <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
         <i class="fas fa-caret-down"></i>
-    </button>
-
-    <!-- Week Calendar Toggle Button -->
-    <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
-        <i class="fas fa-calendar-week"></i>
     </button>
 
     <!-- TradingView Container -->

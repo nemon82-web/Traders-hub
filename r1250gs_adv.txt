@@ -1,0 +1,60 @@
+
+Full VIN: WB10M1104N6G13669
+
+VIN	6G13669
+Prod. Date	2022-06-28
+Type	R 1250 GS ADVENTURE
+Series	K51 (1 Series)
+Body Type	-
+Steering	-
+Engine	A74
+Displacement	0
+Power	0kw / 0hp
+Drive	-
+Colour	Black-storm met./black/agate-grey
+Upholstery	-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+X0134	Adaptive Headlights
+X018B	Engine drag torque control
+X0191	Dynamic ESA
+X0193	Keyless Ride
+X019G	Sport silencer
+X0202	Daytime running lights
+X0219	Deluxe headlight
+X0222	Gearshift assistant Pro
+X0224	Driving modes Pro
+X0230	Comfort Package
+X0233	Touring package
+X0235	Dynamic package
+X0272	Preparation, navigation unit
+X0340	Exhaust manifold, chrome-plated
+X0384	Operating instructions, Italian
+X0458	Style Triple Black
+X0518	Seat heating
+X0519	Heated handlebar grips
+X0530	RDC
+X0538	Cruise control
+X0562	Additional headlight
+X056A	Light package
+X05AD	Cruising Light
+X05AE	Multifunctional turn signal bulbs
+X05AF	Multifunctional turn signal bulbs II
+X0603	Alarm system
+X0680	Case holder, aluminium case
+X06AC	Intelligent emergency call
+X06AE	Teleservices
+X0771	Cross-spoke wheels
+X08CA	EU scope
