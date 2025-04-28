@@ -1,0 +1,20 @@
+ var event = new MouseEvent('mousedown', {
+    button: 3,
+    bubbles: true,
+    cancelable: true,
+    view: window
+});
+document.dispatchEvent(event);
+
+
+
+
+
+
+
+
+
+
+
+
+kurwa, gesturefy dziala jako custom skrypt

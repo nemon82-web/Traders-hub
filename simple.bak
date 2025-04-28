@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
+    <title>NemoN Simple</title>
+    <link rel="icon" href="cal_ico.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-bg: #1d2120;
+            --text-primary: #e0e0e0;
+            --glass-bg: rgba(18, 18, 18, 0.95);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            font-family: 'Exo 2', sans-serif;
+            overflow: hidden;
+        }
+
+        /* TradingView Container */
+        .tradingview-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            z-index: 900;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .tradingview-container.slid-right {
+            transform: translateX(100%);
+        }
+
+        /* Spotware cTrader Container */
+        .center_hidden-iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            z-index: 800;
+            overflow: hidden;
+        }
+
+        /* Control Buttons */
+        .control-buttons {
+            position: fixed;
+            top: 5px;
+            right: 30%;
+            display: flex;
+            gap: 10px;
+            z-index: 1351;
+        }
+
+        .control-buttons button {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .control-buttons button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+
+        .control-buttons button i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+        }
+
+        /* Top Tab Toggle Button */
+        .toptab-toggle {
+            position: fixed;
+            top: 5px;
+            right: 38%;
+            width: 35px;
+            height: 35px;
+            z-index: 1351;
+            cursor: pointer;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toptab-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+
+        .toptab-toggle i {
+            color: #00c5e8;
+            font-size: 24px;
+        }
+
+        /* Top Tab Toggle Inside */
+        .toptab-toggle-inside {
+            position: absolute;
+            top: 65%;
+            left: 0;
+            width: 32px;
+            height: 75px;
+            z-index: 1351;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .toptab-toggle-inside:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+
+        .toptab-toggle-inside i {
+            color: #00c5e8;
+            font-size: 24px;
+        }
+
+        /* Top Tab Container */
+        .calendar-container {
+            position: fixed;
+            transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .calendar-container.locked {
+            top: 0 !important;
+        }
+
+        #toptab {
+            top: -120vh;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1350;
+        }
+
+        .calendar-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Control Buttons -->
+    <div class="control-buttons">
+        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
+            <i class="fas fa-caret-right"></i>
+        </button>
+        <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+            <i class="fas fa-expand"></i>
+        </button>
+    </div>
+
+    <!-- Top Tab Toggle Button -->
+    <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
+        <i class="fas fa-caret-down"></i>
+    </button>
+
+    <!-- TradingView Container -->
+    <div class="tradingview-container">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+                "autosize": true,
+                "symbol": "FX:EURUSD",
+                "interval": "60",
+                "timezone": "Europe/Warsaw",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "backgroundColor": "rgba(0, 0, 0, 0.3)",
+                "show_popup_button": true,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "watchlist": [
+                    "🌍",
+                    "EURUSD",
+                    "GBPUSD",
+                    "AUDUSD",
+                    "NZDUSD",
+                    "USDCAD",
+                    "USDCHF",
+                    "USDJPY",
+                    "🧩",
+                    "AUDCAD",
+                    "AUDCHF",
+                    "AUDJPY",
+                    "AUDNZD",
+                    "CADCHF",
+                    "CADJPY",
+                    "CHFJPY",
+                    "EURAUD",
+                    "EURCAD",
+                    "EURCHF",
+                    "EURGBP",
+                    "EURJPY",
+                    "EURNZD",
+                    "GBPAUD",
+                    "GBPCAD",
+                    "GBPCHF",
+                    "GBPJPY",
+                    "GBPNZD",
+                    "NZDCAD",
+                    "NZDCHF",
+                    "NZDJPY",
+                    "🏝️",
+                    "AUDSGD",
+                    "EURNOK",
+                    "EURPLN",
+                    "EURSEK",
+                    "EURSGD",
+                    "GBPPLN",
+                    "GBPSEK",
+                    "USDNOK",
+                    "USDPLN",
+                    "USDSEK",
+                    "USDSGD",
+                    "📊 | 📈",
+                    "CAPITALCOM:US100",
+                    "CAPITALCOM:US500",
+                    "CAPITALCOM:US30",
+                    "DE40",
+                    "TICKMILL:WIG20",
+                    "CAPITALCOM:HK50",
+                    "CAPITALCOM:J225",
+                    "CAPITALCOM:UK100",
+                    "FXOPEN:VIX",
+                    "TRADU:VOLX",
+                    "CMCMARKETS:VOLINDEXK2025",
+                    "CMCMARKETS:VOLINDEXM2025",
+                    "CAPITALCOM:DXY",
+                    "BTCUSD",
+                    "⛏️ | 💰",
+                    "CFI:WTI",
+                    "XAUUSD"
+                ],
+                "calendar": true,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com"
+            }
+            </script>
+        </div>
+    </div>
+
+    <!-- Spotware cTrader Container -->
+    <div class="center_hidden-iframe-container">
+        <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
+
+    <!-- CMC Markets Top Tab -->
+    <div class="calendar-container" id="toptab">
+        <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
+        <button class="toptab-toggle-inside" role="button" aria-label="Toggle top tab" title="Toggle top tab">
+            <i class="fas fa-caret-down"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript for Functionality -->
+    <script>
+        // Initialize Slide Sounds
+        const slideSound = new Audio('slide.mp3');
+        const slideOutSound = new Audio('slide.mp3');
+
+        // Toggle Top Tab
+        const toptabToggle = document.querySelector('.toptab-toggle');
+        const toptabContainer = document.getElementById('toptab');
+
+        function toggleToptab() {
+            toptabContainer.classList.toggle('locked');
+            const isLocked = toptabContainer.classList.contains('locked');
+            const outsideIcon = toptabToggle.querySelector('i');
+            const insideToggle = document.querySelector('.toptab-toggle-inside');
+            const insideIcon = insideToggle ? insideToggle.querySelector('i') : null;
+            if (isLocked) {
+                outsideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
+                if (insideIcon) insideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
+                slideSound.play();
+            } else {
+                outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                slideOutSound.play();
+            }
+        }
+
+        toptabToggle.addEventListener('click', toggleToptab);
+        toptabToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleToptab();
+            }
+        });
+
+        const toptabToggleInside = document.querySelector('.toptab-toggle-inside');
+        if (toptabToggleInside) {
+            toptabToggleInside.addEventListener('click', toggleToptab);
+            toptabToggleInside.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleToptab();
+                }
+            });
+        }
+
+        // Toggle Main Chart
+        const mainChartContainer = document.querySelector('.tradingview-container');
+        const mainChartToggle = document.querySelector('.main-chart-toggle');
+
+        function toggleMainChart() {
+            mainChartContainer.classList.toggle('slid-right');
+            const icon = mainChartToggle.querySelector('i');
+            if (mainChartContainer.classList.contains('slid-right')) {
+                icon.classList.replace('fa-caret-right', 'fa-caret-left');
+                slideOutSound.play();
+            } else {
+                icon.classList.replace('fa-caret-left', 'fa-caret-right');
+                slideSound.play();
+            }
+        }
+
+        mainChartToggle.addEventListener('click', toggleMainChart);
+
+        mainChartToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMainChart();
+            }
+        });
+
+        // Mouse Button Controls
+        document.addEventListener('mousedown', function(e) {
+            if (e.button === 1) { // Middle mouse button
+                e.preventDefault();
+                toggleToptab();
+            } else if (e.button === 3) { // Side mouse button (back)
+                e.preventDefault();
+                toggleMainChart();
+            }
+        });
+
+        // Close Top Tab on Outside Click or Escape
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
+                if (toptabContainer.classList.contains('locked')) {
+                    toptabContainer.classList.remove('locked');
+                    slideOutSound.play();
+                    const outsideIcon = toptabToggle.querySelector('i');
+                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
+                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && toptabContainer.classList.contains('locked')) {
+                toptabContainer.classList.remove('locked');
+                slideOutSound.play();
+                const outsideIcon = toptabToggle.querySelector('i');
+                const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
+                if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+            }
+        });
+
+        // Fullscreen Toggle
+        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
+
+        function updateFullscreenButton() {
+            const icon = fullscreenToggle.querySelector('i');
+            if (document.fullscreenElement) {
+                icon.classList.replace('fa-expand', 'fa-compress');
+            } else {
+                icon.classList.replace('fa-compress', 'fa-expand');
+            }
+        }
+
+        fullscreenToggle.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        updateFullscreenButton();
+    </script>
+</body>
+</html>
