@@ -153,12 +153,12 @@
         }
 
         /* Top Tab Container */
-        .calendar-container {
+        .cmc-container {
             position: fixed;
             transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .calendar-container.locked {
+        .cmc-container.locked {
             top: 0 !important;
         }
 
@@ -170,7 +170,7 @@
             z-index: 1350;
         }
 
-        .calendar-container iframe {
+        .cmc-container iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -286,7 +286,7 @@
     </div>
 
     <!-- CMC Markets Top Tab -->
-    <div class="calendar-container" id="toptab">
+    <div class="cmc-container" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
         <button class="toptab-toggle-inside" role="button" aria-label="Toggle top tab" title="Toggle top tab">
             <i class="fas fa-caret-down"></i>
@@ -377,7 +377,7 @@
 
         // Close Top Tab on Outside Click or Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
+            if (!e.target.closest('.cmc-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
                 if (toptabContainer.classList.contains('locked')) {
                     toptabContainer.classList.remove('locked');
                     slideOutSound.play();
