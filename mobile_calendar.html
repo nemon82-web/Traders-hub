@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Economic Calendar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #0a0a14;
             --secondary-bg: #1a1a2f;
             --accent-daily: #26a326;
             --accent-weekly: #d92020;
+            --accent-gold: #DAA520;
             --text-primary: #f0f0ff;
             --glass-bg: rgba(25, 25, 45, 0.95);
         }
@@ -29,7 +31,6 @@
             overflow: hidden;
         }
 
-        /* Launch Menu - Unchanged */
         .launch-menu {
             position: fixed;
             top: 0;
@@ -77,6 +78,11 @@
             box-shadow: 0 8px 32px rgba(217, 32, 32, 0.15);
         }
 
+        .menu-item.pip {
+            --accent: var(--accent-gold);
+            box-shadow: 0 8px 32px rgba(218, 165, 32, 0.15);
+        }
+
         .menu-icon {
             width: 40px;
             height: 40px;
@@ -102,7 +108,6 @@
             opacity: 0.8;
         }
 
-        /* Calendar Containers - Modified Size */
         .calendar-container {
             position: fixed;
             top: 0;
@@ -155,6 +160,38 @@
             margin-top: 20px;
         }
 
+        .pip-wrapper {
+            width: 100%;
+            height: calc(100% - 60px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        .pip-container {
+            width: 100%;
+            max-width: 465px;
+            padding: 1rem;
+        }
+
+        .pip-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+        }
+
+        #pip-value-calculator-61143 {
+            border: 4px solid var(--accent-gold);
+            border-radius: 80px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+        }
+
         ::-webkit-scrollbar {
             display: none;
         }
@@ -182,6 +219,16 @@
                 <p>Market-moving events this week</p>
             </div>
         </a>
+
+        <a href="#" class="menu-item pip" data-calendar="pip">
+            <div class="menu-icon">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <div class="menu-text">
+                <h2>Pip Calculator</h2>
+                <p>Calculate pip values</p>
+            </div>
+        </a>
     </div>
 
     <!-- Calendars -->
@@ -205,16 +252,52 @@
         <iframe src="https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
+    <div class="calendar-container" id="pipCalculator">
+        <div class="calendar-header">
+            <h2>Pip Calculator</h2>
+            <button class="close-btn" onclick="showLaunchMenu()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="pip-wrapper">
+            <div class="pip-container">
+                <h1>PipSulator</h1>
+                <div id="pip-value-calculator-61143">
+                    <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+                    <script type="text/javascript">
+                        RemoteCalc({
+                        "Url":"https://www.cashbackforex.com",
+                        "TopPaneStyle":"YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCMxZDIxMjAgMCUsICMyZDM0MzQgMTAwJSk7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyLWJvdHRvbTogbm9uZTs=",
+                        "BottomPaneStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgYm9yZGVyOiBzb2xpZCAwcHggIzJhMmUzOTsgY29sb3I6ICM5MTk0YTE7",
+                        "ButtonStyle":"YmFja2dyb3VuZDogIzJkMzQzNDsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAyMHB4Ow==",
+                        "TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiA0MHB4OyBmb250LXdlaWdodDogNTAwOw==",
+                        "TextboxStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgY29sb3I6ICM5MTk0YTE7IGJvcmRlcjogc29saWQgMHB4ICM9MTk0YTE7",
+                        "ContainerWidth":"465",
+                        "HighlightColor":"rgba(0,0,0,1.0)",
+                        "IsDisplayTitle":false,
+                        "IsShowChartLinks":false,
+                        "IsShowEmbedButton":false,
+                        "Lang":"pl",
+                        "CompactType":"large",
+                        "Calculator":"pip-value-calculator",
+                        "ContainerId":"pip-value-calculator-61143"
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
         const launchMenu = document.getElementById('launchMenu');
         const menuItems = document.querySelectorAll('.menu-item');
         const calendars = {
             daily: document.getElementById('dailyCalendar'),
-            weekly: document.getElementById('weeklyCalendar')
+            weekly: document.getElementById('weeklyCalendar'),
+            pip: document.getElementById('pipCalculator')
         };
 
-        // Handle menu selection
         menuItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -227,15 +310,13 @@
             });
         });
 
-        // Show launch menu
         function showLaunchMenu() {
             Object.values(calendars).forEach(cal => cal.classList.remove('active'));
             launchMenu.style.display = 'flex';
             setTimeout(() => launchMenu.style.opacity = '1', 50);
         }
 
-        // Handle hardware back button
         window.onpopstate = showLaunchMenu;
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9389f74cbda5676c',t:'MTc0NjA0Njc5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
