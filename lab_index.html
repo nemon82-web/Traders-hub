@@ -2,79 +2,559 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
-    <title>NemoN Simple</title>
+    <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Variables */
+        html {
+            overflow: hidden;
+        }        
         :root {
-            --primary-bg: #1d2120;
+            --primary-bg: #1d2120;  
+            --secondary-bg: #2d3434;
+            --accent-1: #4682B4;
+            --accent-2: #6A5ACD;
+            --accent-3: #008080;
+            --accent-4: #2E8B57;
+            --accent-gold: #DAA520;
             --text-primary: #e0e0e0;
             --glass-bg: rgba(18, 18, 18, 0.95);
+            --border-radius: 16px;
         }
-
         /* Reset and Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
-            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%), 
+                        radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px;
             min-height: 100vh;
             color: var(--text-primary);
             font-family: 'Exo 2', sans-serif;
+            padding: 2rem;
+            padding-top: 80px;
             overflow: hidden;
         }
 
-        /* TradingView Container */
-        .tradingview-container {
+        /* Left Charts */
+        .left-charts {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%;
+            height: 98vh;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .left-charts.hidden {
+            transform: translateX(-110%) translateY(-50%);
+        }
+
+        /* Pip Container */
+        .pip-container {
+            position: fixed;
+            left: 5px;
+            top: 48%;
+            transform: translateY(-50%);
+            width: 365px;
+            height: auto;
+            z-index: 997;
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            background: transparent;
+        }
+
+        .pip-container.hidden {
+            transform: translateX(-130%) translateY(-50%);
+        }
+
+        .pip-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+        }
+
+        #pip-value-calculator-61143 {
+            border: 4px solid var(--accent-gold);
+            border-radius: 80px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        .chart-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            height: 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #A9A9A9;
+        }
+
+        .nasdaq-chart {
+            border: 2px solid #4682B4;
+            position: relative;
+        }
+
+        .nasdaq-chart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #4682B4;
+            pointer-events: none;
+        }
+
+        .dax-chart {
+            border: 2px solid #2E8B57;
+            position: relative;
+        }
+
+        .dax-chart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #2E8B57;
+            pointer-events: none;
+        }
+
+        .sp500-chart {
+            border: 2px solid #DAA520;
+            position: relative;
+        }
+
+        .sp500-chart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #DAA520;
+            pointer-events: none;
+        }
+
+        .vix-chart {
+            border: 2px solid #A9A9A9;
+            position: relative;
+        }
+
+        .vix-chart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 18px #A9A9A9;
+            pointer-events: none;
+        }
+
+        .countdown {
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+
+        #nasdaq-countdown span {
+            font-weight: bold;
+            color: #4682B4;
+        }
+
+        #dax-countdown span {
+            font-weight: bold;
+            color: #2E8B57;
+        }
+
+        #sp500-countdown span {
+            font-weight: bold;
+            color: #DAA520;
+        }
+
+        /* Main Time Display */
+        #time-display {
+            position: fixed;
+            top: -60px;
+            left: 27.5vw;
+            z-index: 1001;
+            background: rgba(18, 18, 18, 0.85);
+            padding: 10px 20px;
+            border-radius: 18px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            width: 210px;
+            position: relative;
+        }
+
+        #time-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.0rem;
+            font-weight: 700;
+            color: #A9A9A9;
+            text-shadow: 0 0 18px rgba(0, 206, 209, 0.8);
+            text-align: center;
+        }
+
+        #day-name {
+            position: absolute;
+            top: 62px;
+            right: 75px;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2rem;
+            color: #DAA520;
+            text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+            text-transform: uppercase;
+        }
+
+        @keyframes Pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
+            15% { transform: scale(1.2); filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
+            30% { transform: scale(0.95); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+            45% { transform: scale(1.1); filter: drop-shadow(0 0 10px rgba(255,255,255,0.6)); }
+            60% { transform: scale(0.98); filter: drop-shadow(0 0 7px rgba(255,255,255,0.4)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
+        }
+
+        @keyframes dance {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            20% {
+                transform: translateX(20px) rotate(10deg);
+            }
+            40% {
+                transform: translateX(-30px) rotate(-15deg) scale(1.2);
+            }
+            50% {
+                transform: translateX(0) rotate(180deg);
+            }
+            60% {
+                transform: translateX(25px) skewY(15deg);
+            }
+            80% {
+                transform: translateX(-10px) rotate(360deg);
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0% {
+                opacity: 0.3;
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+            5% {
+                opacity: 0.6;
+                transform: translateX(-5%) translateY(-2%) rotate(-5deg);
+            }
+            10% {
+                opacity: 1;
+                transform: translateX(-10%) translateY(2%) rotate(5deg);
+            }
+            20% {
+                transform: translateX(-20%) translateY(-2%) rotate(-5deg);
+            }
+            30% {
+                transform: translateX(-30%) translateY(2%) rotate(5deg);
+            }
+            40% {
+                transform: translateX(-40%) translateY(-1.5%) rotate(-4deg);
+            }
+            50% {
+                transform: translateX(-50%) translateY(1.5%) rotate(4deg);
+            }
+            60% {
+                transform: translateX(-60%) translateY(-1%) rotate(-3deg);
+            }
+            70% {
+                transform: translateX(-70%) translateY(1%) rotate(3deg);
+            }
+            80% {
+                transform: translateX(-80%) translateY(-0.5%) rotate(-2deg);
+            }
+            90% {
+                transform: translateX(-90%) translateY(0.5%) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-100%) translateY(0) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+
+        @keyframes AlicePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* World Clocks */
+        #world-clocks {
+            position: fixed;
+            top: 10px;
+            left: 63.0%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .world-clock {
+            position: relative;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(18, 18, 18, 0.85) 70%);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transform: perspective(600px) rotateX(5deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .world-clock div:first-child {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+        }
+
+        .world-clock div:last-child:not(.clickable-icon) {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .world-clock:nth-child(1) div:last-child:not(.clickable-icon) { color: #4682B4; }
+        .world-clock:nth-child(2) div:last-child:not(.clickable-icon) { color: #6A5ACD; }
+        .world-clock:nth-child(3) div:last-child:not(.clickable-icon) { color: #008080; }
+        .world-clock:nth-child(4) div:last-child:not(.clickable-icon) { color: #DAA520; }
+
+        .world-clock:nth-child(1):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(2):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(3):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .world-clock:nth-child(4):hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: perspective(600px) scale(1.08) rotateX(0deg);
+        }
+
+        .clickable-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .clickable-icon:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+        }
+
+        .radio-icon {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .main-time-zet {
+            top: -10px;
+            left: 170px;
+        }
+        
+        .main-time-rmf {
+            top: -10px;
+            left: 25px;
+        }
+
+        .radio-icon:hover {
+            transform: scale(1.2);
+            color: #FFD700;
+        }
+
+        /* Cursor pointer for clickable world clock elements */
+        .london-clock > div:first-child, .london-clock > div:nth-child(2),
+        .newyork-clock > div:first-child, .newyork-clock > div:nth-child(2) {
+            cursor: pointer;
+        }
+
+        .ascii-art_old {
+            position: fixed;
+            display: none;
+            top: 60px;
+            left: 25px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .kurvix-container {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transform: translateX(-50%);
+            z-index: 500;
+        }
+
+        .kurvix-image {
+            width: 150px;
+            height: auto;
+            animation: shake 5s infinite;
+            pointer-events: none;
+        }
+        
+        /* TradingView Container */
+        .tradingview-container {
+            position: absolute;
+            top: 52%;
+            left: 62%;
+            transform: translate(-50%, -50%);
+            width: 67.5%;
+            height: 75%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
             z-index: 900;
             overflow: hidden;
             transition: transform 0.3s ease-in-out;
         }
 
-        .tradingview-container.slid-right {
-            transform: translateX(100%);
+        .tradingview-widget-copyright .blue-text {
+            color: var(--accent-3) !important;
         }
 
-        /* Spotware cTrader Container */
+        .tradingview-widget-container {
+            height: 100% !important;
+        }
+
+        /* Center Hidden Iframe Container */
         .center_hidden-iframe-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: absolute;
+            top: 52%;
+            left: 62%;
+            transform: translate(-50%, -50%);
+            width: 67.5%;
+            height: 75%;
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
             z-index: 800;
             overflow: hidden;
+            transition: transform 0.3s ease-in-out;
         }
 
-        /* Control Buttons */
+        /* Class for sliding elements off-screen to the right */
+        .hidden-right {
+            transform: translate(-50%, -50%) translateY(100vw);
+        }
+
+        /* Bottom Right Widget */
+        .bottom-right-widget {
+            position: fixed;
+            bottom: -70px;
+            right: -10px;
+            width: 1000px;
+            z-index: 1000;
+        }
+
+        /* Control Buttons for Left Charts and Main Chart */
         .control-buttons {
             position: fixed;
-            top: 5px;
-            right: 33%;
+            top: 10px;
+            right: 5px;
             display: flex;
             gap: 10px;
-            z-index: 1351;
+            z-index: 1001;
         }
 
         .control-buttons button {
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1) !important;
             backdrop-filter: blur(12px) saturate(180%);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
@@ -82,84 +562,186 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .control-buttons button:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.15) !important;
             backdrop-filter: blur(14px) saturate(200%);
-            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+            box-shadow: 
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
         }
 
         .control-buttons button i {
-            font-size: 1.0rem;
+            font-size: 1.6rem;
             color: var(--text-primary);
         }
 
-        /* Top Tab Toggle Button */
+        .left-charts-toggle {
+            border-color: var(--accent-4);
+        }
+
+        .main-chart-toggle {
+            border-color: var(--accent-1);
+        }
+
+        /* Toptab Toggle Button */
         .toptab-toggle {
-            position: fixed;
-            top: 5px;
-            right: 45%;
-            width: 35px;
-            height: 35px;
-            z-index: 1351;
             cursor: pointer;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 85px;
+            right: 5px;
+            width: 50px;
+            height: 50px;
+            z-index: 1351;
+            background: rgba(255, 255, 255, 0.1) !important;
             backdrop-filter: blur(12px) saturate(180%);
             border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .toptab-toggle:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.15) !important;
             backdrop-filter: blur(14px) saturate(200%);
-            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+            box-shadow: 
+                0 0 20px rgba(70, 130, 180, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.15);
         }
 
         .toptab-toggle i {
-            color: #00c5e8;
+            color: #00c5e8 !important;
             font-size: 24px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
         }
 
-        /* Top Tab Toggle Inside */
+        /* Toptab Toggle Inside */
         .toptab-toggle-inside {
             position: absolute;
-            top: 65%;
-            left: 0;
-            width: 32px;
-            height: 75px;
+            bottom: 0%;
+            left: 26%;
+            width: 450px;
+            height: 120px;
             z-index: 1351;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            background: transparent !important;
+            backdrop-filter: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .toptab-toggle-inside:hover {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(14px) saturate(200%);
-            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+            background: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: none;
         }
 
         .toptab-toggle-inside i {
-            color: #00c5e8;
-            font-size: 24px;
+            color: transparent !important;
+            font-size: 0;
+            text-shadow: none;
         }
 
-        /* Top Tab Container */
-        .cmc-container {
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .left-charts {
+                display: none;
+            }
+
+            .tradingview-container {
+                left: 50%;
+                width: 95%;
+            }
+
+            #world-clocks {
+                top: 110px;
+                right: 15px;
+                gap: 10px;
+            }
+
+            .world-clock {
+                width: 90px;
+                height: 90px;
+            }
+
+            .world-clock div:first-child {
+                font-size: 0.8rem;
+            }
+
+            .world-clock div:last-child:not(.clickable-icon) {
+                font-size: 1rem;
+            }
+
+            .bottom-right-widget {
+                width: 100%;
+                right: 0;
+            }
+        }
+
+        /* Calendar Containers */
+        .calendar-container {
             position: fixed;
+            transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .calendar-container.locked {
+            right: 0 !important;
+            border-radius: var(--border-radius);
+        }
+
+        .calendar-container.slide-top {
             transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        .cmc-container.locked {
+        .calendar-container.slide-top.locked {
             top: 0 !important;
+            border-radius: 0 0 26px 26px;
+            overflow: hidden;
+        }
+
+        #economic-calendar {
+            top: 50%;
+            right: -650px;
+            transform: translateY(-50%);
+            width: 650px;
+            height: 100vh;
+            z-index: 1100;
+        }
+
+        #surprise {
+            top: 50%;
+            right: -350px;
+            transform: translateY(-50%);
+            width: 350px;
+            height: 100vh;
+            z-index: 1290;
+        }
+
+        #week-calendar {
+            top: 50%;
+            right: -650px;
+            transform: translateY(-50%);
+            width: 650px;
+            height: 100vh;
+            z-index: 1080;
+        }
+
+        #myfxbook-tab {
+            top: 88%;
+            right: -750px;
+            transform: translateY(-50%);
+            width: 750px;
+            height: 600px;
+            z-index: 1050;
         }
 
         #toptab {
@@ -170,57 +752,427 @@
             z-index: 1350;
         }
 
-        .cmc-container iframe {
-            width: 100%;
-            height: 100%;
+        .calendar-tab {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .calendar-tab:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-top .calendar-tab {
+            left: 46%;
+            top: 100%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 45px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        #economic-calendar .calendar-tab {
+            left: -45px;
+            top: 30%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 50px;
+            border-radius: 15px 0 0 15px;
+        }
+
+        #week-calendar .calendar-tab {
+            left: -45px;
+            top: 40%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 50px;
+            border-radius: 15px 0 0 15px;
+        }
+
+        #surprise .calendar-tab {
+            left: -45px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 50px;
+            border-radius: 15px 0 0 15px;
+        }
+
+        #myfxbook-tab .calendar-tab {
+            left: -45px;
+            top: 15%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 50px;
+            border-radius: 15px 0 0 15px;
+        }
+
+        .calendar-tab i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .calendar-tab:hover i {
+            transform: scale(1.2);
+        }
+
+        .calendar-tab:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-1);
+        }
+
+        .calendar-container iframe {
+            width: 100% !important;
+            height: 100% !important;
             border: none;
         }
 
-        /* Week Calendar Container */
-        .week-calendar-container {
-            position: fixed;
-            left: -650px; /* Hidden by default */
-            top: 0;
-            width: 650px;
-            height: 100vh;
-            background: var(--glass-bg);
-            backdrop-filter: blur(22px);
-            z-index: 1352;
-            transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        @keyframes slideDown {
+            from { opacity: 0; transform: translate(-50%, -25px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
 
-        .week-calendar-container.locked {
-            left: 0;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
 
-        .week-calendar-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 5px;
+        }
+
+        .kurvinox-container {
+            position: absolute;
+            bottom: 110px;
+            right: -5px;
+            transform: translateX(-50%);
+            z-index: 5500;
+        }
+
+        .kurvinox-image {
+            width: 75px;
+            height: auto;
+            animation: dance 4s infinite;
+            pointer-events: none;
+        }
+        
+        .fa-pause {
+            animation: Pulse 1s ease-in-out infinite;
+        }
+
+        /* New CSS for toggling image visibility */
+        .kurvinox-image.image-hidden,
+        .kurvix-image.image-hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Control Buttons -->
+    <!-- Main Time Display with Radio Button RMF ; ZET -->
+    <div id="time-display">
+        <i class="fas fa-play radio-icon main-time-zet" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01"></i>
+        <i class="fas fa-play radio-icon main-time-rmf" data-url="https://rs201-krk.rmfstream.pl/rmf_fm"></i>
+        <div id="time-text"></div>
+        <div id="day-name"></div>
+    </div>
+
+    <!-- Left Charts -->
+    <div class="left-charts">
+        <div class="chart-panel dax-chart">
+            <div class="chart-header">
+                <div class="countdown" id="dax-countdown">
+                    <span></span>
+                </div>
+                <div class="symbol-info">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                        "symbols": [
+                            {
+                                "proName": "CAPITALCOM:DE40",
+                                "title": "DE40"
+                            }
+                        ],
+                        "isTransparent": true,
+                        "showSymbolLogo": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
+                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:DE40",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(46, 139, 87, 0.15)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel nasdaq-chart">
+            <div class="chart-header">
+                <div class="countdown" id="nasdaq-countdown">
+                    <span></span>
+                </div>
+                <div class="symbol-info">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                        "symbols": [
+                            {
+                                "proName": "CAPITALCOM:US100",
+                                "title": "US100"
+                            }
+                        ],
+                        "isTransparent": true,
+                        "showSymbolLogo": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
+                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:US100",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(70, 130, 180, 0.20)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel sp500-chart">
+            <div class="chart-header">
+                <div class="countdown" id="sp500-countdown">
+                    <span></span>
+                </div>
+                <div class="symbol-info">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                        "symbols": [
+                            {
+                                "proName": "CAPITALCOM:US500",
+                                "title": "US500"
+                            }
+                        ],
+                        "isTransparent": true,
+                        "showSymbolLogo": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
+                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CAPITALCOM:US500",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "rgba(218, 165, 32, 0.08)",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+        <div class="chart-panel vix-chart">
+            <div class="chart-header">
+                <div class="label"></div>
+                <div class="symbol-info">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                        "symbols": [
+                            {
+                                "proName": "CMCMARKETS:VOLINDEXK2025",
+                                "title": "VOLX_20maj"
+                            }
+                        ],
+                        "isTransparent": true,
+                        "showSymbolLogo": false,
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="tradingview-widget-container" style="height: calc(100% - 40px);">
+                <div class="tradingview-widget-container__widget" style="width:100%; height:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "CMCMARKETS:VOLINDEXK2025",
+                    "interval": "60",
+                    "timezone": "Europe/Warsaw",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "backgroundColor": "#121212",
+                    "show_popup_button": true,
+                    "hide_legend": true,
+                    "allow_symbol_change": true,
+                    "save_image": false,
+                    "hide_top_toolbar": true,
+                    "calendar": true,
+                    "hide_volume": true,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pip Container -->
+    <div class="pip-container hidden">
+        <!-- Kurvinox Image -->
+        <div class="kurvinox-container">
+            <img src="kurvinox.png" alt="Kurvinox" class="kurvinox-image">
+        </div>
+        <h1>PipSulator</h1>
+        <div id="pip-value-calculator-61143">
+            <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+            <script type="text/javascript">
+                RemoteCalc({
+                "Url":"https://www.cashbackforex.com",
+                "TopPaneStyle":"YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCMxZDIxMjAgMCUsICMyZDM0MzQgMTAwJSk7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyLWJvdHRvbTogbm9uZTs=",
+                "BottomPaneStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgYm9yZGVyOiBzb2xpZCAwcHggIzJhMmUzOTsgY29sb3I6ICM5MTk0YTE7",
+                "ButtonStyle":"YmFja2dyb3VuZDogIzJkMzQzNDsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAyMHB4Ow==",
+                "TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiA0MHB4OyBmb250LXdlaWdodDogNTAwOw==",
+                "TextboxStyle":"YmFja2dyb3VuZDogIzE1MTgxZDsgY29sb3I6ICM5MTk0YTE7IGJvcmRlcjogc29saWQgMHB4ICM9MTk0YTE7",
+                "ContainerWidth":"465",
+                "HighlightColor":"rgba(0,0,0,1.0)",
+                "IsDisplayTitle":false,
+                "IsShowChartLinks":false,
+                "IsShowEmbedButton":false,
+                "Lang":"pl",
+                "CompactType":"large",
+                "Calculator":"pip-value-calculator",
+                "ContainerId":"pip-value-calculator-61143"
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- World Clocks with Radio Icons -->
+    <div id="world-clocks">
+        <div class="world-clock">
+            <div>Sydney</div>
+            <div id="sydney-time">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3"></i>
+            <i class="fas fa-fire-alt clickable-icon" onclick="openHeat()"></i>
+        </div>
+        <div class="world-clock">
+            <div>Tokyo</div>
+            <div id="tokyo-time">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://stream-relay-geo.ntslive.net/stream"></i>
+            <i class="fas fa-heading clickable-icon"  onclick="openhtsfx()"></i>
+        </div>
+        <div class="world-clock london-clock">
+            <div onclick="openBBC()">London</div>
+            <div id="london-time" onclick="openBBC()">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://media-ice.musicradio.com/CapitalMP3"></i>
+            <i class="fas fa-user clickable-icon" onclick="openstrefaklienta()"></i>
+        </div>
+        <div class="world-clock newyork-clock">
+            <div onclick="openCNBC()">New York</div>
+            <div id="newyork-time" onclick="openCNBC()">00:00:00</div>
+            <i class="fas fa-play radio-icon" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3"></i>
+            <i class="fas fa-m clickable-icon" onclick="openMforex()"></i>
+        </div>
+    </div>
+
+    <!-- Control Buttons with New Images Toggle -->
     <div class="control-buttons">
-	
-	        <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
-            <i class="fas fa-calendar-week"></i>
+        <button class="left-charts-toggle" role="button" aria-label="Toggle left charts" title="Toggle left charts">
+            <i class="fas fa-calculator"></i>
         </button>
-	
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
-            <i class="fas fa-caret-right"></i>
+            <i class="fas fa-exchange-alt"></i>
         </button>
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
- 
+        <button class="images-toggle" role="button" aria-label="Toggle images" title="Toggle images">
+            <i class="fas fa-eye"></i>
+        </button>
     </div>
 
-    <!-- Top Tab Toggle Button -->
-    <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
+    <!-- Toptab Toggle Button -->
+    <button class="toptab-toggle" role="button" aria-label="Toggle toptab" title="Toggle toptab">
         <i class="fas fa-caret-down"></i>
     </button>
+
+    <!-- ASCII Art Old -->
+    <div class="ascii-art_old">
+        <pre>
+  ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
+  ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
+  ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
+ )))
+
+██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
+  ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
+  ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
+        </pre>
+    </div>
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
@@ -309,40 +1261,119 @@
         </div>
     </div>
 
-    <!-- Spotware cTrader Container -->
-    <div class="center_hidden-iframe-container">
+    <!-- Center Hidden Iframe Container -->
+    <div class="center_hidden-iframe-container hidden-right">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
-    <!-- CMC Markets Top Tab -->
-    <div class="cmc-container" id="toptab">
+    <!-- Calendar Containers -->
+    <div class="calendar-container" id="economic-calendar">
+        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Today's Economic Calendar">
+            <i class="fas fa-calendar" style="color: #2E8B57;"></i>
+        </div>
+        <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%232E8B57&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <div class="calendar-container" id="surprise">
+        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show HTS Trader">
+            <i class="fas fa-carrot" style="color: #ED9121;"></i>
+        </div>
+        <iframe loading="lazy" src="pip.html"></iframe>
+    </div>
+
+    <div class="calendar-container" id="week-calendar">
+        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show This Week's Economic Calendar">
+            <i class="fas fa-calendar-week" style="color: #DAA520;"></i>
+        </div>
+        <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    </div>
+
+    <div class="calendar-container slide-top" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
-        <button class="toptab-toggle-inside" role="button" aria-label="Toggle top tab" title="Toggle top tab">
+        <button class="toptab-toggle-inside" role="button" aria-label="Toggle toptab" title="Toggle toptab">
             <i class="fas fa-caret-down"></i>
         </button>
     </div>
 
-    <!-- Week Calendar Container -->
-    <div class="week-calendar-container" id="week-calendar">
-        <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+    <div class="calendar-container" id="myfxbook-tab">
+        <div class="calendar-tab" role="button" tabindex="0" aria-label="Show Myfxbook Outlook">
+            <i class="fas fa-user-friends" style="color: white"></i>
+        </div>
+        <iframe loading="lazy" src="myfxbook.html"></iframe>
     </div>
 
-    <!-- JavaScript for Functionality -->
+    <!-- Bottom Right Ticker Widget -->
+    <div class="bottom-right-widget">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+            {
+                "symbols": [
+                    {
+                        "description": "HK50",
+                        "proName": "CAPITALCOM:HK50"
+                    },
+                    {
+                        "description": "JPN225",
+                        "proName": "CAPITALCOM:J225"
+                    },
+                    {
+                        "description": "FTSE100",
+                        "proName": "CAPITALCOM:UK100"
+                    },
+                    {
+                        "description": "WIG20",
+                        "proName": "TICKMILL:WIG20"
+                    }
+                ],
+                "isTransparent": true,
+                "showSymbolLogo": true,
+                "colorTheme": "dark",
+                "locale": "en"
+            }
+            </script>
+        </div>
+    </div>
+
+    <!-- Kurvix Image -->
+    <div class="kurvix-container">
+        <img src="kurvix.png" alt="Kurvix" class="kurvix-image">
+    </div>
+
+    <!-- Audio Element for Radio Playback -->
+    <audio id="radio-player" preload="none"></audio>
+
+    <!-- JavaScript Libraries and Custom Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
     <script>
+        // Update Time and Day
+        function updateTime() {
+            const now = new Date();
+            const dayName = now.toLocaleString('en-US', { weekday: 'short' });
+            const dayOfMonth = now.getDate();
+            document.getElementById('day-name').textContent = `${dayName} ${dayOfMonth}`;
+            document.getElementById('time-text').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+            const options = { hour12: false };
+            document.getElementById('sydney-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Australia/Sydney' });
+            document.getElementById('tokyo-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
+            document.getElementById('london-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
+            document.getElementById('newyork-time').textContent = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
         // Initialize Slide Sounds
         const slideSound = new Audio('slide.mp3');
         const slideOutSound = new Audio('slide.mp3');
 
-        // Select Elements
+        // Select Pip Container
+        const pipContainer = document.querySelector('.pip-container');
+
+        // Handle Toptab Toggle
         const toptabToggle = document.querySelector('.toptab-toggle');
         const toptabContainer = document.getElementById('toptab');
-        const weekCalendarContainer = document.getElementById('week-calendar');
-        const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
-        const mainChartContainer = document.querySelector('.tradingview-container');
-        const mainChartToggle = document.querySelector('.main-chart-toggle');
-        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
 
-        // Toggle Top Tab
         function toggleToptab() {
             toptabContainer.classList.toggle('locked');
             const isLocked = toptabContainer.classList.contains('locked');
@@ -361,6 +1392,7 @@
         }
 
         toptabToggle.addEventListener('click', toggleToptab);
+
         toptabToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -379,96 +1411,325 @@
             });
         }
 
-        // Toggle Week Calendar
-        weekCalendarToggle.addEventListener('click', () => {
-            const isLocked = weekCalendarContainer.classList.toggle('locked');
-            if (isLocked) {
-                slideSound.play();
-            } else {
-                slideOutSound.play();
-            }
-        });
+        // Handle Calendar Tab Interactions
+        const tabs = document.querySelectorAll('.calendar-tab');
+        tabs.forEach(tab => {
+            const container = tab.parentElement;
 
-        // Toggle Main Chart
-        function toggleMainChart() {
-            mainChartContainer.classList.toggle('slid-right');
-            const icon = mainChartToggle.querySelector('i');
-            if (mainChartContainer.classList.contains('slid-right')) {
-                icon.classList.replace('fa-caret-right', 'fa-caret-left');
-                slideOutSound.play();
-            } else {
-                icon.classList.replace('fa-caret-left', 'fa-caret-right');
-                slideSound.play();
-            }
-        }
-
-        mainChartToggle.addEventListener('click', toggleMainChart);
-        mainChartToggle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            tab.addEventListener('click', (e) => {
                 e.preventDefault();
-                toggleMainChart();
-            }
-        });
-
-        // Mouse Button Controls
-        document.addEventListener('mousedown', function(e) {
-            if (e.button === 1) { // Middle mouse button
-                e.preventDefault();
-                toggleToptab();
-            } else if (e.button === 3) { // Side mouse button (back)
-                e.preventDefault();
-                toggleMainChart();
-            } else if (e.button === 4) { // Forward mouse button
-                e.preventDefault();
-                const isLocked = weekCalendarContainer.classList.toggle('locked');
-                if (isLocked) {
+                const wasLocked = container.classList.contains('locked');
+                container.classList.toggle('locked');
+                if (!wasLocked) {
                     slideSound.play();
                 } else {
                     slideOutSound.play();
                 }
+            });
+
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const wasLocked = container.classList.contains('locked');
+                    container.classList.toggle('locked');
+                    if (!wasLocked) {
+                        slideSound.play();
+                    } else {
+                        slideOutSound.play();
+                    }
+                }
+            });
+        });
+
+        // Mouse button controls for panels
+        document.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            switch(e.button) {
+                case 4: // Reassigned from week-calendar to left-charts
+                    const leftCharts = document.querySelector('.left-charts');
+                    const leftChartsIcon = document.querySelector('.left-charts-toggle i');
+                    const wasHidden = leftCharts.classList.contains('hidden');
+                    leftCharts.classList.toggle('hidden');
+                    pipContainer.classList.toggle('hidden');
+                    if (wasHidden) {
+                        leftChartsIcon.classList.replace('fa-chart-gantt', 'fa-calculator');
+                        slideSound.play();
+                    } else {
+                        leftChartsIcon.classList.replace('fa-calculator', 'fa-chart-gantt');
+                        slideOutSound.play();
+                    }
+                    break;
+                case 3: // Toggle main TradingView chart
+                    mainChartToggle.click();
+                    break;
+                case 1:
+                    toggleToptab();
+                    break;
             }
         });
 
-        // Close Panels on Outside Click or Escape
+        // Close panels when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.cmc-container') && 
-                !e.target.closest('.toptab-toggle') && 
-                !e.target.closest('.toptab-toggle-inside') && 
-                !e.target.closest('.week-calendar-container') && 
-                !e.target.closest('.week-calendar-toggle')) {
-                if (toptabContainer.classList.contains('locked')) {
-                    toptabContainer.classList.remove('locked');
+            if (!e.target.closest('.calendar-container') && !e.target.closest('.toptab-toggle') && !e.target.closest('.toptab-toggle-inside')) {
+                document.querySelectorAll('.calendar-container.locked').forEach(container => {
+                    container.classList.remove('locked');
                     slideOutSound.play();
-                    const outsideIcon = toptabToggle.querySelector('i');
-                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                }
-                if (weekCalendarContainer.classList.contains('locked')) {
-                    weekCalendarContainer.classList.remove('locked');
-                    slideOutSound.play();
-                }
+                    if (container.id === 'toptab') {
+                        const outsideIcon = document.querySelector('.toptab-toggle i');
+                        const insideIcon = document.querySelector('.toptab-toggle-inside i');
+                        if (outsideIcon) {
+                            outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                        if (insideIcon) {
+                            insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                    }
+                });
             }
         });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if (toptabContainer.classList.contains('locked')) {
-                    toptabContainer.classList.remove('locked');
+                document.querySelectorAll('.calendar-container.locked').forEach(container => {
+                    container.classList.remove('locked');
                     slideOutSound.play();
-                    const outsideIcon = toptabToggle.querySelector('i');
-                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    if (container.id === 'toptab') {
+                        const outsideIcon = document.querySelector('.toptab-toggle i');
+                        const insideIcon = document.querySelector('.toptab-toggle-inside i');
+                        if (outsideIcon) {
+                            outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                        if (insideIcon) {
+                            insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Market Countdowns
+        const nasdaqOpen = { hour: 9, minute: 30, second: 0 };
+        const nasdaqClose = { hour: 16, minute: 0, second: 0 };
+        const nasdaqZone = 'America/New_York';
+
+        const daxOpen = { hour: 9, minute: 0, second: 0 };
+        const daxClose = { hour: 17, minute: 30, second: 0 };
+        const daxZone = 'Europe/Berlin';
+
+        function getTargetTime(zone, open, close) {
+            const nowLocal = luxon.DateTime.now().setZone(zone);
+            const weekday = nowLocal.weekday;
+            const isTradingDay = weekday >= 1 && weekday <= 5;
+
+            const todayOpen = nowLocal.set({ hour: open.hour, minute: open.minute, second: open.second });
+            const todayClose = nowLocal.set({ hour: close.hour, minute: close.minute, second: close.second });
+
+            if (isTradingDay) {
+                if (nowLocal < todayOpen) {
+                    return { target: todayOpen, label: '🔒' };
+                } else if (nowLocal < todayClose) {
+                    return { target: todayClose, label: '🔓' };
                 }
-                if (weekCalendarContainer.classList.contains('locked')) {
-                    weekCalendarContainer.classList.remove('locked');
+            }
+            let nextDay = isTradingDay ? nowLocal.plus({ days: 1 }) : nowLocal;
+            while (nextDay.weekday > 5) {
+                nextDay = nextDay.plus({ days: 1 });
+            }
+            const nextOpen = nextDay.set({ hour: open.hour, minute: open.minute, second: open.second });
+            return { target: nextOpen, label: '🔒' };
+        }
+
+        function formatTime(diff) {
+            const shifted = diff.shiftTo('hours', 'minutes', 'seconds').toObject();
+            const hours = Math.floor(shifted.hours);
+            const minutes = Math.floor(shifted.minutes);
+            const seconds = Math.floor(shifted.seconds);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function updateCountdown() {
+            const usTarget = getTargetTime(nasdaqZone, nasdaqOpen, nasdaqClose);
+            const nowUs = luxon.DateTime.now().setZone(nasdaqZone);
+            const diffUs = usTarget.target.diff(nowUs);
+            const timeStrUs = formatTime(diffUs);
+
+            ['nasdaq', 'sp500'].forEach(id => {
+                document.querySelector(`#${id}-countdown span`).textContent = `${usTarget.label}: ${timeStrUs}`;
+            });
+
+            const daxTarget = getTargetTime(daxZone, daxOpen, daxClose);
+            const nowDax = luxon.DateTime.now().setZone(daxZone);
+            const diffDax = daxTarget.target.diff(nowDax);
+            const timeStrDax = formatTime(diffDax);
+            document.querySelector('#dax-countdown span').textContent = `${daxTarget.label}: ${timeStrDax}`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // External Link Functions
+        function openHeat() {
+            const width = 1200;
+            const height = 800;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('https://nemon82-web.github.io/Traders-hub/feed.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+        }
+
+        function openhtsfx() {
+            const width = 1200;
+            const height = 800;
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
+            window.open('simple.html', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+        }
+
+        function openstrefaklienta() {
+            const width = 1200;
+            const height = 800;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('https://myfx.mforex.pl', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+        }
+
+        function openMforex() {
+            const width = 1200;
+            const height = 800;
+            const leftPos = (window.screen.width / 2) - (width / 2);
+            const topPos = (window.screen.height / 2) - (height / 2);
+            window.open('https://webtrader.mforex.pl/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${leftPos},top=${topPos}`);
+        }
+
+        function openBBC() {
+            const width = screen.width / 3;
+            const height = screen.height;
+            const left = 0;
+            const top = 0;
+            window.open('https://www.bbc.com/news', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+        }
+
+        function openCNBC() {
+            const width = screen.width / 3;
+            const height = screen.height;
+            const left = screen.width / 1;
+            const top = 0;
+            window.open('https://www.cnbc.com/', '_blank', `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`);
+        }
+
+        // Radio Playback Functionality
+        const audio = document.getElementById('radio-player');
+        let currentStation = null;
+
+        document.querySelectorAll('.radio-icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const url = icon.dataset.url;
+                if (currentStation === icon) {
+                    if (!audio.paused) {
+                        audio.pause();
+                        icon.classList.replace('fa-pause', 'fa-play');
+                        currentStation = null;
+                    }
+                } else {
+                    if (currentStation) {
+                        currentStation.classList.replace('fa-pause', 'fa-play');
+                    }
+                    audio.src = url;
+                    audio.play();
+                    icon.classList.replace('fa-play', 'fa-pause');
+                    currentStation = icon;
+                }
+            });
+        });
+
+        audio.addEventListener('error', () => {
+            if (currentStation) {
+                currentStation.classList.replace('fa-pause', 'fa-play');
+                currentStation = null;
+            }
+        });
+
+        // Toggle Left Charts and Main Chart with Static Buttons
+        const leftCharts = document.querySelector('.left-charts');
+        const mainChartContainer = document.querySelector('.tradingview-container');
+        const cTraderContainer = document.querySelector('.center_hidden-iframe-container');
+        const leftChartsToggle = document.querySelector('.left-charts-toggle');
+        const mainChartToggle = document.querySelector('.main-chart-toggle');
+
+        leftChartsToggle.addEventListener('click', () => {
+            leftCharts.classList.toggle('hidden');
+            pipContainer.classList.toggle('hidden');
+            const icon = leftChartsToggle.querySelector('i');
+            if (leftCharts.classList.contains('hidden')) {
+                icon.classList.replace('fa-calculator', 'fa-chart-gantt');
+                slideOutSound.play();
+            } else {
+                icon.classList.replace('fa-chart-gantt', 'fa-calculator');
+                slideSound.play();
+            }
+        });
+
+        leftChartsToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                leftCharts.classList.toggle('hidden');
+                pipContainer.classList.toggle('hidden');
+                const icon = leftChartsToggle.querySelector('i');
+                if (leftCharts.classList.contains('hidden')) {
+                    icon.classList.replace('fa-calculator', 'fa-chart-gantt');
                     slideOutSound.play();
+                } else {
+                    icon.classList.replace('fa-chart-gantt', 'fa-calculator');
+                    slideSound.play();
                 }
             }
         });
 
-        // Fullscreen Toggle
+        let isTradingViewVisible = true;
+
+        mainChartToggle.addEventListener('click', () => {
+            if (isTradingViewVisible) {
+                mainChartContainer.classList.add('hidden-right');
+                cTraderContainer.classList.remove('hidden-right');
+                slideOutSound.play();
+            } else {
+                mainChartContainer.classList.remove('hidden-right');
+                cTraderContainer.classList.add('hidden-right');
+                slideSound.play();
+            }
+            isTradingViewVisible = !isTradingViewVisible;
+            const icon = mainChartToggle.querySelector('i');
+            if (isTradingViewVisible) {
+                icon.classList.replace('fa-shuffle', 'fa-exchange-alt');
+            } else {
+                icon.classList.replace('fa-exchange-alt', 'fa-shuffle');
+            }
+        });
+
+        mainChartToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (isTradingViewVisible) {
+                    mainChartContainer.classList.add('hidden-right');
+                    cTraderContainer.classList.remove('hidden-right');
+                    slideOutSound.play();
+                } else {
+                    mainChartContainer.classList.remove('hidden-right');
+                    cTraderContainer.classList.add('hidden-right');
+                    slideSound.play();
+                }
+                isTradingViewVisible = !isTradingViewVisible;
+                const icon = mainChartToggle.querySelector('i');
+                if (isTradingViewVisible) {
+                    icon.classList.replace('fa-shuffle', 'fa-exchange-alt');
+                } else {
+                    icon.classList.replace('fa-exchange-alt', 'fa-shuffle');
+                }
+            }
+        });
+
+        // Add Fullscreen Toggle Functionality
+        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
+
         function updateFullscreenButton() {
             const icon = fullscreenToggle.querySelector('i');
             if (document.fullscreenElement) {
@@ -487,7 +1748,34 @@
         });
 
         document.addEventListener('fullscreenchange', updateFullscreenButton);
+
+        // Initial update
         updateFullscreenButton();
+
+        // New JavaScript for toggling images
+        const imagesToggle = document.querySelector('.images-toggle');
+        const kurvinoxImage = document.querySelector('.kurvinox-image');
+        const kurvixImage = document.querySelector('.kurvix-image');
+
+        imagesToggle.addEventListener('click', () => {
+            const isHidden = kurvinoxImage.classList.toggle('image-hidden');
+            kurvixImage.classList.toggle('image-hidden');
+            const icon = imagesToggle.querySelector('i');
+            if (isHidden) {
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        imagesToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                imagesToggle.click();
+            }
+        });
     </script>
+
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

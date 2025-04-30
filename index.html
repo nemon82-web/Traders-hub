@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="navigate-to 'none';">
     <title>NemoN's Trading Hub - Live Charts & Tools</title>
     <link rel="icon" href="cal_ico.png" type="image/png">
@@ -10,10 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Exo+2:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Variables */
-         html {
-    overflow: hidden;
-}		
-		
+        html {
+            overflow: hidden;
+        }        
         :root {
             --primary-bg: #1d2120;  
             --secondary-bg: #2d3434;
@@ -874,6 +873,12 @@
         .fa-pause {
             animation: Pulse 1s ease-in-out infinite;
         }
+
+        /* New CSS for toggling image visibility */
+        .kurvinox-image.image-hidden,
+        .kurvix-image.image-hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -1134,7 +1139,7 @@
         </div>
     </div>
 
-    <!-- Control Buttons -->
+    <!-- Control Buttons with New Images Toggle -->
     <div class="control-buttons">
         <button class="left-charts-toggle" role="button" aria-label="Toggle left charts" title="Toggle left charts">
             <i class="fas fa-calculator"></i>
@@ -1144,6 +1149,9 @@
         </button>
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
+        </button>
+        <button class="images-toggle" role="button" aria-label="Toggle images" title="Toggle images">
+            <i class="fas fa-eye"></i>
         </button>
     </div>
 
@@ -1158,7 +1166,9 @@
   ███╗   ██╗ ███████╗ ███╗   ███╗  ██████╗  ███╗   ██╗
   ████╗  ██║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ████╗  ██║
   ██╔██╗ ██║ █████╗   ██╔████╔██║ ██║   ██║ ██╔██╗ ██║
-  ██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
+ )))
+
+██║╚██╗██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ██║╚██╗██║
   ██║ ╚████║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ██║ ╚████║
   ╚═╝  ╚═══╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝
         </pre>
@@ -1741,6 +1751,29 @@
 
         // Initial update
         updateFullscreenButton();
+
+        // New JavaScript for toggling images
+        const imagesToggle = document.querySelector('.images-toggle');
+        const kurvinoxImage = document.querySelector('.kurvinox-image');
+        const kurvixImage = document.querySelector('.kurvix-image');
+
+        imagesToggle.addEventListener('click', () => {
+            const isHidden = kurvinoxImage.classList.toggle('image-hidden');
+            kurvixImage.classList.toggle('image-hidden');
+            const icon = imagesToggle.querySelector('i');
+            if (isHidden) {
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        imagesToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                imagesToggle.click();
+            }
+        });
     </script>
 
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9363a8bd1869bfcc',t:'MTc0NTY0NTEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
