@@ -13,6 +13,7 @@
             --primary-bg: #1d2120;
             --text-primary: #e0e0e0;
             --glass-bg: rgba(18, 18, 18, 0.95);
+            --accent-gold: #DAA520; /* Added for pip calculator frame */
         }
 
         /* Reset and Base Styles */
@@ -198,23 +199,74 @@
             height: 100%;
             border: none;
         }
+
+        /* Pip Calculator Container */
+        .pip-calculator-container {
+            position: fixed;
+            right: -365px; /* Hidden by default */
+            top: 0;
+            width: 365px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            z-index: 1352;
+            transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pip-calculator-container.locked {
+            right: 0;
+        }
+
+        /* Pip Calculator Hide Button */
+        .pip-calculator-hide {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 1;
+        }
+
+        .pip-calculator-hide:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+
+        .pip-calculator-hide i {
+            font-size: 1.0rem;
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
     <!-- Control Buttons -->
     <div class="control-buttons">
-	
-	        <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
+        <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
             <i class="fas fa-calendar-week"></i>
         </button>
-	
+        <button class="pip-calculator-toggle" role="button" aria-label="Toggle pip calculator" title="Toggle pip calculator">
+            <i class="fas fa-calculator"></i>
+        </button>
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
             <i class="fas fa-caret-right"></i>
         </button>
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
- 
     </div>
 
     <!-- Top Tab Toggle Button -->
@@ -327,6 +379,35 @@
         <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23297cf0&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
     </div>
 
+    <!-- Pip Calculator Container -->
+    <div class="pip-calculator-container" id="pip-calculator">
+        <button class="pip-calculator-hide" role="button" aria-label="Hide pip calculator" title="Hide pip calculator">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="pip-value-calculator-61143" style="width: 365px; border: 4px solid var(--accent-gold); border-radius: 80px; overflow: hidden; box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);">
+            <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+            <script type="text/javascript">
+                RemoteCalc({
+                    "Url": "https://www.cashbackforex.com",
+                    "TopPaneStyle": "YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCMxZDIxMjAgMCUsICMyZDM0MzQgMTAwJSk7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyLWJvdHRvbTogbm9uZTs=",
+                    "BottomPaneStyle": "YmFja2dyb3VuZDogIzE1MTgxZDsgYm9yZGVyOiBzb2xpZCAwcHggIzJhMmUzOTsgY29sb3I6ICM5MTk0YTE7",
+                    "ButtonStyle": "YmFja2dyb3VuZDogIzJkMzQzNDsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAyMHB4Ow==",
+                    "TitleStyle": "dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiA0MHB4OyBmb250LXdlaWdodDogNTAwOw==",
+                    "TextboxStyle": "YmFja2dyb3VuZDogIzE1MTgxZDsgY29sb3I6ICM5MTk0YTE7IGJvcmRlcjogc29saWQgMHB4ICM9MTk0YTE7",
+                    "ContainerWidth": "365",
+                    "HighlightColor": "rgba(0,0,0,1.0)",
+                    "IsDisplayTitle": false,
+                    "IsShowChartLinks": false,
+                    "IsShowEmbedButton": false,
+                    "Lang": "pl",
+                    "CompactType": "large",
+                    "Calculator": "pip-value-calculator",
+                    "ContainerId": "pip-value-calculator-61143"
+                });
+            </script>
+        </div>
+    </div>
+
     <!-- JavaScript for Functionality -->
     <script>
         // Initialize Slide Sounds
@@ -338,9 +419,12 @@
         const toptabContainer = document.getElementById('toptab');
         const weekCalendarContainer = document.getElementById('week-calendar');
         const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
+        const pipCalculatorContainer = document.getElementById('pip-calculator');
+        const pipCalculatorToggle = document.querySelector('.pip-calculator-toggle');
         const mainChartContainer = document.querySelector('.tradingview-container');
         const mainChartToggle = document.querySelector('.main-chart-toggle');
         const fullscreenToggle = document.querySelector('.fullscreen-toggle');
+        const pipCalculatorHide = document.querySelector('.pip-calculator-hide');
 
         // Toggle Top Tab
         function toggleToptab() {
@@ -385,6 +469,30 @@
             if (isLocked) {
                 slideSound.play();
             } else {
+                slideOutSound.play();
+            }
+        });
+
+        // Toggle Pip Calculator
+        pipCalculatorToggle.addEventListener('click', () => {
+            const isLocked = pipCalculatorContainer.classList.toggle('locked');
+            if (isLocked) {
+                slideSound.play();
+            } else {
+                slideOutSound.play();
+            }
+        });
+
+        // Hide Pip Calculator from Inside
+        pipCalculatorHide.addEventListener('click', () => {
+            pipCalculatorContainer.classList.remove('locked');
+            slideOutSound.play();
+        });
+
+        pipCalculatorHide.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                pipCalculatorContainer.classList.remove('locked');
                 slideOutSound.play();
             }
         });
@@ -435,7 +543,9 @@
                 !e.target.closest('.toptab-toggle') && 
                 !e.target.closest('.toptab-toggle-inside') && 
                 !e.target.closest('.week-calendar-container') && 
-                !e.target.closest('.week-calendar-toggle')) {
+                !e.target.closest('.week-calendar-toggle') &&
+                !e.target.closest('.pip-calculator-container') && 
+                !e.target.closest('.pip-calculator-toggle')) {
                 if (toptabContainer.classList.contains('locked')) {
                     toptabContainer.classList.remove('locked');
                     slideOutSound.play();
@@ -446,6 +556,10 @@
                 }
                 if (weekCalendarContainer.classList.contains('locked')) {
                     weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
+                if (pipCalculatorContainer.classList.contains('locked')) {
+                    pipCalculatorContainer.classList.remove('locked');
                     slideOutSound.play();
                 }
             }
@@ -463,6 +577,10 @@
                 }
                 if (weekCalendarContainer.classList.contains('locked')) {
                     weekCalendarContainer.classList.remove('locked');
+                    slideOutSound.play();
+                }
+                if (pipCalculatorContainer.classList.contains('locked')) {
+                    pipCalculatorContainer.classList.remove('locked');
                     slideOutSound.play();
                 }
             }
@@ -489,5 +607,6 @@
         document.addEventListener('fullscreenchange', updateFullscreenButton);
         updateFullscreenButton();
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938d68a0ea2b53d8',t:'MTc0NjA4Mjg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
