@@ -15,14 +15,12 @@
             --glass-bg: rgba(18, 18, 18, 0.95);
             --accent-gold: #DAA520; /* Added for pip calculator frame */
         }
-
         /* Reset and Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             background: linear-gradient(135deg, var(--primary-bg) 0%, #1c1c1c 100%);
             min-height: 100vh;
@@ -30,7 +28,6 @@
             font-family: 'Exo 2', sans-serif;
             overflow: hidden;
         }
-
         /* TradingView Container */
         .tradingview-container {
             position: fixed;
@@ -44,11 +41,9 @@
             overflow: hidden;
             transition: transform 0.3s ease-in-out;
         }
-
         .tradingview-container.slid-right {
             transform: translateX(100%);
         }
-
         /* Spotware cTrader Container */
         .center_hidden-iframe-container {
             position: fixed;
@@ -61,17 +56,15 @@
             z-index: 800;
             overflow: hidden;
         }
-
         /* Control Buttons */
         .control-buttons {
             position: fixed;
             top: 2px;
-            right: 33%;
+            right: 24%;
             display: flex;
             gap: 10px;
             z-index: 1351;
         }
-
         .control-buttons button {
             width: 35px;
             height: 35px;
@@ -86,39 +79,31 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
         .control-buttons button:hover {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(14px) saturate(200%);
             box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
         }
-
         .control-buttons button i {
             font-size: 1.0rem;
             color: var(--text-primary);
         }
-
         /* Specific Icon Colors */
         .control-buttons .toptab-toggle i {
             color: #00c5e8;
         }
-
         .control-buttons .week-calendar-toggle i {
             color: #FF5733;
         }
-
         .control-buttons .pip-calculator-toggle i {
             color: #33FF57;
         }
-
         .control-buttons .main-chart-toggle i {
             color: #3357FF;
         }
-
         .control-buttons .fullscreen-toggle i {
             color: #FF33A1;
         }
-
         /* Top Tab Toggle Inside */
         .toptab-toggle-inside {
             position: absolute;
@@ -134,28 +119,23 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
         .toptab-toggle-inside:hover {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(14px) saturate(200%);
             box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
         }
-
         .toptab-toggle-inside i {
             color: #00c5e8;
             font-size: 24px;
         }
-
         /* Top Tab Container */
         .cmc-container {
             position: fixed;
             transition: top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
         .cmc-container.locked {
             top: 0 !important;
         }
-
         #toptab {
             top: -120vh;
             left: 0;
@@ -163,13 +143,11 @@
             height: 100vh;
             z-index: 1350;
         }
-
         .cmc-container iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-
         /* Week Calendar Container */
         .week-calendar-container {
             position: fixed;
@@ -181,18 +159,64 @@
             backdrop-filter: blur(22px);
             z-index: 1352;
             transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            display: flex;
+            flex-direction: column;
         }
-
         .week-calendar-container.locked {
             left: 0;
         }
-
-        .week-calendar-container iframe {
+        /* Calendar Header */
+        .calendar-header {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+        }
+        .calendar-tab, .close-btn {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .calendar-tab:hover, .close-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+        .calendar-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .calendar-tab i, .close-btn i {
+            font-size: 1.0rem;
+            color: var(--text-primary);
+        }
+        /* Match calendar icon colors */
+        .calendar-tab[data-type="daily"] i {
+            color: #26a326; /* Green for daily */
+        }
+        .calendar-tab[data-type="weekly"] i {
+            color: #d92020; /* Red for weekly */
+        }
+        #calendar-iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 50px);
             border: none;
         }
-
         /* Pip Calculator Container */
         .pip-calculator-container {
             position: fixed;
@@ -205,11 +229,9 @@
             z-index: 1352;
             transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
         .pip-calculator-container.locked {
             right: 0;
         }
-
         /* Pip Calculator Hide Button */
         .pip-calculator-hide {
             position: absolute;
@@ -229,23 +251,20 @@
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
             z-index: 1;
         }
-
         .pip-calculator-hide:hover {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(14px) saturate(200%);
             box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
         }
-
         .pip-calculator-hide i {
             font-size: 1.0rem;
             color: var(--text-primary);
         }
-
         /* Clock Styles */
         .clock {
             position: fixed;
-            bottom: 2px;
-            left: 8%;
+            top: 8px;
+            right: 42%;
             z-index: 1400;
             font-family: 'Exo 2', sans-serif;
             font-size: 16px;
@@ -262,22 +281,19 @@
         <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
             <i class="fas fa-caret-down"></i>
         </button>
-        
         <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
             <i class="fas fa-caret-right"></i>
         </button>
-        <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
+        <button class="week-calendar-toggle" role="button" aria-label="Toggle calendar" title="Toggle calendar">
             <i class="fas fa-calendar-week"></i>
         </button>
         <button class="pip-calculator-toggle" role="button" aria-label="Toggle pip calculator" title="Toggle pip calculator">
             <i class="fas fa-calculator"></i>
         </button>
-
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
     </div>
-
     <!-- TradingView Container -->
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
@@ -364,12 +380,10 @@
             </script>
         </div>
     </div>
-
     <!-- Spotware cTrader Container -->
     <div class="center_hidden-iframe-container">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
-
     <!-- CMC Markets Top Tab -->
     <div class="cmc-container" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
@@ -377,12 +391,23 @@
             <i class="fas fa-caret-down"></i>
         </button>
     </div>
-
     <!-- Week Calendar Container -->
     <div class="week-calendar-container" id="week-calendar">
-        <iframe loading="lazy" src="https://sslecal2.investing.com?ecoDayBackground=%23297cf0&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"></iframe>
+        <div class="calendar-header">
+            <div class="tabs">
+                <button class="calendar-tab" data-type="daily" title="Daily Calendar" role="button" aria-label="Show daily calendar">
+                    <i class="fas fa-calendar-day"></i>
+                </button>
+                <button class="calendar-tab" data-type="weekly" title="Weekly Calendar" role="button" aria-label="Show weekly calendar">
+                    <i class="fas fa-calendar-week"></i>
+                </button>
+            </div>
+            <button class="close-btn" title="Close calendar" role="button" aria-label="Close calendar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <iframe id="calendar-iframe" loading="lazy" src=""></iframe>
     </div>
-
     <!-- Pip Calculator Container -->
     <div class="pip-calculator-container" id="pip-calculator">
         <button class="pip-calculator-hide" role="button" aria-label="Hide pip calculator" title="Hide pip calculator">
@@ -411,10 +436,8 @@
             </script>
         </div>
     </div>
-
     <!-- Clock Container -->
     <div id="clock" class="clock"></div>
-
     <!-- JavaScript for Functionality -->
     <script>
         // Initialize Slide Sounds
@@ -432,6 +455,16 @@
         const mainChartToggle = document.querySelector('.main-chart-toggle');
         const fullscreenToggle = document.querySelector('.fullscreen-toggle');
         const pipCalculatorHide = document.querySelector('.pip-calculator-hide');
+
+        // Calendar URLs
+        const dailyUrl = "https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1";
+        const weeklyUrl = "https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1";
+
+        // Preload daily calendar to reduce flickering
+        document.addEventListener('DOMContentLoaded', () => {
+            const iframe = document.getElementById('calendar-iframe');
+            iframe.src = dailyUrl;
+        });
 
         // Toggle Top Tab
         function toggleToptab() {
@@ -470,14 +503,42 @@
             });
         }
 
-        // Toggle Week Calendar
+        // Toggle Week Calendar (default to daily)
         weekCalendarToggle.addEventListener('click', () => {
             const isLocked = weekCalendarContainer.classList.toggle('locked');
             if (isLocked) {
+                const iframe = document.getElementById('calendar-iframe');
+                iframe.src = dailyUrl;
+                const tabs = document.querySelectorAll('.calendar-tab');
+                tabs.forEach(tab => tab.classList.remove('active'));
+                document.querySelector('.calendar-tab[data-type="daily"]').classList.add('active');
                 slideSound.play();
             } else {
                 slideOutSound.play();
             }
+        });
+
+        // Calendar Tabs
+        const calendarTabs = document.querySelectorAll('.calendar-tab');
+        calendarTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const type = tab.dataset.type;
+                const iframe = document.getElementById('calendar-iframe');
+                if (type === 'daily') {
+                    iframe.src = dailyUrl;
+                } else {
+                    iframe.src = weeklyUrl;
+                }
+                calendarTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Close Button for Calendar
+        const closeBtn = document.querySelector('.close-btn');
+        closeBtn.addEventListener('click', () => {
+            weekCalendarContainer.classList.remove('locked');
+            slideOutSound.play();
         });
 
         // Toggle Pip Calculator
@@ -525,7 +586,7 @@
             }
         });
 
-        // Mouse Button Controls
+        // Mouse Button Controls (forward button defaults to daily)
         document.addEventListener('mousedown', function(e) {
             if (e.button === 1) { // Middle mouse button
                 e.preventDefault();
@@ -537,6 +598,11 @@
                 e.preventDefault();
                 const isLocked = weekCalendarContainer.classList.toggle('locked');
                 if (isLocked) {
+                    const iframe = document.getElementById('calendar-iframe');
+                    iframe.src = dailyUrl;
+                    const tabs = document.querySelectorAll('.calendar-tab');
+                    tabs.forEach(tab => tab.classList.remove('active'));
+                    document.querySelector('.calendar-tab[data-type="daily"]').classList.add('active');
                     slideSound.play();
                 } else {
                     slideOutSound.play();
@@ -628,5 +694,6 @@
         setInterval(updateClock, 1000); // Update every second
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938d68a0ea2b53d8',t:'MTc0NjA4Mjg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938f86b288378834',t:'MTc0NjEwNTEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
