@@ -98,32 +98,25 @@
             color: var(--text-primary);
         }
 
-        /* Top Tab Toggle Button */
-        .toptab-toggle {
-            position: fixed;
-            top: 2px;
-            right: 45%;
-            width: 35px;
-            height: 35px;
-            z-index: 1351;
-            cursor: pointer;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px) saturate(180%);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .toptab-toggle:hover {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(14px) saturate(200%);
-            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
-        }
-
-        .toptab-toggle i {
+        /* Specific Icon Colors */
+        .control-buttons .toptab-toggle i {
             color: #00c5e8;
-            font-size: 24px;
+        }
+
+        .control-buttons .week-calendar-toggle i {
+            color: #FF5733;
+        }
+
+        .control-buttons .pip-calculator-toggle i {
+            color: #33FF57;
+        }
+
+        .control-buttons .main-chart-toggle i {
+            color: #3357FF;
+        }
+
+        .control-buttons .fullscreen-toggle i {
+            color: #FF33A1;
         }
 
         /* Top Tab Toggle Inside */
@@ -255,24 +248,24 @@
 <body>
     <!-- Control Buttons -->
     <div class="control-buttons">
+        <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
+            <i class="fas fa-caret-down"></i>
+        </button>
+		
+		        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
+            <i class="fas fa-caret-right"></i>
+        </button>
         <button class="week-calendar-toggle" role="button" aria-label="Toggle week calendar" title="Toggle week calendar">
             <i class="fas fa-calendar-week"></i>
         </button>
         <button class="pip-calculator-toggle" role="button" aria-label="Toggle pip calculator" title="Toggle pip calculator">
             <i class="fas fa-calculator"></i>
         </button>
-        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
-            <i class="fas fa-caret-right"></i>
-        </button>
+
         <button class="fullscreen-toggle" role="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
     </div>
-
-    <!-- Top Tab Toggle Button -->
-    <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
-        <i class="fas fa-caret-down"></i>
-    </button>
 
     <!-- TradingView Container -->
     <div class="tradingview-container">
