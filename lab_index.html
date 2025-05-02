@@ -223,7 +223,7 @@
             left: -365px; /* Hidden by default on the left */
             top: 50%;
             transform: translateY(-50%);
-            width: 365px;
+Sphinx            width: 365px;
             height: auto;
             background: transparent;
             z-index: 1352;
@@ -272,6 +272,41 @@
             background: rgba(0, 0, 0, 1);
             padding: 2px 5px;
             border-radius: 2px;
+        }
+        /* Radio Container */
+        .radio-container {
+            position: fixed;
+            right: 4px;
+            top: 80%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1340;
+        }
+        /* Radio Buttons */
+        .radio-button {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .radio-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px) saturate(200%);
+            box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
+        }
+        .radio-button i {
+            font-size: 1.2rem;
+            color: var(--text-primary);
         }
     </style>
 </head>
@@ -438,6 +473,23 @@
     </div>
     <!-- Clock Container -->
     <div id="clock" class="clock"></div>
+    <!-- Audio Element for Radio Playback -->
+    <audio id="radio-player" preload="none"></audio>
+    <!-- Radio Container -->
+    <div class="radio-container">
+        <button class="radio-button" data-url="https://rs201-krk.rmfstream.pl/rmf_fm" title="RMF FM">
+            <i class="fas fa-play"></i>
+        </button>
+        <button class="radio-button" data-url="https://zt01.cdn.eurozet.pl/zet-net.mp3?redirected=01" title="Radio ZET">
+            <i class="fas fa-play"></i>
+        </button>
+        <button class="radio-button" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3" title="Sydney Radio">
+            <i class="fas fa-play"></i>
+        </button>
+        <button class="radio-button" data-url="https://media-ice.musicradio.com/CapitalMP3" title="London Radio">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
     <!-- JavaScript for Functionality -->
     <script>
         // Initialize Slide Sounds
@@ -692,8 +744,44 @@
 
         updateClock(); // Initial call to display time immediately
         setInterval(updateClock, 1000); // Update every second
+
+        // Radio Functionality
+        const audio = document.getElementById('radio-player');
+        let currentStation = null;
+
+        document.querySelectorAll('.radio-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const url = button.dataset.url;
+                const icon = button.querySelector('i');
+                if (currentStation === button) {
+                    if (!audio.paused) {
+                        audio.pause();
+                        icon.classList.replace('fa-pause', 'fa-play');
+                        currentStation = null;
+                    }
+                } else {
+                    if (currentStation) {
+                        const currentIcon = currentStation.querySelector('i');
+                        currentIcon.classList.replace('fa-pause', 'fa-play');
+                    }
+                    audio.src = url;
+                    audio.play();
+                    icon.classList.replace('fa-play', 'fa-pause');
+                    currentStation = button;
+                }
+            });
+        });
+
+        audio.addEventListener('error', () => {
+            if (currentStation) {
+                const icon = currentStation.querySelector('i');
+                icon.classList.replace('fa-pause', 'fa-play');
+                currentStation = null;
+            }
+        });
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938d68a0ea2b53d8',t:'MTc0NjA4Mjg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938f86b288378834',t:'MTc0NjEwNTEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939911433e4eafc6',t:'MTc0NjIwNTE0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
