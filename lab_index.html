@@ -99,10 +99,10 @@
             color: #33FF57;
         }
         .control-buttons .main-chart-toggle i {
-            color: #3357FF;
+            color: yellow;
         }
         .control-buttons .fullscreen-toggle i {
-            color: #FF33A1;
+            color: white;
         }
         /* Top Tab Toggle Inside */
         .toptab-toggle-inside {
@@ -207,10 +207,10 @@
         }
         /* Match calendar icon colors */
         .calendar-tab[data-type="daily"] i {
-            color: #26a326; /* Green for daily */
+            color: #37aed0; /* Green for daily */
         }
         .calendar-tab[data-type="weekly"] i {
-            color: #d92020; /* Red for weekly */
+            color: #d84823; /* Red for weekly */
         }
         #calendar-iframe {
             width: 100%;
@@ -220,17 +220,17 @@
         /* Pip Calculator Container */
         .pip-calculator-container {
             position: fixed;
-            right: -365px; /* Hidden by default */
+            left: -365px; /* Hidden by default on the left */
             top: 50%;
             transform: translateY(-50%);
             width: 365px;
             height: auto;
             background: transparent;
             z-index: 1352;
-            transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .pip-calculator-container.locked {
-            right: 0;
+            left: 0;
         }
         /* Pip Calculator Hide Button */
         .pip-calculator-hide {
@@ -263,15 +263,15 @@
         /* Clock Styles */
         .clock {
             position: fixed;
-            top: 8px;
-            right: 42%;
+            top: 7px;
+            right: 2px;
             z-index: 1400;
             font-family: 'Exo 2', sans-serif;
             font-size: 16px;
             color: cyan;
             background: rgba(0, 0, 0, 1);
             padding: 2px 5px;
-            border-radius: 5px;
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -457,8 +457,8 @@
         const pipCalculatorHide = document.querySelector('.pip-calculator-hide');
 
         // Calendar URLs
-        const dailyUrl = "https://sslecal2.investing.com?ecoDayBackground=%2326a326&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1";
-        const weeklyUrl = "https://sslecal2.investing.com?ecoDayBackground=%23d92020&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1";
+        const dailyUrl = "https://sslecal2.investing.com?ecoDayBackground=%2337aed0&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1";
+        const weeklyUrl = "https://sslecal2.investing.com?ecoDayBackground=%23d84823&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1";
 
         // Preload daily calendar to reduce flickering
         document.addEventListener('DOMContentLoaded', () => {

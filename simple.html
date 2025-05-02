@@ -220,17 +220,17 @@
         /* Pip Calculator Container */
         .pip-calculator-container {
             position: fixed;
-            right: -365px; /* Hidden by default */
+            left: -365px; /* Hidden by default on the left */
             top: 50%;
             transform: translateY(-50%);
             width: 365px;
             height: auto;
             background: transparent;
             z-index: 1352;
-            transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .pip-calculator-container.locked {
-            right: 0;
+            left: 0;
         }
         /* Pip Calculator Hide Button */
         .pip-calculator-hide {
