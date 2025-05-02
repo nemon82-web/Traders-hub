@@ -167,13 +167,15 @@
         }
         /* Calendar Header */
         .calendar-header {
-            height: 50px;
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 10px;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 2;
         }
         .tabs {
             display: flex;
@@ -213,8 +215,12 @@
             color: #d84823; /* Red for weekly */
         }
         #calendar-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: calc(100% - 50px);
+            height: 100%;
+            z-index: 1;
             border: none;
         }
         /* Pip Calculator Container */
@@ -223,7 +229,7 @@
             left: -365px; /* Hidden by default on the left */
             top: 50%;
             transform: translateY(-50%);
-Sphinx            width: 365px;
+            width: 365px;
             height: auto;
             background: transparent;
             z-index: 1352;
