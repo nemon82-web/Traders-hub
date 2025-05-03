@@ -13,7 +13,9 @@
             --primary-bg: #1d2120;
             --text-primary: #e0e0e0;
             --glass-bg: rgba(18, 18, 18, 0.95);
-            --accent-gold: #DAA520; /* Added for pip calculator frame */
+            --accent-gold: #DAA520;
+            --tradingview-z: 101; /* Initial: TradingView on top */
+            --ctrader-z: 100;
         }
         /* Reset and Base Styles */
         * {
@@ -37,15 +39,15 @@
             height: 100vh;
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
-            z-index: 900;
+            z-index: var(--tradingview-z);
             overflow: hidden;
             transition: transform 0.3s ease-in-out;
         }
-        .tradingview-container.slid-right {
+        .tradingview-container.hidden {
             transform: translateX(100%);
         }
-        /* Spotware cTrader Container */
-        .center_hidden-iframe-container {
+        /* cTrader Container */
+        .ctrader-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -53,8 +55,12 @@
             height: 100vh;
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
-            z-index: 800;
+            z-index: var(--ctrader-z);
             overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .ctrader-container.hidden {
+            transform: translateX(100%);
         }
         /* Control Buttons */
         .control-buttons {
@@ -89,44 +95,42 @@
             color: var(--text-primary);
         }
         /* Specific Icon Colors */
-        .control-buttons .toptab-toggle i {
-            color: #00c5e8;
-        }
-        .control-buttons .week-calendar-toggle i {
-            color: #FF5733;
-        }
-        .control-buttons .pip-calculator-toggle i {
-            color: #33FF57;
-        }
-        .control-buttons .main-chart-toggle i {
-            color: yellow;
-        }
-        .control-buttons .fullscreen-toggle i {
-            color: white;
-        }
-        /* Top Tab Toggle Inside */
-        .toptab-toggle-inside {
+        .control-buttons .toptab-toggle i { color: #00c5e8; }
+        .control-buttons .week-calendar-toggle i { color: #FF5733; }
+        .control-buttons .pip-calculator-toggle i { color: #33FF57; }
+        .control-buttons .main-chart-toggle i { color: yellow; }
+        .control-buttons .fullscreen-toggle i { color: white; }
+        /* Mode Switch Button */
+        .mode-switch {
             position: absolute;
-            top: 65%;
             left: 0;
+            top: 65%;
+            transform: translateY(-50%);
+            z-index: 1340;
             width: 32px;
             height: 75px;
-            z-index: 1351;
-            cursor: pointer;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px) saturate(180%);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-        .toptab-toggle-inside:hover {
+        .mode-switch:hover {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(14px) saturate(200%);
             box-shadow: 0 0 20px rgba(70, 130, 180, 0.4);
         }
-        .toptab-toggle-inside i {
-            color: #00c5e8;
-            font-size: 24px;
+        /* Override styles when inside #toptab */
+        #toptab .mode-switch {
+            position: absolute;
+            top: 65%;
+            left: 0;
+            transform: translateY(-50%);
         }
         /* Top Tab Container */
         .cmc-container {
@@ -151,7 +155,7 @@
         /* Week Calendar Container */
         .week-calendar-container {
             position: fixed;
-            left: -650px; /* Hidden by default */
+            left: -650px;
             top: 0;
             width: 650px;
             height: 100vh;
@@ -206,13 +210,8 @@
             font-size: 1.0rem;
             color: var(--text-primary);
         }
-        /* Match calendar icon colors */
-        .calendar-tab[data-type="daily"] i {
-            color: #37aed0; /* Green for daily */
-        }
-        .calendar-tab[data-type="weekly"] i {
-            color: #d84823; /* Red for weekly */
-        }
+        .calendar-tab[data-type="daily"] i { color: #37aed0; }
+        .calendar-tab[data-type="weekly"] i { color: #d84823; }
         #calendar-iframe {
             position: absolute;
             top: 0;
@@ -225,7 +224,7 @@
         /* Pip Calculator Container */
         .pip-calculator-container {
             position: fixed;
-            left: -365px; /* Hidden by default on the left */
+            left: -365px;
             top: 50%;
             transform: translateY(-50%);
             width: 365px;
@@ -353,66 +352,17 @@
                 "allow_symbol_change": true,
                 "save_image": false,
                 "watchlist": [
-                    "🌍",
-                    "EURUSD",
-                    "GBPUSD",
-                    "AUDUSD",
-                    "NZDUSD",
-                    "USDCAD",
-                    "USDCHF",
-                    "USDJPY",
-                    "🧩",
-                    "AUDCAD",
-                    "AUDCHF",
-                    "AUDJPY",
-                    "AUDNZD",
-                    "CADCHF",
-                    "CADJPY",
-                    "CHFJPY",
-                    "EURAUD",
-                    "EURCAD",
-                    "EURCHF",
-                    "EURGBP",
-                    "EURJPY",
-                    "EURNZD",
-                    "GBPAUD",
-                    "GBPCAD",
-                    "GBPCHF",
-                    "GBPJPY",
-                    "GBPNZD",
-                    "NZDCAD",
-                    "NZDCHF",
-                    "NZDJPY",
-                    "🏝️",
-                    "AUDSGD",
-                    "EURNOK",
-                    "EURPLN",
-                    "EURSEK",
-                    "EURSGD",
-                    "GBPPLN",
-                    "GBPSEK",
-                    "USDNOK",
-                    "USDPLN",
-                    "USDSEK",
-                    "USDSGD",
-                    "📊 | 📈",
-                    "CAPITALCOM:US100",
-                    "CAPITALCOM:US500",
-                    "CAPITALCOM:US30",
-                    "DE40",
-                    "TICKMILL:WIG20",
-                    "CAPITALCOM:HK50",
-                    "CAPITALCOM:J225",
-                    "CAPITALCOM:UK100",
-                    "FXOPEN:VIX",
-                    "TRADU:VOLX",
-                    "CMCMARKETS:VOLINDEXK2025",
-                    "CMCMARKETS:VOLINDEXM2025",
-                    "CAPITALCOM:DXY",
-                    "BTCUSD",
-                    "⛏️ | 💰",
-                    "CFI:WTI",
-                    "XAUUSD"
+                    "🌍", "EURUSD", "GBPUSD", "AUDUSD", "NZDUSD", "USDCAD", "USDCHF", "USDJPY",
+                    "🧩", "AUDCAD", "AUDCHF", "AUDJPY", "AUDNZD", "CADCHF", "CADJPY", "CHFJPY",
+                    "EURAUD", "EURCAD", "EURCHF", "EURGBP", "EURJPY", "EURNZD", "GBPAUD", "GBPCAD",
+                    "GBPCHF", "GBPJPY", "GBPNZD", "NZDCAD", "NZDCHF", "NZDJPY",
+                    "🏝️", "AUDSGD", "EURNOK", "EURPLN", "EURSEK", "EURSGD", "GBPPLN", "GBPSEK",
+                    "USDNOK", "USDPLN", "USDSEK", "USDSGD",
+                    "📊 | 📈", "CAPITALCOM:US100", "CAPITALCOM:US500", "CAPITALCOM:US30", "DE40",
+                    "TICKMILL:WIG20", "CAPITALCOM:HK50", "CAPITALCOM:J225", "CAPITALCOM:UK100",
+                    "FXOPEN:VIX", "TRADU:VOLX", "CMCMARKETS:VOLINDEXK2025", "CMCMARKETS:VOLINDEXM2025",
+                    "CAPITALCOM:DXY", "BTCUSD",
+                    "⛏️ | 💰", "CFI:WTI", "XAUUSD"
                 ],
                 "calendar": true,
                 "hide_volume": true,
@@ -421,15 +371,15 @@
             </script>
         </div>
     </div>
-    <!-- Spotware cTrader Container -->
-    <div class="center_hidden-iframe-container">
+    <!-- cTrader Container -->
+    <div class="ctrader-container">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
     <!-- CMC Markets Top Tab -->
     <div class="cmc-container" id="toptab">
         <iframe loading="lazy" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl"></iframe>
-        <button class="toptab-toggle-inside" role="button" aria-label="Toggle top tab" title="Toggle top tab">
-            <i class="fas fa-caret-down"></i>
+        <button class="mode-switch" role="button" aria-label="Switch mode" title="Switch mode">
+            <i class="fas fa-chart-bar" style="color: #000000;"></i>
         </button>
     </div>
     <!-- Week Calendar Container -->
@@ -509,35 +459,65 @@
         const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
         const pipCalculatorContainer = document.getElementById('pip-calculator');
         const pipCalculatorToggle = document.querySelector('.pip-calculator-toggle');
-        const mainChartContainer = document.querySelector('.tradingview-container');
+        const tradingviewContainer = document.querySelector('.tradingview-container');
+        const ctraderContainer = document.querySelector('.ctrader-container');
         const mainChartToggle = document.querySelector('.main-chart-toggle');
         const fullscreenToggle = document.querySelector('.fullscreen-toggle');
         const pipCalculatorHide = document.querySelector('.pip-calculator-hide');
+        const modeSwitch = document.querySelector('.mode-switch');
 
         // Calendar URLs
         const dailyUrl = "https://sslecal2.investing.com?ecoDayBackground=%2337aed0&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1";
         const weeklyUrl = "https://sslecal2.investing.com?ecoDayBackground=%23d84823&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1";
 
-        // Preload daily calendar to reduce flickering
+        // Preload daily calendar
         document.addEventListener('DOMContentLoaded', () => {
             const iframe = document.getElementById('calendar-iframe');
             iframe.src = dailyUrl;
         });
+
+        // Mode Management
+        let currentMode = localStorage.getItem('currentMode') || 'tradingview';
+
+        function setMode(mode) {
+            currentMode = mode;
+            localStorage.setItem('currentMode', mode);
+            if (mode === 'tradingview') {
+                document.documentElement.style.setProperty('--tradingview-z', '101');
+                document.documentElement.style.setProperty('--ctrader-z', '100');
+                tradingviewContainer.classList.remove('hidden');
+                ctraderContainer.classList.remove('hidden');
+            } else {
+                document.documentElement.style.setProperty('--tradingview-z', '100');
+                document.documentElement.style.setProperty('--ctrader-z', '101');
+                ctraderContainer.classList.remove('hidden');
+                tradingviewContainer.classList.remove('hidden');
+            }
+            updateToggleIcon();
+            const icon = modeSwitch.querySelector('i');
+            icon.classList.remove('fa-sync-alt', 'fa-chart-bar', 'fa-chart-line');
+            if (mode === 'tradingview') {
+                icon.classList.add('fa-chart-bar');
+                icon.style.color = '#000000';
+            } else {
+                icon.classList.add('fa-chart-line');
+                icon.style.color = '#33FF57';
+            }
+        }
+
+        // Initial mode setup
+        setMode(currentMode);
 
         // Toggle Top Tab
         function toggleToptab() {
             toptabContainer.classList.toggle('locked');
             const isLocked = toptabContainer.classList.contains('locked');
             const outsideIcon = toptabToggle.querySelector('i');
-            const insideToggle = document.querySelector('.toptab-toggle-inside');
-            const insideIcon = insideToggle ? insideToggle.querySelector('i') : null;
             if (isLocked) {
                 outsideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
-                if (insideIcon) insideIcon.classList.replace('fa-caret-down', 'fa-caret-up');
                 slideSound.play();
             } else {
                 outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                 slideOutSound.play();
             }
         }
@@ -550,18 +530,7 @@
             }
         });
 
-        const toptabToggleInside = document.querySelector('.toptab-toggle-inside');
-        if (toptabToggleInside) {
-            toptabToggleInside.addEventListener('click', toggleToptab);
-            toptabToggleInside.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleToptab();
-                }
-            });
-        }
-
-        // Toggle Week Calendar (default to daily)
+        // Toggle Week Calendar
         weekCalendarToggle.addEventListener('click', () => {
             const isLocked = weekCalendarContainer.classList.toggle('locked');
             if (isLocked) {
@@ -592,7 +561,7 @@
             });
         });
 
-        // Close Button for Calendar
+        // Close Calendar
         const closeBtn = document.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => {
             weekCalendarContainer.classList.remove('locked');
@@ -609,12 +578,11 @@
             }
         });
 
-        // Hide Pip Calculator from Inside
+        // Hide Pip Calculator
         pipCalculatorHide.addEventListener('click', () => {
             pipCalculatorContainer.classList.remove('locked');
             slideOutSound.play();
         });
-
         pipCalculatorHide.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -625,14 +593,41 @@
 
         // Toggle Main Chart
         function toggleMainChart() {
-            mainChartContainer.classList.toggle('slid-right');
-            const icon = mainChartToggle.querySelector('i');
-            if (mainChartContainer.classList.contains('slid-right')) {
-                icon.classList.replace('fa-caret-right', 'fa-caret-left');
-                slideOutSound.play();
+            if (currentMode === 'tradingview') {
+                tradingviewContainer.classList.toggle('hidden');
             } else {
-                icon.classList.replace('fa-caret-left', 'fa-caret-right');
-                slideSound.play();
+                ctraderContainer.classList.toggle('hidden');
+            }
+            updateToggleIcon();
+            if (currentMode === 'tradingview') {
+                if (tradingviewContainer.classList.contains('hidden')) {
+                    slideOutSound.play();
+                } else {
+                    slideSound.play();
+                }
+            } else {
+                if (ctraderContainer.classList.contains('hidden')) {
+                    slideOutSound.play();
+                } else {
+                    slideSound.play();
+                }
+            }
+        }
+
+        function updateToggleIcon() {
+            const icon = mainChartToggle.querySelector('i');
+            if (currentMode === 'tradingview') {
+                if (tradingviewContainer.classList.contains('hidden')) {
+                    icon.classList.replace('fa-caret-right', 'fa-caret-left');
+                } else {
+                    icon.classList.replace('fa-caret-left', 'fa-caret-right');
+                }
+            } else {
+                if (ctraderContainer.classList.contains('hidden')) {
+                    icon.classList.replace('fa-caret-right', 'fa-caret-left');
+                } else {
+                    icon.classList.replace('fa-caret-left', 'fa-caret-right');
+                }
             }
         }
 
@@ -644,7 +639,16 @@
             }
         });
 
-        // Mouse Button Controls (forward button defaults to daily)
+        // Mode Switch
+        modeSwitch.addEventListener('click', () => {
+            if (currentMode === 'tradingview') {
+                setMode('ctrader');
+            } else {
+                setMode('tradingview');
+            }
+        });
+
+        // Mouse Button Controls
         document.addEventListener('mousedown', function(e) {
             if (e.button === 1) { // Middle mouse button
                 e.preventDefault();
@@ -668,11 +672,10 @@
             }
         });
 
-        // Close Panels on Outside Click or Escape
+        // Close Panels on Outside Click
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.cmc-container') && 
                 !e.target.closest('.toptab-toggle') && 
-                !e.target.closest('.toptab-toggle-inside') && 
                 !e.target.closest('.week-calendar-container') && 
                 !e.target.closest('.week-calendar-toggle') &&
                 !e.target.closest('.pip-calculator-container') && 
@@ -681,9 +684,7 @@
                     toptabContainer.classList.remove('locked');
                     slideOutSound.play();
                     const outsideIcon = toptabToggle.querySelector('i');
-                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                 }
                 if (weekCalendarContainer.classList.contains('locked')) {
                     weekCalendarContainer.classList.remove('locked');
@@ -696,15 +697,14 @@
             }
         });
 
+        // Close Panels on Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (toptabContainer.classList.contains('locked')) {
                     toptabContainer.classList.remove('locked');
                     slideOutSound.play();
                     const outsideIcon = toptabToggle.querySelector('i');
-                    const insideIcon = toptabToggleInside ? toptabToggleInside.querySelector('i') : null;
-                    if (outsideIcon) outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
-                    if (insideIcon) insideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
+                    outsideIcon.classList.replace('fa-caret-up', 'fa-caret-down');
                 }
                 if (weekCalendarContainer.classList.contains('locked')) {
                     weekCalendarContainer.classList.remove('locked');
@@ -748,8 +748,8 @@
             document.getElementById('clock').textContent = timeString;
         }
 
-        updateClock(); // Initial call to display time immediately
-        setInterval(updateClock, 1000); // Update every second
+        updateClock();
+        setInterval(updateClock, 1000);
 
         // Radio Functionality
         const audio = document.getElementById('radio-player');
@@ -786,8 +786,5 @@
             }
         });
     </script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938d68a0ea2b53d8',t:'MTc0NjA4Mjg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938f86b288378834',t:'MTc0NjEwNTEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939911433e4eafc6',t:'MTc0NjIwNTE0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
