@@ -1,0 +1,59 @@
+//@version=6
+indicator("HTS_NemoN_simple", overlay=true)
+
+
+// ██╗  ██╗  ███████╗ ███████╗
+// ██║  ██║ ╚══██╔══╝ ██╔════╝
+// ███████║    ██║    ███████╗
+// ██║  ██║    ██║    ╚════██║
+// ██╝  ██╝    ╚═╝    ███████╝
+
+// INPUTS
+// ======
+// HTS Lengths
+lenFast = input.int(33, "Fast MA Length", minval=1)
+lenSlow = input.int(144, "Slow MA Length", minval=1)
+
+// Visual Customizations
+HTSFastColor = input.color(#00bbd480, "Fast Band Color")
+HTSSlowColor = input.color(#ff525280, "Slow Band Color")
+lineWidth = input.int(1, "Line Width", minval=1, maxval=5)
+
+// VALIDATION
+// ==========
+if lenFast >= lenSlow
+    runtime.error("Fast MA length must be smaller than Slow MA length")
+
+// CALCULATIONS
+// ============
+HTSFastHigh = ta.rma(high, lenFast)
+HTSFastLow = ta.rma(low, lenFast)
+HTSSlowHigh = ta.rma(high, lenSlow)
+HTSSlowLow = ta.rma(low, lenSlow)
+
+// PLOTTING
+// ========
+// Fast Band
+plotFastHigh = plot(HTSFastHigh, "Góra tnie w dół (FAST-high)", color=HTSFastColor, linewidth=lineWidth)
+plotFastLow = plot(HTSFastLow, "Dół tnie w górę(FAST-low)", color=HTSFastColor, linewidth=lineWidth)
+fill(plotFastHigh, plotFastLow, color.new(HTSFastColor, 90))
+
+// Slow Band
+plotSlowHigh = plot(HTSSlowHigh, "górę(slow_high)", color=HTSSlowColor, linewidth=lineWidth)
+plotSlowLow = plot(HTSSlowLow, "dół(slow_low)", color=HTSSlowColor, linewidth=lineWidth)
+fill(plotSlowHigh, plotSlowLow, color.new(HTSSlowColor, 90))
+
+// ALERT SYSTEM
+// ============
+alertcondition(ta.crossover(HTSFastLow, HTSSlowHigh), 
+  "Bullish Crossover", "Fast MA crossed above Slow MA")
+alertcondition(ta.crossunder(HTSFastHigh, HTSSlowLow), 
+  "Bearish Crossunder", "Fast MA crossed below Slow MA")
+
+// CROSSOVER LOGIC
+bullishCross = ta.crossover(HTSFastLow, HTSSlowHigh) // Fast Low crosses above Slow High
+bearishCross = ta.crossunder(HTSFastHigh, HTSSlowLow) // Fast High crosses below Slow Low
+
+// PLOT DOTS EXACTLY ON CROSSOVER LINES
+plot(bullishCross ? HTSFastLow : na, style=plot.style_circles, color=color.rgb(59, 169, 233),linewidth = 4, title="Bullish Dot 🟢")
+plot(bearishCross ? HTSFastHigh : na, style=plot.style_circles, color=color.rgb(250, 20, 31), linewidth = 4, title="Bearish Dot 🔴")
