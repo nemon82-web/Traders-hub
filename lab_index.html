@@ -28,7 +28,7 @@
             font-family: 'Exo 2', sans-serif;
             overflow: hidden;
         }
-        /* TradingView Container */
+        /* TradingView Container - Static and Always Visible */
         .tradingview-container {
             position: fixed;
             top: 0;
@@ -37,15 +37,11 @@
             height: 100vh;
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
-            z-index: 900;
+            z-index: 100;
             overflow: hidden;
-            transition: transform 0.3s ease-in-out;
         }
-        .tradingview-container.slid-right {
-            transform: translateX(100%);
-        }
-        /* Spotware cTrader Container */
-        .center_hidden-iframe-container {
+        /* cTrader Container - Visible by Default, Togglable */
+        .ctrader-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -53,8 +49,12 @@
             height: 100vh;
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
-            z-index: 800;
+            z-index: 101;
+            transition: transform 0.3s ease-in-out;
             overflow: hidden;
+        }
+        .ctrader-container.hidden {
+            transform: translateX(100%);
         }
         /* Control Buttons */
         .control-buttons {
@@ -321,8 +321,8 @@
         <button class="toptab-toggle" role="button" aria-label="Toggle top tab" title="Toggle top tab">
             <i class="fas fa-caret-down"></i>
         </button>
-        <button class="main-chart-toggle" role="button" aria-label="Toggle main chart" title="Toggle main chart">
-            <i class="fas fa-caret-right"></i>
+        <button class="main-chart-toggle" role="button" aria-label="Toggle cTrader" title="Toggle cTrader">
+            <i class="fas fa-caret-right"></i> <!-- Initially visible, so icon to hide -->
         </button>
         <button class="week-calendar-toggle" role="button" aria-label="Toggle calendar" title="Toggle calendar">
             <i class="fas fa-calendar-week"></i>
@@ -338,7 +338,7 @@
     <div class="tradingview-container">
         <div class="tradingview-widget-container" style="height:100%;width:100%;position:relative;">
             <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-            <img src="terminowe.png" style="position:absolute;bottom:32px;left:0;width:200px;height:auto;z-index:1;pointer-events:none;" alt="Terminowe">
+            <img src="terminowe.png" style="position:absolute;bottom:32px;left:5px;width:200px;height:auto;z-index:1;pointer-events:none;" alt="Terminowe">
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
             {
                 "autosize": true,
@@ -417,18 +417,12 @@
                 "calendar": true,
                 "hide_volume": true,
                 "support_host": "https://www.tradingview.com"
-				
-				widget.onChartReady(() => {
-            widget.chart().createStudy('Relative Strength Index', false, false, { in_0: 14 });
-        })
-				
             }
-			
             </script>
         </div>
     </div>
-    <!-- Spotware cTrader Container -->
-    <div class="center_hidden-iframe-container">
+    <!-- cTrader Container - Visible by Default -->
+    <div class="ctrader-container">
         <iframe src="https://ct.spotware.com/" loading="lazy" style="width:100%; height:100%; border:none;"></iframe>
     </div>
     <!-- CMC Markets Top Tab -->
@@ -515,7 +509,7 @@
         const weekCalendarToggle = document.querySelector('.week-calendar-toggle');
         const pipCalculatorContainer = document.getElementById('pip-calculator');
         const pipCalculatorToggle = document.querySelector('.pip-calculator-toggle');
-        const mainChartContainer = document.querySelector('.tradingview-container');
+        const ctraderContainer = document.querySelector('.ctrader-container');
         const mainChartToggle = document.querySelector('.main-chart-toggle');
         const fullscreenToggle = document.querySelector('.fullscreen-toggle');
         const pipCalculatorHide = document.querySelector('.pip-calculator-hide');
@@ -629,11 +623,11 @@
             }
         });
 
-        // Toggle Main Chart
+        // Toggle cTrader
         function toggleMainChart() {
-            mainChartContainer.classList.toggle('slid-right');
+            ctraderContainer.classList.toggle('hidden');
             const icon = mainChartToggle.querySelector('i');
-            if (mainChartContainer.classList.contains('slid-right')) {
+            if (ctraderContainer.classList.contains('hidden')) {
                 icon.classList.replace('fa-caret-right', 'fa-caret-left');
                 slideOutSound.play();
             } else {
@@ -795,5 +789,6 @@
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938d68a0ea2b53d8',t:'MTc0NjA4Mjg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938f86b288378834',t:'MTc0NjEwNTEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939911433e4eafc6',t:'MTc0NjIwNTE0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939f8267cf4abfd1',t:'MTc0NjI3MjY5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
