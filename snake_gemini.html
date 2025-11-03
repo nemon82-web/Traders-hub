@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Viper Velocity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: #00f2ff;
+            --danger-glow: #ff005d;
+            --food-glow: #ffc400;
+            --bg-color: #0d0d1a;
+            --ui-bg: #1a1a2e;
+            --ui-bg-light: #2c2c4d;
+            --text-color: #e0e0ff;
+        }
+
+        body {
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-color);
+            overflow: hidden;
+            text-shadow: 0 0 5px rgba(224, 224, 255, 0.3);
+        }
+
+        .game-container {
+            display: flex;
+            gap: 20px;
+            background: var(--ui-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2), inset 0 0 10px rgba(0,0,0,0.5);
+            border: 1px solid var(--primary-glow);
+            position: relative;
+        }
+
+        #game-canvas {
+            border: 2px solid var(--primary-glow);
+            border-radius: 8px;
+            background: #000;
+            box-shadow: 0 0 20px var(--primary-glow) inset;
+        }
+
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 220px;
+        }
+
+        .stats, .powerup-display, .controls {
+            background: linear-gradient(145deg, var(--ui-bg-light), var(--ui-bg));
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .stats h3, .powerup-display h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-glow);
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .stat-item, .control-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .stat-item span, #combo {
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #combo {
+            color: var(--danger-glow);
+        }
+
+        #powerup-inventory, #active-powerups {
+            min-height: 50px;
+        }
+
+        .powerup-slot, .active-powerup {
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid grey;
+            font-size: 14px;
+        }
+
+        .powerup-slot .keybind {
+            background: var(--ui-bg);
+            padding: 4px 6px;
+            border-radius: 3px;
+            border: 1px solid var(--primary-glow);
+        }
+
+        .active-powerup .timer-bar {
+            height: 4px;
+            background: var(--primary-glow);
+            border-radius: 2px;
+            width: 100%;
+            animation: timer-decrease linear;
+        }
+
+        @keyframes timer-decrease {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        .controls {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+        .controls .key {
+            background: var(--ui-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid var(--text-color);
+        }
+
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 13, 26, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .game-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .overlay-title {
+            font-size: 60px;
+            color: var(--danger-glow);
+            text-shadow: 0 0 10px var(--danger-glow), 0 0 20px var(--danger-glow), 0 0 40px var(--danger-glow);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .overlay-text {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .overlay-button {
+            background: none;
+            border: 2px solid var(--primary-glow);
+            color: var(--primary-glow);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            padding: 10px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: 0 0 10px var(--primary-glow);
+            transition: all 0.3s ease;
+        }
+
+        .overlay-button:hover {
+            background: var(--primary-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+    </style>
+</head>
+<body>
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <div class="game-container">
+        <div style="position: relative;">
+            <canvas id="game-canvas" width="600" height="600"></canvas>
+            <div id="game-menu" class="game-overlay visible">
+                 <h2 class="overlay-title" style="color: var(--primary-glow); text-shadow: 0 0 10px var(--primary-glow);">VIPER VELOCITY</h2>
+                 <p class="overlay-text">The ultimate neon snake experience.</p>
+                 <button id="start-button" class="overlay-button">Start Game</button>
+            </div>
+             <div id="game-over-menu" class="game-overlay">
+                 <h2 class="overlay-title">GAME OVER</h2>
+                 <p class="overlay-text">Your final score: <span id="final-score">0</span></p>
+                 <button id="restart-button" class="overlay-button">Play Again</button>
+            </div>
+             <div id="pause-menu" class="game-overlay">
+                 <h2 class="overlay-title" style="font-size: 48px; color: var(--primary-glow);">PAUSED</h2>
+                 <button id="resume-button" class="overlay-button">Resume</button>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="stats">
+                <h3><i class="icon-stats"></i> Telemetry</h3>
+                <div class="stat-item"><span>Score:</span> <span id="score">0</span></div>
+                <div class="stat-item"><span>Length:</span> <span id="length">1</span></div>
+                <div class="stat-item"><span>High Score:</span> <span id="highscore">0</span></div>
+                <div class="stat-item"><span>Time:</span> <span id="time">0:00</span></div>
+                <div class="stat-item"><span>Combo:</span> <span id="combo">x1</span></div>
+            </div>
+            <div class="powerup-display">
+                <h3><i class="icon-powerups"></i> Inventory</h3>
+                <div id="powerup-inventory"></div>
+            </div>
+            <div class="powerup-display">
+                <h3><i class="icon-active"></i> Active Effects</h3>
+                <div id="active-powerups"></div>
+            </div>
+            <div class="controls">
+                <div class="control-item"><span class="key">←↑→↓</span> : Move</div>
+                <div class="control-item"><span class="key">Space</span> : Pause</div>
+                <div class="control-item"><span class="key">1-3</span> : Use Powerup</div>
+                <div class="control-item"><span class="key">M</span> : Mute Sound</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+class Game {
+    constructor() {
+        // Core Components
+        this.canvas = document.getElementById('game-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.gainNode = this.audioContext.createGain();
+        this.bgMusic = document.getElementById('bg-music');
+
+        // UI Elements
+        this.ui = {
+            score: document.getElementById('score'),
+            length: document.getElementById('length'),
+            highscore: document.getElementById('highscore'),
+            time: document.getElementById('time'),
+            combo: document.getElementById('combo'),
+            powerupInventory: document.getElementById('powerup-inventory'),
+            activePowerups: document.getElementById('active-powerups'),
+            menus: {
+                start: document.getElementById('game-menu'),
+                pause: document.getElementById('pause-menu'),
+                gameOver: document.getElementById('game-over-menu'),
+            },
+            buttons: {
+                start: document.getElementById('start-button'),
+                restart: document.getElementById('restart-button'),
+                resume: document.getElementById('resume-button'),
+            },
+            finalScore: document.getElementById('final-score'),
+        };
+
+        // Game Configuration
+        this.config = {
+            GRID_SIZE: 30,
+            INITIAL_SPEED: 120, // ms per tick
+            MIN_SPEED: 40,
+            POWERUPS: {
+                shield:   { color: '#00ffff', duration: 8000, name: 'Shield' },
+                speed:    { color: '#ffff00', duration: 10000, name: 'Speed Boost' },
+                magnet:   { color: '#ff00ff', duration: 10000, name: 'Food Magnet' },
+                ghost:    { color: '#ffffff', duration: 6000, name: 'Ghost' },
+            },
+            FOOD_TYPES: {
+                normal:   { color: '#ff3333', value: 10, glow: '#ff3333' },
+                special:  { color: '#ff9933', value: 50, glow: '#ff9933' },
+                powerup:  { color: '#cc33ff', value: 0, glow: '#cc33ff' },
+            }
+        };
+
+        this.CELL_SIZE = this.canvas.width / this.config.GRID_SIZE;
+        this.lastFrameTime = 0;
+        this.gamePace = 0;
+        this.state = 'MENU'; // MENU, PLAYING, PAUSED, GAME_OVER
+        this.init();
+    }
+
+    init() {
+        this.setupAudio();
+        this.setupEventListeners();
+        this.resetState();
+        this.ui.highscore.textContent = localStorage.getItem('snakeHighScore') || 0;
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    setupAudio() {
+        this.gainNode.gain.value = 0.15;
+        this.gainNode.connect(this.audioContext.destination);
+        const track = this.audioContext.createMediaElementSource(this.bgMusic);
+        track.connect(this.gainNode);
+        this.sfx = {
+            eat: () => this.createSound(784, 'square', 0.1, 0.5),
+            specialEat: () => this.createSound(1046, 'sine', 0.2, 0.8),
+            getPowerup: () => this.createSound(523, 'triangle', 0.3, 0.7),
+            usePowerup: () => this.createSound(659, 'sawtooth', 0.4, 0.9),
+            gameOver: () => {
+                this.createSound(164, 'sawtooth', 0.8, 1);
+                this.createSound(110, 'sawtooth', 0.8, 1);
+            },
+            combo: (mult) => this.createSound(200 + (100 * mult), 'sawtooth', 0.15, 0.4),
+            click: () => this.createSound(880, 'sine', 0.1, 0.3)
+        };
+    }
+
+    setupEventListeners() {
+        document.addEventListener('keydown', this.handleInput.bind(this));
+        this.ui.buttons.start.onclick = () => this.startGame();
+        this.ui.buttons.restart.onclick = () => this.startGame();
+        this.ui.buttons.resume.onclick = () => this.togglePause();
+    }
+    
+    createSound(frequency, type, duration, volume) {
+        if (this.audioContext.state === 'suspended') this.audioContext.resume();
+        const oscillator = this.audioContext.createOscillator();
+        const envelope = this.audioContext.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+        envelope.gain.setValueAtTime(volume, this.audioContext.currentTime);
+        envelope.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+        oscillator.connect(envelope);
+        envelope.connect(this.gainNode);
+        oscillator.start();
+        oscillator.stop(this.audioContext.currentTime + duration);
+    }
+    
+    resetState() {
+        this.snake = [{ x: 15, y: 15 }];
+        this.food = [];
+        this.direction = 'right';
+        this.nextDirection = 'right';
+        this.score = 0;
+        this.startTime = Date.now();
+        this.combo = { multiplier: 1, timeout: null };
+        this.powerups = { inventory: [], active: [] };
+        this.particles = [];
+        this.gridOffset = 0;
+        this.generateFood(5);
+    }
+
+    startGame() {
+        this.sfx.click();
+        if (this.audioContext.state === 'suspended') this.audioContext.resume();
+        this.bgMusic.currentTime = 0;
+        this.bgMusic.play().catch(e => console.log("Autoplay blocked."));
+        
+        this.resetState();
+        this.state = 'PLAYING';
+        this.ui.menus.start.classList.remove('visible');
+        this.ui.menus.gameOver.classList.remove('visible');
+    }
+
+    togglePause() {
+        this.sfx.click();
+        if (this.state === 'PLAYING') {
+            this.state = 'PAUSED';
+            this.bgMusic.pause();
+            this.ui.menus.pause.classList.add('visible');
+        } else if (this.state === 'PAUSED') {
+            this.state = 'PLAYING';
+            this.bgMusic.play();
+            this.ui.menus.pause.classList.remove('visible');
+        }
+    }
+
+    handleInput(e) {
+        if (this.state !== 'PLAYING') return;
+
+        switch (e.key) {
+            case 'ArrowUp': if (this.direction !== 'down') this.nextDirection = 'up'; break;
+            case 'ArrowDown': if (this.direction !== 'up') this.nextDirection = 'down'; break;
+            case 'ArrowLeft': if (this.direction !== 'right') this.nextDirection = 'left'; break;
+            case 'ArrowRight': if (this.direction !== 'left') this.nextDirection = 'right'; break;
+            case ' ': this.togglePause(); break;
+            case 'm': case 'M': this.gainNode.gain.value = this.gainNode.gain.value > 0 ? 0 : 0.15; break;
+            case '1': case '2': case '3': this.usePowerup(parseInt(e.key) - 1); break;
+        }
+    }
+
+    gameLoop(timestamp) {
+        const deltaTime = timestamp - this.lastFrameTime;
+        this.lastFrameTime = timestamp;
+
+        if (this.state === 'PLAYING') {
+            const speedModifier = this.powerups.active.reduce((acc, p) => p.type === 'speed' ? -50 : acc, 0);
+            const timePenalty = Math.floor((Date.now() - this.startTime) / 20000) * 5;
+            const lengthPenalty = Math.floor(this.snake.length / 5) * 5;
+            const currentSpeed = Math.max(this.config.MIN_SPEED, this.config.INITIAL_SPEED - lengthPenalty - timePenalty + speedModifier);
+            
+            this.gamePace += deltaTime;
+            if (this.gamePace >= currentSpeed) {
+                this.gamePace = 0;
+                this.update();
+            }
+        }
+        
+        this.draw();
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    update() {
+        this.direction = this.nextDirection;
+        const head = { ...this.snake[0] };
+        
+        switch (this.direction) {
+            case 'up': head.y--; break;
+            case 'down': head.y++; break;
+            case 'left': head.x--; break;
+            case 'right': head.x++; break;
+        }
+
+        this.checkCollisions(head);
+        if (this.state !== 'PLAYING') return;
+
+        this.snake.unshift(head);
+        
+        const ateFoodItem = this.checkFoodConsumption(head);
+        if (!ateFoodItem) {
+            this.snake.pop();
+        } else {
+            this.generateFood(1);
+        }
+
+        this.updatePowerups();
+        this.updateUI();
+    }
+
+    checkCollisions(head) {
+        const hasGhost = this.hasActivePowerup('ghost');
+        const hasShield = this.hasActivePowerup('shield');
+
+        let wallCollision = head.x < 0 || head.x >= this.config.GRID_SIZE || head.y < 0 || head.y >= this.config.GRID_SIZE;
+        if (wallCollision) {
+            if (hasGhost || hasShield) { // Wrap around
+                head.x = (head.x + this.config.GRID_SIZE) % this.config.GRID_SIZE;
+                head.y = (head.y + this.config.GRID_SIZE) % this.config.GRID_SIZE;
+            } else {
+                this.endGame();
+                return;
+            }
+        }
+        
+        const selfCollision = this.snake.slice(1).some(s => s.x === head.x && s.y === head.y);
+        if (selfCollision && !hasGhost) {
+            this.endGame();
+        }
+    }
+    
+    checkFoodConsumption(head) {
+        let ateFood = null;
+        this.food = this.food.filter(f => {
+            if (f.x === head.x && f.y === head.y) {
+                ateFood = f;
+                this.createParticles(f.x, f.y, f.glow, 20);
+                return false;
+            }
+            return true;
+        });
+
+        if (ateFood) {
+            if (ateFood.type === 'powerup') {
+                this.sfx.getPowerup();
+                if (this.powerups.inventory.length < 3) {
+                    const types = Object.keys(this.config.POWERUPS);
+                    const randomType = types[Math.floor(Math.random() * types.length)];
+                    this.powerups.inventory.push({ type: randomType, ...this.config.POWERUPS[randomType]});
+                }
+            } else {
+                this.score += ateFood.value * this.combo.multiplier;
+                this.combo.multiplier++;
+                ateFood.type === 'special' ? this.sfx.specialEat() : this.sfx.eat();
+                this.sfx.combo(this.combo.multiplier);
+            }
+            if (this.combo.timeout) clearTimeout(this.combo.timeout);
+            this.combo.timeout = setTimeout(() => this.combo.multiplier = 1, 3000);
+        }
+        return !!ateFood;
+    }
+
+    generateFood(count) {
+        const types = Object.keys(this.config.FOOD_TYPES);
+        const weights = [0.75, 0.15, 0.1]; // normal, special, powerup
+        
+        for(let i=0; i<count; i++) {
+            if (this.food.length >= 7) break;
+            let type;
+            const rand = Math.random();
+            if (rand < weights[0]) type = 'normal';
+            else if (rand < weights[0] + weights[1]) type = 'special';
+            else type = 'powerup';
+            
+            let pos;
+            do {
+                pos = { x: Math.floor(Math.random() * this.config.GRID_SIZE), y: Math.floor(Math.random() * this.config.GRID_SIZE) };
+            } while (this.snake.some(s => s.x === pos.x && s.y === pos.y) || this.food.some(f => f.x === pos.x && f.y === pos.y));
+            
+            this.food.push({ ...pos, ...this.config.FOOD_TYPES[type], type });
+        }
+    }
+    
+    usePowerup(index) {
+        if (index < this.powerups.inventory.length) {
+            this.sfx.usePowerup();
+            const powerup = this.powerups.inventory.splice(index, 1)[0];
+            powerup.expiresAt = Date.now() + powerup.duration;
+            powerup.animationDuration = powerup.duration / 1000;
+            this.powerups.active.push(powerup);
+        }
+    }
+
+    updatePowerups() {
+        this.powerups.active = this.powerups.active.filter(p => Date.now() < p.expiresAt);
+        if (this.hasActivePowerup('magnet')) {
+            const head = this.snake[0];
+            this.food.forEach(f => {
+                const dx = head.x - f.x;
+                const dy = head.y - f.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 5 && dist > 0.5) {
+                    f.x += dx / dist / 5;
+                    f.y += dy / dist / 5;
+                }
+            });
+        }
+    }
+
+    hasActivePowerup(type) {
+        return this.powerups.active.some(p => p.type === type);
+    }
+
+    endGame() {
+        this.sfx.gameOver();
+        this.bgMusic.pause();
+        this.state = 'GAME_OVER';
+        this.createParticles(this.snake[0].x, this.snake[0].y, '#ff005d', 200, 3);
+        
+        const highscore = localStorage.getItem('snakeHighScore') || 0;
+        if (this.score > highscore) {
+            localStorage.setItem('snakeHighScore', this.score);
+            this.ui.highscore.textContent = this.score;
+        }
+        
+        this.ui.finalScore.textContent = this.score;
+        this.ui.menus.gameOver.classList.add('visible');
+    }
+
+    // --- DRAWING & UI ---
+    
+    updateUI() {
+        this.ui.score.textContent = this.score;
+        this.ui.length.textContent = this.snake.length;
+        this.ui.combo.textContent = `x${this.combo.multiplier}`;
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        this.ui.time.textContent = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, '0')}`;
+        
+        this.ui.powerupInventory.innerHTML = this.powerups.inventory.map((p, i) => `
+            <div class="powerup-slot" style="border-left-color: ${p.color}">
+                <span class="keybind">${i+1}</span> ${p.name}
+            </div>`).join('');
+            
+        this.ui.activePowerups.innerHTML = this.powerups.active.map(p => {
+            const timeLeft = p.expiresAt - Date.now();
+            return `
+            <div class="active-powerup" style="border-left-color: ${p.color}">
+                <div style="width: 100%;">
+                    <span>${p.name} (${Math.ceil(timeLeft/1000)}s)</span>
+                    <div class="timer-bar-container" style="background: rgba(0,0,0,0.5); border-radius: 2px; margin-top: 4px;">
+                        <div class="timer-bar" style="background: ${p.color}; animation-duration: ${p.animationDuration}s; animation-play-state:${this.state === 'PAUSED' ? 'paused' : 'running'}; width: ${timeLeft/p.duration * 100}%"></div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+    
+    draw() {
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.drawGrid();
+        this.drawFood();
+        this.drawSnake();
+        this.drawParticles();
+    }
+    
+    drawGrid() {
+        this.ctx.strokeStyle = 'rgba(0, 242, 255, 0.05)';
+        this.ctx.lineWidth = 1;
+        this.gridOffset = (this.gridOffset + 0.1) % this.CELL_SIZE;
+        for (let x = this.gridOffset; x < this.canvas.width; x += this.CELL_SIZE) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.canvas.height);
+            this.ctx.stroke();
+        }
+        for (let y = this.gridOffset; y < this.canvas.height; y += this.CELL_SIZE) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.canvas.width, y);
+            this.ctx.stroke();
+        }
+    }
+
+    drawFood() {
+        this.food.forEach(f => {
+            this.ctx.fillStyle = f.color;
+            this.ctx.shadowColor = f.glow;
+            this.ctx.shadowBlur = 15;
+            this.ctx.beginPath();
+            this.ctx.arc(f.x * this.CELL_SIZE + this.CELL_SIZE / 2, f.y * this.CELL_SIZE + this.CELL_SIZE / 2, this.CELL_SIZE / 2.5, 0, Math.PI * 2);
+            this.ctx.fill();
+        });
+        this.ctx.shadowBlur = 0;
+    }
+
+    drawSnake() {
+        const baseColor = this.hasActivePowerup('ghost') ? '#ffffff' : '#00ff00';
+        this.snake.forEach((seg, i) => {
+            const gradient = this.ctx.createLinearGradient(
+                (seg.x - 1) * this.CELL_SIZE, seg.y * this.CELL_SIZE,
+                (seg.x + 1) * this.CELL_SIZE, seg.y * this.CELL_SIZE
+            );
+            gradient.addColorStop(0, `${baseColor}99`);
+            gradient.addColorStop(0.5, `${baseColor}ff`);
+            gradient.addColorStop(1, `${baseColor}99`);
+            
+            this.ctx.fillStyle = gradient;
+            this.ctx.shadowColor = baseColor;
+            this.ctx.shadowBlur = 15;
+            
+            this.ctx.fillRect(
+                seg.x * this.CELL_SIZE + 1,
+                seg.y * this.CELL_SIZE + 1,
+                this.CELL_SIZE - 2,
+                this.CELL_SIZE - 2
+            );
+        });
+        this.ctx.shadowBlur = 0;
+    }
+    
+    createParticles(x, y, color, count, speed=1) {
+        for (let i = 0; i < count; i++) {
+            this.particles.push({
+                x: x * this.CELL_SIZE + this.CELL_SIZE / 2,
+                y: y * this.CELL_SIZE + this.CELL_SIZE / 2,
+                color: color,
+                radius: Math.random() * 3 + 1,
+                dx: (Math.random() - 0.5) * 8 * speed,
+                dy: (Math.random() - 0.5) * 8 * speed,
+                life: 1,
+                decay: Math.random() * 0.03 + 0.01,
+            });
+        }
+    }
+
+    drawParticles() {
+        this.particles = this.particles.filter(p => {
+            p.x += p.dx;
+            p.y += p.dy;
+            p.dy += 0.1; // gravity
+            p.life -= p.decay;
+            
+            if (p.life <= 0) return false;
+            
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            this.ctx.globalAlpha = p.life;
+            this.ctx.fillStyle = p.color;
+            this.ctx.shadowColor = p.color;
+            this.ctx.shadowBlur = 10;
+            this.ctx.fill();
+            
+            return true;
+        });
+        this.ctx.globalAlpha = 1;
+        this.ctx.shadowBlur = 0;
+    }
+}
+
+// Initialize the game once the DOM is loaded
+window.addEventListener('load', () => new Game());
+</script>
+</body>
+</html>
