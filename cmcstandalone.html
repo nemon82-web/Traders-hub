@@ -40,8 +40,10 @@
         /* ============================================== */
         .cmc-container {
             width: 100vw;
-            height: 100vh;
+            /* ZMIANA: Zmniejszenie wysokości o 5px, aby stworzyć odstęp na dole */
+            height: calc(100vh - 5px); 
             border: none;
+            display: block; /* Upewnia się, że iframe nie ma domyślnego marginesu pod spodem */
         }
 
         /* ============================================== */
@@ -83,7 +85,7 @@
 </head>
 <body>
 
-    <!-- Osadzona platforma CMC Markets, która wypełnia całe okno -->
+    <!-- Osadzona platforma CMC Markets, która wypełnia całe okno z 5px odstępem na dole -->
     <iframe class="cmc-container" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" title="Platforma CMC Markets"></iframe>
     
     <!-- Pływający przycisk do przełączania trybu pełnoekranowego -->
