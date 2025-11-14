@@ -1,15 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-    <title>CMC Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CMC Markets</title>
+
+    <!-- Ikony z Font Awesome (dla przycisku fullscreen) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ============================================== */
+        /*          STYLE PODSTAWOWE I RESET              */
+        /* ============================================== */
+        :root {
+            /* Kolory z oryginalnego pliku dla spójności wyglądu przycisku */
+            --primary-bg: #1a1c20;
+            --glass-bg: rgba(35, 37, 42, 0.9);
+            --text-primary: #e6e6e6;
+            --border-color: rgba(90, 150, 255, 0.2);
+            --accent-blue: #5a96ff;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Ukrywa paski przewijania na głównym dokumencie */
+            background-color: var(--primary-bg);
+            font-family: sans-serif;
+        }
+
+        /* ============================================== */
+        /*       GŁÓWNY ELEMENT - IFRAME Z CMC            */
+        /* ============================================== */
+        .cmc-container {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+        }
+
+        /* ============================================== */
+        /*      PŁYWAJĄCY PRZYCISK PEŁNEGO EKRANU         */
+        /* ============================================== */
+        .fullscreen-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 10000; /* Zapewnia, że przycisk jest zawsze na wierzchu */
+
+            /* Styl przycisku */
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5rem; /* Rozmiar ikony */
+            
+            /* Wyśrodkowanie ikony w przycisku */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            /* Płynne przejścia */
+            transition: all var(--transition-speed) ease;
+            -webkit-tap-highlight-color: transparent; /* Usuwa podświetlenie na urządzeniach mobilnych */
+        }
+
+        .fullscreen-button:hover {
+            transform: scale(1.1);
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+    </style>
 </head>
 <body>
-    <iframe 
-        src="https://www.tradingview.com/chart/7TopvvPr/" 
-        style="width:100%;height:100vh;" 
-        referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation"
-        allow="camera; microphone; fullscreen; geolocation; encrypted-media"
-    ></iframe>
+
+    <!-- Osadzona platforma CMC Markets, która wypełnia całe okno -->
+    <iframe class="cmc-container" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" title="Platforma CMC Markets"></iframe>
+    
+    <!-- Pływający przycisk do przełączania trybu pełnoekranowego -->
+    <button id="fullscreen-btn" class="fullscreen-button" title="Pełny ekran">
+        <i class="fas fa-expand"></i>
+    </button>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const fullscreenIcon = fullscreenBtn.querySelector('i');
+
+        // Funkcja do przełączania trybu pełnoekranowego
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                // Jeśli nie jesteśmy w trybie pełnoekranowym, włącz go
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Błąd przy próbie włączenia trybu pełnoekranowego: ${err.message} (${err.name})`);
+                });
+            } else {
+                // Jeśli jesteśmy w trybie pełnoekranowym, wyłącz go
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Funkcja do aktualizacji ikony na przycisku (rozwiń/zwiń)
+        function updateFullscreenIcon() {
+            const isFullscreen = !!document.fullscreenElement;
+            fullscreenIcon.classList.toggle('fa-expand', !isFullscreen); // Pokaż ikonę 'expand' jeśli NIE ma trybu fullscreen
+            fullscreenIcon.classList.toggle('fa-compress', isFullscreen); // Pokaż ikonę 'compress' jeśli JEST tryb fullscreen
+        }
+
+        // Dodanie nasłuchiwania na kliknięcie przycisku
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Dodanie nasłuchiwania na zmianę stanu pełnego ekranu (np. po naciśnięciu Esc)
+        document.addEventListener('fullscreenchange', updateFullscreenIcon);
+    });
+    </script>
 </body>
 </html>
