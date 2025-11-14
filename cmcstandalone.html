@@ -7,19 +7,23 @@
 
     <!-- Ikony z Font Awesome (dla przycisku fullscreen) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================== */
-        /*          STYLE PODSTAWOWE I RESET              */
+        /*          ZMIENNE I STYLE PODSTAWOWE            */
         /* ============================================== */
         :root {
-            /* Kolory z oryginalnego pliku dla spójności wyglądu przycisku */
+            /* Kolory i wartości pobrane z oryginalnego pliku dla spójności */
             --primary-bg: #1a1c20;
+            --secondary-bg: #23252a;
             --glass-bg: rgba(35, 37, 42, 0.9);
             --text-primary: #e6e6e6;
             --border-color: rgba(90, 150, 255, 0.2);
             --accent-blue: #5a96ff;
+            --border-radius: 12px;
             --transition-speed: 0.3s;
+            --font-main: 'Exo 2', sans-serif;
         }
 
         * {
@@ -30,20 +34,47 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Ukrywa paski przewijania na głównym dokumencie */
+            overflow: hidden; /* Zapobiega pojawianiu się pasków przewijania */
+        }
+        
+        body {
             background-color: var(--primary-bg);
-            font-family: sans-serif;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.04) 2%, transparent 0%),
+                radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.04) 2%, transparent 0%);
+            background-size: 100px 100px;
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            
+            /* Używamy siatki (grid), aby łatwo wycentrować ramkę i dodać odstępy */
+            display: grid;
+            padding: 1rem; /* Tworzy odstęp (gap) od każdej krawędzi okna */
+        }
+        
+        /* ============================================== */
+        /*    RAMKA (WRAPPER) DLA PLATFORMY CMC           */
+        /* ============================================== */
+        .cmc-wrapper {
+            /* Ramka będzie zajmować całą dostępną przestrzeń wewnątrz paddingu body */
+            width: 100%;
+            height: 100%;
+
+            /* Stylizacja ramki */
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden; /* Kluczowe, aby zaokrąglone rogi "przycięły" narożniki iframe */
+
+            /* Ustawienia flexboxa, aby iframe wewnątrz idealnie się dopasował */
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ============================================== */
-        /*       GŁÓWNY ELEMENT - IFRAME Z CMC            */
-        /* ============================================== */
-        .cmc-container {
-            width: 100vw;
-            /* ZMIANA: Zmniejszenie wysokości o 5px, aby stworzyć odstęp na dole */
-            height: calc(100vh - 5px); 
+        .cmc-iframe {
+            flex-grow: 1; /* Iframe rozciągnie się, by wypełnić całą ramkę */
             border: none;
-            display: block; /* Upewnia się, że iframe nie ma domyślnego marginesu pod spodem */
+            width: 100%;
+            height: 100%;
         }
 
         /* ============================================== */
@@ -51,11 +82,11 @@
         /* ============================================== */
         .fullscreen-button {
             position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 10000; /* Zapewnia, że przycisk jest zawsze na wierzchu */
+            /* ZMIANA: Pozycjonujemy przycisk względem paddingu body */
+            top: calc(1rem + 15px);
+            left: calc(1rem + 15px);
+            z-index: 10000;
 
-            /* Styl przycisku */
             width: 48px;
             height: 48px;
             background: var(--glass-bg);
@@ -63,16 +94,14 @@
             color: var(--text-primary);
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.5rem; /* Rozmiar ikony */
+            font-size: 1.5rem;
             
-            /* Wyśrodkowanie ikony w przycisku */
             display: flex;
             align-items: center;
             justify-content: center;
             
-            /* Płynne przejścia */
             transition: all var(--transition-speed) ease;
-            -webkit-tap-highlight-color: transparent; /* Usuwa podświetlenie na urządzeniach mobilnych */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .fullscreen-button:hover {
@@ -85,8 +114,10 @@
 </head>
 <body>
 
-    <!-- Osadzona platforma CMC Markets, która wypełnia całe okno z 5px odstępem na dole -->
-    <iframe class="cmc-container" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" title="Platforma CMC Markets"></iframe>
+    <!-- Kontener z ramką, w którym osadzona jest platforma CMC -->
+    <div class="cmc-wrapper">
+        <iframe class="cmc-iframe" src="https://platform.cmcmarkets.com/#/login?b=CMC-CFD&r=PL&l=pl" title="Platforma CMC Markets"></iframe>
+    </div>
     
     <!-- Pływający przycisk do przełączania trybu pełnoekranowego -->
     <button id="fullscreen-btn" class="fullscreen-button" title="Pełny ekran">
@@ -97,16 +128,16 @@
     document.addEventListener('DOMContentLoaded', () => {
         const fullscreenBtn = document.getElementById('fullscreen-btn');
         const fullscreenIcon = fullscreenBtn.querySelector('i');
+        const cmcWrapper = document.querySelector('.cmc-wrapper'); // Uchwyt do ramki
 
         // Funkcja do przełączania trybu pełnoekranowego
         function toggleFullscreen() {
+            // ZMIANA: Teraz elementem przełączanym w tryb pełnoekranowy jest cała ramka
             if (!document.fullscreenElement) {
-                // Jeśli nie jesteśmy w trybie pełnoekranowym, włącz go
-                document.documentElement.requestFullscreen().catch(err => {
+                cmcWrapper.requestFullscreen().catch(err => {
                     alert(`Błąd przy próbie włączenia trybu pełnoekranowego: ${err.message} (${err.name})`);
                 });
             } else {
-                // Jeśli jesteśmy w trybie pełnoekranowym, wyłącz go
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 }
@@ -116,8 +147,10 @@
         // Funkcja do aktualizacji ikony na przycisku (rozwiń/zwiń)
         function updateFullscreenIcon() {
             const isFullscreen = !!document.fullscreenElement;
-            fullscreenIcon.classList.toggle('fa-expand', !isFullscreen); // Pokaż ikonę 'expand' jeśli NIE ma trybu fullscreen
-            fullscreenIcon.classList.toggle('fa-compress', isFullscreen); // Pokaż ikonę 'compress' jeśli JEST tryb fullscreen
+            fullscreenIcon.classList.toggle('fa-expand', !isFullscreen);
+            fullscreenIcon.classList.toggle('fa-compress', isFullscreen);
+            // Ukryj przycisk, gdy jesteśmy w trybie pełnoekranowym
+            fullscreenBtn.style.display = isFullscreen ? 'none' : 'flex';
         }
 
         // Dodanie nasłuchiwania na kliknięcie przycisku
