@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kalendarze Investing.com – dzień + tydzień</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --page-padding: 18px;
+      --gap: 18px;
+      --card-radius: 16px;
+      --card-inner-radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      color: #f5f5f5;
+      background-color: #050608;
+      /* elegancki ciemny deseń */
+      background-image:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.04) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.03) 0, transparent 55%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.03) 75%, transparent 75%, transparent);
+      background-size: auto, auto, 40px 40px;
+      background-attachment: fixed;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      padding: var(--page-padding);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calendars-grid {
+      flex: 1;
+      display: flex;
+      gap: var(--gap);
+      align-items: stretch;
+      justify-content: center;
+      /* wysokość dopasowana do ekranu z marginesami */
+      min-height: calc(100vh - 2 * var(--page-padding));
+    }
+
+    .calendar-card {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      border-radius: var(--card-radius);
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 60%),
+                  rgba(10, 10, 15, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .calendar-frame-wrapper {
+      flex: 1;
+      border-radius: var(--card-inner-radius);
+      overflow: hidden;
+      background: #05060a;
+    }
+
+    .calendar-frame-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Guzik pełnego ekranu */
+    .fullscreen-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(5, 5, 10, 0.92);
+      color: #f5f5f5;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .fullscreen-btn span.icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(20, 20, 30, 0.98);
+    }
+
+    .fullscreen-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Responsywność – na wąskich ekranach kalendarze jeden pod drugim */
+    @media (max-width: 960px) {
+      .calendars-grid {
+        flex-direction: column;
+      }
+      .calendar-card {
+        min-height: 50vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      :root {
+        --page-padding: 10px;
+        --gap: 10px;
+      }
+
+      .fullscreen-btn {
+        top: 8px;
+        right: 8px;
+        padding: 6px 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="fullscreen-btn" id="fullscreenToggle">
+    <span class="icon">⛶</span>
+    <span class="label">Full&nbsp;screen</span>
+  </button>
+
+  <div class="page-wrapper">
+    <div class="calendars-grid">
+      <!-- Kalendarz dzienny -->
+      <div class="calendar-card">
+        <div class="calendar-frame-wrapper">
+          <iframe loading="lazy"
+            src="https://sslecal2.investing.com?ecoDayBackground=%232E8B57&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=day&timeZone=59&lang=1"
+            title="Kalendarz ekonomiczny – dzień"></iframe>
+        </div>
+      </div>
+
+      <!-- Kalendarz tygodniowy -->
+      <div class="calendar-card">
+        <div class="calendar-frame-wrapper">
+          <iframe loading="lazy"
+            src="https://sslecal2.investing.com?ecoDayBackground=%23DAA520&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=59&lang=1"
+            title="Kalendarz ekonomiczny – tydzień"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('fullscreenToggle');
+      const iconSpan = btn.querySelector('.icon');
+      const labelSpan = btn.querySelector('.label');
+
+      function updateLabel() {
+        if (document.fullscreenElement) {
+          iconSpan.textContent = '✕';
+          labelSpan.textContent = 'Wyjście';
+        } else {
+          iconSpan.textContent = '⛶';
+          labelSpan.textContent = 'Full\u00a0screen';
+        }
+      }
+
+      btn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.().catch(() => { });
+        } else {
+          document.exitFullscreen?.();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', updateLabel);
+    })();
+  </script>
+</body>
+</html>
