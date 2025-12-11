@@ -1,267 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Global Waves</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
-    :root {
-      --primary: rgba(255,255,255,0.9);
-      --glass: rgba(255,255,255,0.05);
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      min-height:100vh; padding:2rem;
-      display:flex; flex-wrap:wrap; gap:2rem;
-      align-items:center; justify-content:center;
-      font-family:'Inter',sans-serif;
-      background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a6073);
-      background-size:400% 400%; animation:gradient 15s ease infinite;
-      color:var(--primary);
-    }
-    @keyframes gradient {
-      0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
-    }
-    .player-card {
-      background:rgba(255,255,255,0.1); border-radius:24px;
-      padding:2rem; backdrop-filter:blur(16px) saturate(180%);
-      box-shadow:0 8px 32px rgba(0,0,0,0.3); width:360px; text-align:center;
-      border:1px solid rgba(255,255,255,0.1);
-    }
-    .player-header h1 {
-      font-size:1.75rem; font-weight:700; display:flex;
-      justify-content:center; gap:.5rem;
-    }
-    .station-info {
-      margin:1.2rem 0; font-size:1.05rem; font-weight:500;
-      min-height:24px; opacity:.9;
-    }
-    .station-buttons {
-      display:grid; grid-template-columns:repeat(2,1fr);
-      gap:.6rem; margin-bottom:1.8rem;
-    }
-    .station-btn {
-      background:var(--glass); border:1px solid rgba(255,255,255,0.1);
-      border-radius:12px; padding:.8rem; cursor:pointer; transition:.3s;
-      font-size:.9rem; color:var(--primary);
-      display:flex; flex-direction:column; align-items:center; gap:.4rem;
-    }
-    .station-btn.active, .station-btn:hover {
-      background:rgba(255,255,255,0.2); transform:translateY(-2px);
-    }
-    .controls { display:flex; flex-direction:column; gap:1.2rem; }
-    .play-controls { display:flex; justify-content:center; gap:1.2rem; }
-    .play-controls button {
-      background:none; border:none; cursor:pointer; transition:.2s; padding:.8rem;
-      border-radius:50%; width:56px; height:56px; display:flex;
-      align-items:center; justify-content:center;
-      background:rgba(255,255,255,0.1);
-    }
-    .play-controls button.play-btn { background:var(--primary); color:#2c5364;
-      box-shadow:0 4px 12px rgba(0,0,0,0.2);
-    }
-    .play-controls i { font-size:1.5rem; }
-    .play-controls button:hover { transform:scale(1.05); }
-    .volume-control { display:flex; align-items:center; gap:.6rem; }
-    .volume-control input[type=range] {
-      width:100%; height:4px; background:rgba(255,255,255,0.1);
-      border-radius:2px; -webkit-appearance:none;
-    }
-    .volume-control input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance:none; width:14px; height:14px;
-      background:var(--primary); border-radius:50%; cursor:pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio & Tools</title>
+    <style>
+        :root {
+            --accent: #ff4400;
+            --bg-dark: #0a0a0a;
+            --card-bg: #141414;
+            --text: #ffffff;
+            --text-muted: #777;
+            /* Zwiększona wysokość panelu z 550px na 700px */
+            --panel-height: 750px; 
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 10px;
+            padding-bottom: 80px;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .status-bar {
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-top: 5px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #555;
+            margin: 20px 0 10px 0;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 5px;
+        }
+
+        .station-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .station-card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .station-card:hover {
+            background: #222;
+            transform: translateX(2px);
+        }
+
+        .station-card.playing {
+            background: #222;
+            border-color: var(--accent);
+            box-shadow: inset 3px 0 0 var(--accent);
+        }
+
+        .station-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .station-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #eee;
+        }
+
+        .station-genre {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
+            margin-left: 10px;
+            transition: 0.2s;
+        }
+
+        .station-card:hover .btn-icon {
+            background: #333;
+        }
+
+        .station-card.playing .btn-icon {
+            background: var(--accent);
+            color: #000;
+        }
+
+        svg { width: 12px; height: 12px; fill: currentColor; }
+
+        .loader {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: none;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- STYLES FOR DRAWER --- */
+        .bottom-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--panel-height);
+            background: #111;
+            border-top: 1px solid #333;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-drawer.open {
+            transform: translateY(0);
+        }
+
+        .drawer-tabs {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .tab-btn {
+            pointer-events: auto;
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #333;
+            border-bottom: none;
+            padding: 8px 20px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .tab-btn:hover {
+            background: #252525;
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        .drawer-content {
+            flex: 1;
+            overflow-y: auto;
+            background: #0a0a0a;
+            padding: 0;
+        }
+
+        .drawer-content::-webkit-scrollbar { width: 5px; }
+        .drawer-content::-webkit-scrollbar-track { background: #0a0a0a; }
+        .drawer-content::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        #pip-value-calculator-61143 {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- London -->
-  <div class="player-card">
-    <div class="player-header">
-      <h1><i class="fas fa-city"></i> London</h1>
-    </div>
-    <div class="station-info">Select a station</div>
-    <div class="station-buttons">
-      <button class="station-btn" data-name="BBC Radio 1" data-url="http://stream.live.vc.bbc_radio_one">
-        <i class="fas fa-play-circle"></i> BBC 1
-      </button>
-      <button class="station-btn" data-name="Capital FM" data-url="http://media-ice.musicradio.com/CapitalMP3">
-        <i class="fas fa-headphones"></i> Capital
-      </button>
-      <button class="station-btn" data-name="LBC London" data-url="http://media-ice.musicradio.com/LBCLondonMP3">
-        <i class="fas fa-bullhorn"></i> LBC
-      </button>
-      <button class="station-btn" data-name="Classic FM" data-url="http://media-ice.musicradio.com/ClassicFMMP3">
-        <i class="fas fa-music"></i> Classic
-      </button>
-    </div>
-    <audio controls preload="none"></audio>
-    <div class="controls">
-      <div class="play-controls">
-        <button class="play-btn"><i class="fas fa-play"></i></button>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up"></i>
-        <input type="range" min="0" max="1" step="0.1" value="0.5"/>
-      </div>
-    </div>
-  </div>
+<div class="container">
+    <header>
+        <h1>Player</h1>
+        <div class="status-bar" id="status-text">Gotowy</div>
+    </header>
 
-  <!-- New York (Updated with Accessible Music Stations) -->
-  <div class="player-card">
-    <div class="player-header">
-      <h1><i class="fas fa-building"></i> New York</h1>
+    <!-- CYBER & FOCUS -->
+    <h2>Cyber & Focus</h2>
+    <div class="station-list">
+        <div class="station-card" onclick="playRadio('https://stream.nightride.fm/nightride.m4a', this, 'Nightride FM')">
+            <div class="station-info"><span class="station-name">Nightride FM</span><span class="station-genre">Synthwave / Cyberpunk</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://ice1.somafm.com/defcon-128-mp3', this, 'Def Con Radio')">
+            <div class="station-info"><span class="station-name">Def Con Radio</span><span class="station-genre">Hacking / Underground</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://ice1.somafm.com/groovesalad-128-mp3', this, 'Groove Salad')">
+            <div class="station-info"><span class="station-name">Groove Salad</span><span class="station-genre">Deep Focus / Chill</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://simulatorradio.stream/stream', this, 'Simulator Radio')">
+            <div class="station-info"><span class="station-name">Simulator Radio</span><span class="station-genre">Retrowave / 80s</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
     </div>
-    <div class="station-info">Select a station</div>
-    <div class="station-buttons">
-      <button class="station-btn" data-name="WNYC FM 93.9 (News/Music)" data-url="https://fm939.wnyc.org/wnycfm">
-        <i class="fas fa-newspaper"></i> WNYC FM
-      </button>
-      <button class="station-btn" data-name="WABC AM 770 (Talk/News)" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/WABCAM.mp3">
-        <i class="fas fa-comment-dots"></i> WABC AM
-      </button>
-      <button class="station-btn" data-name="Z100 100.3 FM (Top 40)" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WHTZFM.mp3">
-        <i class="fas fa-headphones"></i> Z100
-      </button>
-      <button class="station-btn" data-name="KTU 103.5 FM (Rhythmic)" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WKTUFM.mp3">
-        <i class="fas fa-drum"></i> KTU
-      </button>
-      <button class="station-btn" data-name="Power 105.1 FM (Hip-Hop)" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WWPRFM.mp3">
-        <i class="fas fa-microphone"></i> Power 105.1
-      </button>
-      <button class="station-btn" data-name="Hot 97 FM (Hip-Hop/Pop)" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFM.mp3">
-        <i class="fas fa-music"></i> Hot 97
-      </button>
-    </div>
-    <audio controls preload="none"></audio>
-    <div class="controls">
-      <div class="play-controls">
-        <button class="play-btn"><i class="fas fa-play"></i></button>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up"></i>
-        <input type="range" min="0" max="1" step="0.1" value="0.5"/>
-      </div>
-    </div>
-  </div>
 
-  <!-- Australia -->
-  <div class="player-card">
-    <div class="player-header">
-      <h1><i class="fas fa-flag"></i> Australia</h1>
+    <!-- POLSKA -->
+    <h2>Polska</h2>
+    <div class="station-list">
+        <div class="station-card" onclick="playRadio('https://r.dcs.redcdn.pl/sc/o2/Eurozet/live/audio.livx', this, 'Radio ZET')">
+            <div class="station-info"><span class="station-name">Radio ZET</span><span class="station-genre">Siła Muzyki</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://rs6-krk2.rmfstream.pl/rmf_fm', this, 'RMF FM')">
+            <div class="station-info"><span class="station-name">RMF FM</span><span class="station-genre">Najlepsza Muzyka</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://waw.ic.smcdn.pl/3990-1.mp3', this, 'VOX FM')">
+            <div class="station-info"><span class="station-name">VOX FM</span><span class="station-genre">W Rytmie Hitów</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
     </div>
-    <div class="station-info">Select a station</div>
-    <div class="station-buttons">
-      <button class="station-btn" data-name="Triple J (Music)" data-url="http://live-radio01.mediahubaustralia.com/2TJW/mp3/">
-        <i class="fas fa-music"></i> Triple J
-      </button>
-      <button class="station-btn" data-name="ABC RN (News/Talk)" data-url="http://live-radio01.mediahubaustralia.com/abcrn.mp3">
-        <i class="fas fa-globe"></i> ABC RN
-      </button>
-      <button class="station-btn" data-name="ABC Classic (Classical)" data-url="http://live-radio01.mediahubaustralia.com/abcclassic.mp3">
-        <i class="fas fa-drum"></i> ABC Classic
-      </button>
-      <button class="station-btn" data-name="2GB Sydney (Talk)" data-url="http://live-radio01.mediahubaustralia.com/2gb.mp3">
-        <i class="fas fa-broadcast-tower"></i> 2GB
-      </button>
-    </div>
-    <audio controls preload="none"></audio>
-    <div class="controls">
-      <div class="play-controls">
-        <button class="play-btn"><i class="fas fa-play"></i></button>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up"></i>
-        <input type="range" min="0" max="1" step="0.1" value="0.5"/>
-      </div>
-    </div>
-  </div>
 
-  <!-- Japan (Updated with Accessible Music Stations) -->
-  <div class="player-card">
-    <div class="player-header">
-      <h1><i class="fas fa-globe-asia"></i> Japan</h1>
+    <!-- UK -->
+    <h2>United Kingdom</h2>
+    <div class="station-list">
+        <div class="station-card" onclick="playRadio('https://media-ssl.musicradio.com/HeartLondonMP3', this, 'Heart London')">
+            <div class="station-info"><span class="station-name">Heart FM</span><span class="station-genre">London Pop</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://media-ssl.musicradio.com/CapitalUKMP3', this, 'Capital UK')">
+            <div class="station-info"><span class="station-name">Capital FM</span><span class="station-genre">UK No.1 Hits</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
+        <div class="station-card" onclick="playRadio('https://media-ssl.musicradio.com/SmoothUKMP3', this, 'Smooth Radio')">
+            <div class="station-info"><span class="station-name">Smooth Radio</span><span class="station-genre">Relaxing Music</span></div>
+            <div class="btn-icon"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg><div class="loader"></div></div>
+        </div>
     </div>
-    <div class="station-info">Select a station</div>
-    <div class="station-buttons">
-      <button class="station-btn" data-name="NHK World (News/Music)" data-url="https://www3.nhk.or.jp/netradio/hls/live/gh-rjrs.m3u8">
-        <i class="fas fa-globe"></i> NHK World
-      </button>
-      <button class="station-btn" data-name="J-Pop Powerplay (J-Pop)" data-url="http://listen.shoutcast.com/jpoppowerplay">
-        <i class="fas fa-music"></i> J-Pop Power
-      </button>
-      <button class="station-btn" data-name="Japan Hits (J-Pop)" data-url="http://stream.japanhitsradio.com:8000/japanhits.mp3">
-        <i class="fas fa-headphones"></i> Japan Hits
-      </button>
-      <button class="station-btn" data-name="Anime Radio (J-Pop/Anime)" data-url="http://stream.animeradio.jp:8000/stream.mp3">
-        <i class="fas fa-play-circle"></i> Anime Radio
-      </button>
+</div>
+
+<!-- SLIDING DRAWER (CALCULATOR ONLY) -->
+<div class="bottom-drawer" id="mainDrawer">
+    <div class="drawer-tabs">
+        <button class="tab-btn" id="btn-calc" onclick="toggleDrawer()">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h5v5h-5V5zM7 5h5v5H7V5zm0 14v-5h5v5H7zm7 0v-5h5v5h-5z"/></svg>
+            PipSulator
+        </button>
     </div>
-    <audio controls preload="none"></audio>
-    <div class="controls">
-      <div class="play-controls">
-        <button class="play-btn"><i class="fas fa-play"></i></button>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up"></i>
-        <input type="range" min="0" max="1" step="0.1" value="0.5"/>
-      </div>
+    
+    <div class="drawer-content">
+        <div id="pip-value-calculator-61143">
+            <script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script>
+            <script type="text/javascript">
+                RemoteCalc({
+                "Url":"https://www.cashbackforex.com",
+                "TopPaneStyle":"YmFja2dyb3VuZDogIzE0MTQxNDsgY29sb3I6IHdoaXRlOyBib3JkZXItYm90dG9tOiAxcHggc29saWQgIzMzMzsg",
+                "BottomPaneStyle":"YmFja2dyb3VuZDogIzBhMGEwYTsgY29sb3I6ICNjY2M7",
+                "ButtonStyle":"YmFja2dyb3VuZDogI2ZmNDQwMDsgY29sb3I6ICMwMDA7IGJvcmRlci1yYWRpdXM6IDRweDsgZm9udC13ZWlnaHQ6IGJvbGQ7",
+                "TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiAyMHB4OyBmb250LXdlaWdodDogNTAwOw==",
+                "TextboxStyle":"YmFja2dyb3VuZDogIzIyMjsgY29sb3I6ICNmZmY7IGJvcmRlcjogMXB4IHNvbGlkICMzMzM7",
+                "ContainerWidth":"100%",
+                "HighlightColor":"#ff4400",
+                "IsDisplayTitle":false,
+                "IsShowChartLinks":false,
+                "IsShowEmbedButton":false,
+                "Lang":"pl",
+                "CompactType":"large",
+                "Calculator":"pip-value-calculator",
+                "ContainerId":"pip-value-calculator-61143"
+                });
+            </script>
+        </div>
     </div>
-  </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    document.querySelectorAll('.player-card').forEach(card => {
-      const stations = card.querySelectorAll('.station-btn');
-      const audio    = card.querySelector('audio');
-      const playBtn  = card.querySelector('.play-btn');
-      const volume   = card.querySelector('.volume-control input[type=range]');
-      const info     = card.querySelector('.station-info');
-      const icon     = playBtn.querySelector('i');
-      let hls;
+<script>
+    // --- RADIO LOGIC ---
+    let currentAudio = new Audio();
+    currentAudio.crossOrigin = "anonymous";
+    let currentButton = null;
+    let isPlaying = false;
+    const statusText = document.getElementById('status-text');
 
-      stations.forEach(btn => btn.addEventListener('click', () => {
-        stations.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        info.textContent = btn.dataset.name;
-        const url = btn.dataset.url;
-
-        if (hls) { hls.destroy(); hls = null; audio.src = ''; }
-
-        if (url.endsWith('.m3u8') && Hls.isSupported()) {
-          hls = new Hls();
-          hls.loadSource(url);
-          hls.attachMedia(audio);
-        } else {
-          audio.src = url;
+    currentAudio.onerror = function(e) {
+        console.error("Audio Error:", e);
+        if(currentButton) {
+            setLoading(currentButton, false);
+            setPlayingUI(currentButton, false);
+            currentButton.classList.remove('playing');
         }
-        audio.play();
-        icon.classList.replace('fa-play', 'fa-pause');
-      }));
+        statusText.innerText = "Błąd. Spróbuj innej stacji.";
+        statusText.style.color = "#ff4400";
+        isPlaying = false;
+    };
 
-      playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-          audio.play();
-          icon.classList.replace('fa-play', 'fa-pause');
-        } else {
-          audio.pause();
-          icon.classList.replace('fa-pause', 'fa-play');
+    currentAudio.onplaying = function() {
+        setLoading(currentButton, false);
+        setPlayingUI(currentButton, true);
+        statusText.innerText = "Gra: " + currentButton.getAttribute('data-name');
+        statusText.style.color = "#ff4400";
+    };
+
+    currentAudio.onwaiting = function() {
+        if(isPlaying && currentButton) {
+            setLoading(currentButton, true);
+            statusText.innerText = "Buforowanie...";
+            statusText.style.color = "#fff";
         }
-      });
+    };
 
-      volume.addEventListener('input', e => audio.volume = e.target.value);
+    function playRadio(url, btnElement, name) {
+        btnElement.setAttribute('data-name', name);
 
-      audio.addEventListener('error', () => {
-        info.textContent = 'Error loading station';
-        icon.classList.replace('fa-pause', 'fa-play');
-        card.querySelector('.station-btn.active')?.classList.remove('active');
-      });
-      audio.addEventListener('play', () => icon.classList.replace('fa-play', 'fa-pause'));
-      audio.addEventListener('pause', () => icon.classList.replace('fa-pause', 'fa-play'));
-    });
-  </script>
+        if (currentButton === btnElement && isPlaying) {
+            currentAudio.pause();
+            isPlaying = false;
+            setPlayingUI(btnElement, false);
+            statusText.innerText = "Pauza";
+            statusText.style.color = "#777";
+            return;
+        }
+
+        if (currentButton === btnElement && !isPlaying) {
+            currentAudio.play();
+            isPlaying = true;
+            setPlayingUI(btnElement, true);
+            return;
+        }
+
+        if (currentButton) {
+            setPlayingUI(currentButton, false);
+            setLoading(currentButton, false);
+            currentButton.classList.remove('playing');
+        }
+        
+        currentButton = btnElement;
+        isPlaying = true;
+        
+        statusText.innerText = "Łączenie...";
+        statusText.style.color = "#fff";
+        setLoading(btnElement, true);
+
+        const streamUrl = url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now();
+        currentAudio.src = streamUrl;
+        currentAudio.load();
+        
+        const playPromise = currentAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Play error:", error);
+                statusText.innerText = "Kliknij ponownie (blokada przeglądarki).";
+                setLoading(btnElement, false);
+                isPlaying = false;
+            });
+        }
+    }
+
+    function setPlayingUI(btn, playing) {
+        const playIcon = btn.querySelector('.icon-play');
+        const pauseIcon = btn.querySelector('.icon-pause');
+        if (playing) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+            btn.classList.add('playing');
+        } else {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            btn.classList.remove('playing');
+        }
+    }
+
+    function setLoading(btn, loading) {
+        if(!btn) return;
+        const playIcon = btn.querySelector('.icon-play');
+        const pauseIcon = btn.querySelector('.icon-pause');
+        const loader = btn.querySelector('.loader');
+        if (loading) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'none';
+            loader.style.display = 'block';
+        } else {
+            loader.style.display = 'none';
+            if(isPlaying && btn.classList.contains('playing')) {
+                pauseIcon.style.display = 'block';
+            } else {
+                playIcon.style.display = 'block';
+            }
+        }
+    }
+
+    // --- DRAWER LOGIC ---
+    function toggleDrawer() {
+        const drawer = document.getElementById('mainDrawer');
+        const btn = document.getElementById('btn-calc');
+        
+        drawer.classList.toggle('open');
+        btn.classList.toggle('active');
+    }
+</script>
+
 </body>
 </html>
